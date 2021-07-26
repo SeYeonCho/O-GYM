@@ -80,6 +80,8 @@ const MainNavigation = (): JSX.Element => {
                 visible={isVisible}
                 onOk={clickModalClose}
                 onCancel={clickModalClose}
+                transitionName=""
+                maskTransitionName=""
                 footer={null}
             >
               <ul style={{width: "100%"}}>
