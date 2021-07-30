@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 public class Career {
 
     @Builder
-    public Career(String description,String company, LocalDate startDate, LocalDate endDate) {
-        this.description = description;
+    public Career(String company, LocalDate startDate, LocalDate endDate,String role) {
+        this.role = role;
         this.company = company;
         this.startDate = startDate;
         this.endDate = endDate;
@@ -31,11 +31,20 @@ public class Career {
     @Column(name = "career_id")
     private Long id; // 대리키
 
-    private String description;
+    private String role;
 
     // 시작일, 종료일
     private LocalDate startDate;
     private LocalDate endDate;
 
     private String company;
+
+    public static Career CreateCareer(String company , LocalDate startDate , LocalDate endDate,String role   ){
+        return Career.builder()
+            .company(company)
+            .startDate(startDate)
+            .endDate(endDate)
+            .role(role)
+            .build();
+    }
 }

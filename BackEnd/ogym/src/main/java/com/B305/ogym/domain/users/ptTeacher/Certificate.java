@@ -49,6 +49,6 @@ public class Certificate {
         if(!ptTeacher.getCertificates().contains(this)){
             this.ptTeacher.getCertificates().add(this);
         }
-
     }
+
 }

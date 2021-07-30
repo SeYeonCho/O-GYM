@@ -4,6 +4,7 @@ import com.B305.ogym.common.jwt.JwtAccessDeniedHandler;
 import com.B305.ogym.common.jwt.JwtAuthenticationEntryPoint;
 import com.B305.ogym.common.jwt.JwtSecurityConfig;
 import com.B305.ogym.common.jwt.TokenProvider;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -50,6 +51,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 , "/favicon.ico"
                 , "/error"
             );
+        web.ignoring().antMatchers("/docs/**");
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
     @Override
@@ -80,7 +83,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/hello").permitAll()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/signup").permitAll()
-
             .anyRequest().authenticated()
 
             .and()

@@ -12,10 +12,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "pt_student_monthly")
 public class PTStudentMonthly {
 
@@ -26,7 +30,6 @@ public class PTStudentMonthly {
 
     private int height; // 키
     private int weight; // 몸무게
-    private int year; // 년도
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pt_student_id")
@@ -35,4 +38,27 @@ public class PTStudentMonthly {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "month")
     private Monthly monthly; // 월
+
+    @Builder
+    public PTStudentMonthly(int height, int weight,PTStudent ptStudent, Monthly monthly){
+        this.height = height;
+        this.weight = weight;
+        this.ptStudent = ptStudent;
+        if(!ptStudent.getPtStudentMonthly().contains(this))
+            ptStudent.getPtStudentMonthly().add(this);
+        this.monthly = monthly;
+    }
+
+    public static PTStudentMonthly createHealth(int height, int weight,PTStudent ptStudent, Monthly monthly){
+        PTStudentMonthly result = PTStudentMonthly.builder()
+            .height(height)
+            .weight(weight)
+            .ptStudent(ptStudent)
+            .monthly(monthly)
+            .build();
+        if(!ptStudent.getPtStudentMonthly().contains(result)){
+            ptStudent.getPtStudentMonthly().add(result);
+        }
+        return result;
+    }
 }

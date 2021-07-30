@@ -2,6 +2,7 @@ package com.B305.ogym.domain.users.common;
 
 import com.B305.ogym.domain.autority.Authority;
 import com.B305.ogym.domain.users.BaseTimeEntity;
+import io.jsonwebtoken.Claims;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Embedded;
@@ -59,26 +60,16 @@ public class UserBase extends BaseTimeEntity {
     @JoinColumn(name = "authority")
     private Authority authority;
 
-//    public UserBase(Long id, String password, Authority authority, String nickname, String email,String zipCode,
-//        String street, String detailedAddress, String tel, Gender gender){
-//        this.id = id;
-//        this.password = password;
-//        this.nickname = nickname;
-//        this.authority = authority;
-//        this.address = Address.builder()
-//                        .zipCode(zipCode)
-//                        .street(street)
-//                        .detailedAddress(detailedAddress)
-//                        .build();
-//        this.email = email;
-//        this.tel = tel;
-//        this.gender = gender;
-//    }
-//    @Builder
-//    public UserBase(String email , String password , String nickname, Authority authority){
-//        this.email = email;
-//        this.password = password;
-//        this.nickname = nickname;
-//        this.authority = authority;
-//    }
+    public UserBase(Claims claims) {
+        this.id = Long.valueOf(claims.get("userId").toString());
+        this.email = claims.get("name").toString();
+//        this.role = claims.get("role").toString();
+    }
+    public void setRole(Authority authority){
+        this.authority = authority;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

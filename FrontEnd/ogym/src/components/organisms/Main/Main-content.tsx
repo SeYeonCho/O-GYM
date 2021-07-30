@@ -3,7 +3,6 @@ import styled from "styled-components";
 import crossFit from '../../../assets/pages/mainPage/carousel/crossfit.jpg';
 import dumbBell from '../../../assets/pages/mainPage/carousel/dumbbells.jpg';
 import weightLift from '../../../assets/pages/mainPage/carousel/weight_lifting.jpg';
-
 const StyledCarousel = styled(Carousel)`
 
  .slick-dots li button {
@@ -40,7 +39,7 @@ const MainContent = (): JSX.Element => {
             <StyledCarousel afterChange={onChange}
                 autoplay
             >
-              
+ 
                 <Image
                   src={crossFit}
                 />
@@ -51,6 +50,7 @@ const MainContent = (): JSX.Element => {
                  <Image
                   src={weightLift}
                 />
+
             </StyledCarousel>
         </>
     );

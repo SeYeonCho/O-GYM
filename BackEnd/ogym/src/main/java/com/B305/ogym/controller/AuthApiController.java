@@ -1,9 +1,10 @@
 package com.B305.ogym.controller;
 
-import com.B305.ogym.controller.dto.LoginDto;
-import com.B305.ogym.controller.dto.TokenDto;
 import com.B305.ogym.common.jwt.JwtFilter;
 import com.B305.ogym.common.jwt.TokenProvider;
+import com.B305.ogym.controller.dto.AuthDto;
+import com.B305.ogym.controller.dto.AuthDto.TokenDto;
+import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api")
@@ -32,10 +31,10 @@ public class AuthApiController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@RequestBody @Valid LoginDto loginDto) {
+    public ResponseEntity<TokenDto> authorize(@RequestBody @Valid AuthDto.LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+            new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()); // 인증 전 객체
 
         Authentication authentication = authenticationManagerBuilder.getObject()
             .authenticate(authenticationToken);

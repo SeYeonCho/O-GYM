@@ -1,5 +1,6 @@
 package com.B305.ogym.service;
 
+import com.B305.ogym.exception.user.UserNotFoundException;
 import com.B305.ogym.domain.users.UserRepository;
 import com.B305.ogym.domain.users.common.UserBase;
 import java.util.ArrayList;
@@ -25,7 +26,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 //        return userRepository.findOneWithAuthoritiesByEmail(email)
 //            .map(userBase -> createUser(email, userBase))
 //            .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
-        UserBase result = userRepository.findOneWithAuthoritiesByEmail(email);
+        UserBase result;
+        result = userRepository.findOneWithAuthoritiesByEmail(email);
+        if(result==null) {
+            throw new UserNotFoundException("존재하지 않는 사용자입니다.");
+        }
+        System.out.println("loadUserByUsername");
         return createUser(email,result);
     }
 

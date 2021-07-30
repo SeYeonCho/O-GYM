@@ -1,18 +1,25 @@
 package com.B305.ogym.common.jwt;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
-import org.springframework.web.filter.GenericFilterBean;
-
+import com.B305.ogym.domain.users.common.UserBase;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
+import org.springframework.web.filter.GenericFilterBean;
 
 public class JwtFilter extends GenericFilterBean {
 
@@ -45,6 +52,28 @@ public class JwtFilter extends GenericFilterBean {
 
         filterChain.doFilter(servletRequest, servletResponse);
     }
+
+    private Authentication getAuthentication(HttpServletRequest request) {
+        String authHeader = request.getHeader(AUTHORIZATION_HEADER);
+        if (authHeader == null) {
+            return null;
+        }
+        String jwt = resolveToken(request);
+        String requestURI = request.getRequestURI();
+
+        Claims claims = null;
+        try {
+            claims = tokenProvider.getClaims(jwt);
+        } catch (JwtException e) {
+            logger.debug("JwtException 발생");
+        }
+        Set<GrantedAuthority> roles = new HashSet<>();
+        String role = (String)claims.get("role");
+        roles.add(new SimpleGrantedAuthority("ROLE_" + role));
+
+        return new UsernamePasswordAuthenticationToken(new UserBase(claims), null, roles);
+    }
+
 
     private String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
