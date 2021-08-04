@@ -1,6 +1,6 @@
 package com.B305.ogym.domain.users.common;
 
-import com.B305.ogym.domain.autority.Authority;
+import com.B305.ogym.domain.authority.Authority;
 import com.B305.ogym.domain.users.BaseTimeEntity;
 import io.jsonwebtoken.Claims;
 import javax.persistence.Column;

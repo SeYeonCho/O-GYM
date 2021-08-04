@@ -47,6 +47,7 @@ public class PTTeacher extends UserBase {
     private String description;
 
     // SNS 링크
+    @Builder.Default
     @OneToMany(mappedBy = "id",cascade = CascadeType.ALL )
     private List<PTTeacherSns> ptTeacherSns = new ArrayList<>();
 

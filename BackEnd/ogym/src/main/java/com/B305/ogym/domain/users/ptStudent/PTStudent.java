@@ -1,5 +1,7 @@
 package com.B305.ogym.domain.users.ptStudent;
 
+import com.B305.ogym.controller.dto.HealthDto;
+import com.B305.ogym.controller.dto.HealthDto.GetMyHealthResponse;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.users.common.Address;
 import com.B305.ogym.domain.users.common.Gender;
@@ -57,6 +59,8 @@ public class PTStudent extends UserBase {
             .build();
     }
 
+    // 월별 건강정보 추가
+    // month가 1~12 사이의 값이 아닐때에는 exception을 던져야한다.
     public void addMonthly(int month, int height, int weight){
         Monthly monthly = Monthly.builder()
             .month(month)
@@ -67,8 +71,38 @@ public class PTStudent extends UserBase {
         this.monthly.add(monthly);
     }
 
+    public HealthDto.GetMyHealthResponse getMyHealthResponse(PTStudent ptStudent){
+        List<Monthly> monthly = ptStudent.getMonthly();
+
+        List<Integer> heightList = new ArrayList<>();
+        List<Integer> weightList = new ArrayList<>();
+
+        for(int i = 0; i < 12; i++){
+            heightList.add(0);
+            weightList.add(0);
+        }
+
+        for(Monthly data : monthly){
+            int month = data.getMonth();
+            int height = data.getHeight();
+            int weight = data.getWeight();
+
+            heightList.set(month-1, height);
+            weightList.set(month-1, weight);
+        }
+
+        HealthDto.GetMyHealthResponse getMyHealthResponse =
+            GetMyHealthResponse.builder()
+                .heightList(heightList)
+                .weightList(weightList)
+                .build();
+
+        return getMyHealthResponse;
+    }
+
     public void deleteMonthly(int month){
 
     }
+
 
 }

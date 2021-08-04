@@ -23,4 +23,11 @@ public class HealthApiController {
             200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(teacherId)
         ));
     }
+
+    @GetMapping("/myhealth")
+    public ResponseEntity<SuccessResponseDto> getMyHealth(){
+        return ResponseEntity.ok(new SuccessResponseDto<HealthDto.GetMyHealthResponse>(
+            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealthResponse()
+        ));
+    }
 }

@@ -4,6 +4,7 @@ import com.B305.ogym.domain.users.common.Gender;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,8 +14,15 @@ public class HealthDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class GetMyHealthResponse {
+
         private List<Integer> heightList;
         private List<Integer> weightList;
+
+        @Builder
+        public GetMyHealthResponse(List<Integer> heightList, List<Integer> weightList) {
+            this.heightList = heightList;
+            this.weightList = weightList;
+        }
     }
 
     @Getter

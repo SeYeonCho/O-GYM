@@ -1,4 +1,4 @@
-package com.B305.ogym.domain.autority;
+package com.B305.ogym.domain.authority;
 
 import lombok.*;
 

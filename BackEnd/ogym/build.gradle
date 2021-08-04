@@ -6,6 +6,7 @@ plugins {
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
 
     id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+
 }
 
 
@@ -50,6 +51,7 @@ dependencies {
 
     //querydsl 추가
     implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
 }
 
 

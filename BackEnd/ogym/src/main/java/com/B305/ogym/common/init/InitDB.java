@@ -1,7 +1,7 @@
 package com.B305.ogym.common.init;
 
 
-import com.B305.ogym.domain.autority.Authority;
+import com.B305.ogym.domain.authority.Authority;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.users.common.Address;
 import com.B305.ogym.domain.users.common.Gender;
@@ -95,6 +95,7 @@ public class InitDB {
             ptStudent.addMonthly(3, 160, 46);
             ptStudent.addMonthly(4, 160, 42);
             ptStudent.addMonthly(5, 160, 43);
+            ptStudent.addMonthly(12, 161, 40);
 //            ptStudent.addMonthly(2, 161, 42);    // ptStudent + month 중복 데이터
 
             em.persist(ptStudent);
