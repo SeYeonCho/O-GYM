@@ -4,6 +4,8 @@ plugins {
     id 'java'
 //    id "org.asciidoctor.convert" version "1.5.9.2"
     id 'org.asciidoctor.jvm.convert' version '3.3.2'
+
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 
@@ -45,6 +47,10 @@ dependencies {
 //    asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+    //querydsl 추가
+    implementation 'com.querydsl:querydsl-jpa'
+    implementation 'com.querydsl:querydsl-apt'
 }
 
 
@@ -65,4 +71,18 @@ bootJar {
         from "${asciidoctor.outputDir}"            // /html5를 사용하지 않는다!
         into 'src/main/resources/static/docs'    // /static/docs로 복사!
     }
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
 }

@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -39,6 +41,10 @@ public class Career {
 
     private String company;
 
+    @ManyToOne
+    @JoinColumn(name = "pt_teacher_id")
+    private PTTeacher ptTeacher;
+
     public static Career CreateCareer(String company , LocalDate startDate , LocalDate endDate,String role   ){
         return Career.builder()
             .company(company)
@@ -46,5 +52,9 @@ public class Career {
             .endDate(endDate)
             .role(role)
             .build();
+    }
+
+    public void setPtTeacher(PTTeacher ptTeacher){
+        this.ptTeacher = ptTeacher;
     }
 }

@@ -4,10 +4,8 @@ import com.B305.ogym.common.util.SecurityUtil;
 import com.B305.ogym.controller.dto.UserDto;
 import com.B305.ogym.controller.dto.UserDto.SaveStudentRequest;
 import com.B305.ogym.controller.dto.UserDto.SaveTeacherRequest;
-import com.B305.ogym.domain.autority.Authority;
-import com.B305.ogym.domain.autority.AuthorityRepository;
-import com.B305.ogym.domain.mappingTable.PTStudentMonthly;
-import com.B305.ogym.domain.mappingTable.PTStudentMonthlyRepository;
+import com.B305.ogym.domain.authority.Authority;
+import com.B305.ogym.domain.authority.AuthorityRepository;
 import com.B305.ogym.domain.users.UserRepository;
 import com.B305.ogym.domain.users.common.Address;
 import com.B305.ogym.domain.users.common.Gender;
@@ -20,6 +18,7 @@ import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
 import com.B305.ogym.exception.user.UserDuplicateException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,7 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MonthlyRepository monthlyRepository;
-    private final PTStudentMonthlyRepository ptStudentMonthlyRepository;
+    //    private final PTStudentMonthlyRepository ptStudentMonthlyRepository;
     private final PTTeacherRepository ptTeacherRepository;
     private final PTStudentRepository ptStudentRepository;
     private final AuthorityRepository authorityRepository;
@@ -54,17 +53,17 @@ public class UserService {
         ptStudentRepository.save(ptStudent);
 
         List<Monthly> months = monthlyRepository.findAll(); // 1 ~ 12
-        for (int i = 0; i < 12; i++) { // 12개월 다 넣는다.
-//            Optional<Monthly> month = monthlyRepository.findById(i + 1); //  미리 리스트로 받아서 사용하자
-//            Monthly monthly = month.orElse(new Monthly(i + 1));
-            PTStudentMonthly ptStudentMonthly = PTStudentMonthly.createHealth(
-                StudentRequest.getMonthlyHeights().get(i),
-                StudentRequest.getMonthlyHeights().get(i),
-                ptStudent, //  연관관계 편의 메소드
-                months.get(i)
-            );
-            ptStudentMonthlyRepository.save(ptStudentMonthly);
-        }
+//        for (int i = 0; i < 12; i++) { // 12개월 다 넣는다.
+////            Optional<Monthly> month = monthlyRepository.findById(i + 1); //  미리 리스트로 받아서 사용하자
+////            Monthly monthly = month.orElse(new Monthly(i + 1));
+//            PTStudentMonthly ptStudentMonthly = PTStudentMonthly.createHealth(
+//                StudentRequest.getMonthlyHeights().get(i),
+//                StudentRequest.getMonthlyHeights().get(i),
+//                ptStudent, //  연관관계 편의 메소드
+//                months.get(i)
+//            );
+//            ptStudentMonthlyRepository.save(ptStudentMonthly);
+//        }
 
     }
 
@@ -86,62 +85,8 @@ public class UserService {
         ptTeacherRepository.save(ptTeacher);
     }
 
-    @Transactional
-    public void signup(UserDto.SaveUserRequest signupReqeust) {
-        if (userRepository.findOneWithAuthoritiesByEmail(signupReqeust.getEmail())
-            != null) {
-            throw new UserDuplicateException("이미 가입되어 있는 유저입니다.");
-        }
 
-        Authority authority = Authority.builder()
-            .authorityName(signupReqeust.getRole())
-            .build();
-
-        Gender gender = Gender.MAN;
-        if (signupReqeust.getGender() == 1) {
-            gender = Gender.WOMAN;
-        }
-
-        Address address = Address.builder()
-            .zipCode(signupReqeust.getZipCode())
-            .street(signupReqeust.getStreet())
-            .detailedAddress(signupReqeust.getDetailedAddress())
-            .build();
-
-        if ("ROLE_PTTEACHER".equals(signupReqeust.getRole())) {
-            PTTeacher ptTeacher = PTTeacher.builder()
-                .email(signupReqeust.getEmail())
-                .password(passwordEncoder.encode(signupReqeust.getPassword()))
-                .username(signupReqeust.getUsername())
-                .nickname(signupReqeust.getNickname())
-                .gender(gender)
-                .tel(signupReqeust.getTel())
-                .address(address)
-                .authority(authority)
-                .build();
-
-            ptTeacherRepository.save(ptTeacher);
-
-        } else if ("ROLE_PTSTUDENT".equals(signupReqeust.getRole())) {
-            PTStudent ptStudent = PTStudent.builder()
-                .email(signupReqeust.getEmail())
-                .password(passwordEncoder.encode(signupReqeust.getPassword()))
-                .username(signupReqeust.getUsername())
-                .nickname(signupReqeust.getNickname())
-                .gender(gender)
-                .tel(signupReqeust.getTel())
-                .address(address)
-                .authority(authority)
-                .build();
-
-            ptStudentRepository.save(ptStudent);
-        } else {
-            System.out.println("??????? 머함");
-        }
-
-    }
-
-    public UserBase getUserWithAuthorities(String email) {
+    public UserBase getUserWithAuthority(String email) {
         return userRepository.findOneWithAuthoritiesByEmail(email);
     }
 
@@ -159,6 +104,16 @@ public class UserService {
     public void deleteUserBase() {
         UserBase userBase = getMyUserWithAuthorities();
         userRepository.delete(userBase);
+    }
+
+    @Transactional
+    public Map<String, Object> getUserInfo(List<String> req) {
+        UserBase userBase = getMyUserWithAuthorities();
+        if (userBase.getAuthority().getAuthorityName().equals("ROLE_PTTEACHER")) {
+            return ptTeacherRepository.getInfo(userBase.getId(), req);
+        } else {
+            return null;
+        }
     }
 
 

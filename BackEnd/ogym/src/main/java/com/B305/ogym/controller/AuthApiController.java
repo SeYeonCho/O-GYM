@@ -4,6 +4,7 @@ import com.B305.ogym.common.jwt.JwtFilter;
 import com.B305.ogym.common.jwt.TokenProvider;
 import com.B305.ogym.controller.dto.AuthDto;
 import com.B305.ogym.controller.dto.AuthDto.TokenDto;
+import com.B305.ogym.controller.dto.SuccessResponseDto;
 import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class AuthApiController {
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<TokenDto> authorize(@RequestBody @Valid AuthDto.LoginDto loginDto) {
+    public ResponseEntity<SuccessResponseDto> authorize(@RequestBody @Valid AuthDto.LoginDto loginDto) {
 
         UsernamePasswordAuthenticationToken authenticationToken =
             new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword()); // 인증 전 객체
@@ -45,6 +46,8 @@ public class AuthApiController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        return new ResponseEntity<>(new TokenDto(jwt), httpHeaders, HttpStatus.OK);
+        return new ResponseEntity(
+            new SuccessResponseDto<TokenDto>(200, "로그인에 성공했습니다.", new TokenDto(jwt)), httpHeaders,
+            HttpStatus.OK);
     }
 }

@@ -47,13 +47,13 @@ public class PTTeacher extends UserBase {
     private String description;
 
     // SNS 링크
-    @OneToMany(mappedBy = "id",cascade = CascadeType.ALL )
+    @Builder.Default
+    @OneToMany(mappedBy = "ptTeacher", cascade = CascadeType.ALL )
     private List<PTTeacherSns> ptTeacherSns = new ArrayList<>();
 
     // 경력 리스트
     @Builder.Default
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "pt_teacher_id")
+    @OneToMany(mappedBy = "ptTeacher",cascade = CascadeType.ALL)
     private List<Career> careers = new ArrayList<>();
 
     // 학생 리스트
@@ -78,6 +78,9 @@ public class PTTeacher extends UserBase {
 //            this.careers = new ArrayList<>();
 //        }
         this.careers.add(career);
+        if(career.getPtTeacher() != this){
+            career.setPtTeacher(this);
+        }
     }
 
 }
