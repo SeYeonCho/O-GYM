@@ -6,6 +6,7 @@ import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptTeacher.Career;
 import com.B305.ogym.domain.users.ptTeacher.Certificate;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -248,11 +249,25 @@ public class UserDto {
     }
 
     @Getter
-    @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class GetUserInfoResponse {
+    @NoArgsConstructor(access = AccessLevel.PUBLIC)
+    public static class CareerDto{
+        private String role;
 
-        private List<Map<String, Object>> info;
+        private LocalDate startDate;
+        private LocalDate endDate;
+
+        private String company;
     }
 
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PUBLIC)
+    public static class CertificateDto{
+
+        private String name; // 자격증 명칭
+
+        private String publisher; // 발급 기관
+
+        private LocalDate date; // 획득일
+    }
 
 }

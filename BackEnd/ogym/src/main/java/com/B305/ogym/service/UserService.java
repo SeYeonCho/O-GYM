@@ -18,6 +18,7 @@ import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
 import com.B305.ogym.exception.user.UserDuplicateException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MonthlyRepository monthlyRepository;
-//    private final PTStudentMonthlyRepository ptStudentMonthlyRepository;
+    //    private final PTStudentMonthlyRepository ptStudentMonthlyRepository;
     private final PTTeacherRepository ptTeacherRepository;
     private final PTStudentRepository ptStudentRepository;
     private final AuthorityRepository authorityRepository;
@@ -84,62 +85,8 @@ public class UserService {
         ptTeacherRepository.save(ptTeacher);
     }
 
-    @Transactional
-    public void signup(UserDto.SaveUserRequest signupReqeust) {
-        if (userRepository.findOneWithAuthoritiesByEmail(signupReqeust.getEmail())
-            != null) {
-            throw new UserDuplicateException("이미 가입되어 있는 유저입니다.");
-        }
 
-        Authority authority = Authority.builder()
-            .authorityName(signupReqeust.getRole())
-            .build();
-
-        Gender gender = Gender.MAN;
-        if (signupReqeust.getGender() == 1) {
-            gender = Gender.WOMAN;
-        }
-
-        Address address = Address.builder()
-            .zipCode(signupReqeust.getZipCode())
-            .street(signupReqeust.getStreet())
-            .detailedAddress(signupReqeust.getDetailedAddress())
-            .build();
-
-        if ("ROLE_PTTEACHER".equals(signupReqeust.getRole())) {
-            PTTeacher ptTeacher = PTTeacher.builder()
-                .email(signupReqeust.getEmail())
-                .password(passwordEncoder.encode(signupReqeust.getPassword()))
-                .username(signupReqeust.getUsername())
-                .nickname(signupReqeust.getNickname())
-                .gender(gender)
-                .tel(signupReqeust.getTel())
-                .address(address)
-                .authority(authority)
-                .build();
-
-            ptTeacherRepository.save(ptTeacher);
-
-        } else if ("ROLE_PTSTUDENT".equals(signupReqeust.getRole())) {
-            PTStudent ptStudent = PTStudent.builder()
-                .email(signupReqeust.getEmail())
-                .password(passwordEncoder.encode(signupReqeust.getPassword()))
-                .username(signupReqeust.getUsername())
-                .nickname(signupReqeust.getNickname())
-                .gender(gender)
-                .tel(signupReqeust.getTel())
-                .address(address)
-                .authority(authority)
-                .build();
-
-            ptStudentRepository.save(ptStudent);
-        } else {
-            System.out.println("??????? 머함");
-        }
-
-    }
-
-    public UserBase getUserWithAuthorities(String email) {
+    public UserBase getUserWithAuthority(String email) {
         return userRepository.findOneWithAuthoritiesByEmail(email);
     }
 
@@ -157,6 +104,16 @@ public class UserService {
     public void deleteUserBase() {
         UserBase userBase = getMyUserWithAuthorities();
         userRepository.delete(userBase);
+    }
+
+    @Transactional
+    public Map<String, Object> getUserInfo(List<String> req) {
+        UserBase userBase = getMyUserWithAuthorities();
+        if (userBase.getAuthority().getAuthorityName().equals("ROLE_PTTEACHER")) {
+            return ptTeacherRepository.getInfo(userBase.getId(), req);
+        } else {
+            return null;
+        }
     }
 
 

@@ -17,17 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class HealthApiController {
     private final HealthService healthService;
 
-    @GetMapping("/mystudents/{teacherId}")
-    public ResponseEntity<SuccessResponseDto> getMyStudentsHealth(@PathVariable(value = "teacherId") long teacherId){
+    @GetMapping("/mystudents")
+    public ResponseEntity<SuccessResponseDto> getMyStudentsHealth(){
         return ResponseEntity.ok(new SuccessResponseDto<HealthDto.MyStudentsHealthListResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(teacherId)
-        ));
-    }
-
-    @GetMapping("/myhealth")
-    public ResponseEntity<SuccessResponseDto> getMyHealth(){
-        return ResponseEntity.ok(new SuccessResponseDto<HealthDto.GetMyHealthResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealthResponse()
+            200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth()
         ));
     }
 }

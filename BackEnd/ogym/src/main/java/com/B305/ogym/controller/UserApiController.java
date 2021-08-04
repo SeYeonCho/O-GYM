@@ -5,6 +5,7 @@ import static com.B305.ogym.controller.dto.UserDto.SaveUserRequest;
 
 import com.B305.ogym.controller.dto.SuccessResponseDto;
 import com.B305.ogym.controller.dto.UserDto;
+import com.B305.ogym.controller.dto.UserDto.GetUserInfoRequest;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.service.UserService;
 import java.util.HashMap;
@@ -35,32 +36,16 @@ public class UserApiController {
         return ResponseEntity.ok("hello");
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<SuccessResponseDto> signup(
-        @RequestBody @Valid SaveUserRequest signupRequest
-    ) {
-        userService.signup(signupRequest);
-        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원가입이 성공했습니다", new HashMap()
-        ));
-    }
-
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('PTTEACHER','ADMIN','USER')")
-    public ResponseEntity<SuccessResponseDto> getMyInfo() {
-        UserBase user = null;
-        user = userService.getMyUserWithAuthorities();
-        Map<String, Object> map = new HashMap<>();
-        map.put("username", user.getUsername());
-        map.put("id", user.getId());
-        map.put("role", user.getAuthority());
-        map.put("email", user.getEmail());
-        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-
-            200, "회원 정보를 불러오는데 성공했습니다", map
-        ));
-    }
-
+    //    @PostMapping("/signup")
+//    public ResponseEntity<SuccessResponseDto> signup(
+//        @RequestBody @Valid SaveUserRequest signupRequest
+//    ) {
+//        userService.signup(signupRequest);
+//        return ResponseEntity.ok(new SuccessResponseDto<Map>(
+//            200, "회원가입이 성공했습니다", new HashMap()
+//        ));
+//    }
+    // 사용자 회원 탈퇴
     @DeleteMapping("/user")
     @PreAuthorize("hasAnyRole('PTTEACHER','ADMIN','USER')")
     public ResponseEntity<SuccessResponseDto> deleteMyUser() {
@@ -71,6 +56,7 @@ public class UserApiController {
         ));
     }
 
+    // 학생 회원가입
     @PostMapping("/user/student")
     public ResponseEntity<SuccessResponseDto> signupStudent(
         @RequestBody @Valid SaveStudentRequest studentRequestDto
@@ -81,6 +67,7 @@ public class UserApiController {
         ));
     }
 
+    // 선생 회원가입
     @PostMapping("/user/teacher")
     public ResponseEntity<SuccessResponseDto> signupTeacher(
         @RequestBody @Valid UserDto.SaveTeacherRequest teacherRequestDto) {
@@ -90,9 +77,13 @@ public class UserApiController {
         ));
     }
 
-    @GetMapping("/user/{username}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<UserBase> getUserInfo(@PathVariable String username) {
-        return ResponseEntity.ok(userService.getUserWithAuthorities(username));
+    // 사용자 회원 정보 조회
+    @GetMapping("/user")
+    @PreAuthorize("hasAnyRole('PTTEACHER','USER')")
+    public ResponseEntity<SuccessResponseDto> getUserInfo(
+        @RequestBody @Valid UserDto.GetUserInfoRequest req) {
+        return ResponseEntity.ok(new SuccessResponseDto<Map>(
+            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(req.getReq())
+        ));
     }
 }
