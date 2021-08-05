@@ -32,7 +32,7 @@ const Box = (props: BoxPropsType) => {
                 height={props.height}
                 padding={ props.padding }
             >
-                 { props.children }
+                { props.children }
             </StyledDiv>
         </>
     );
