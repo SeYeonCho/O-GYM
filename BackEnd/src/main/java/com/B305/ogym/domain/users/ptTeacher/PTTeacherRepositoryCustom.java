@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PTTeacherRepositoryCustom {
-    MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail);
+    MyStudentsHealthListResponse findMyStudentsHealth(Long teacherId);
     Map<String,Object> getInfo(Long teacherId, List<String> req);
 }

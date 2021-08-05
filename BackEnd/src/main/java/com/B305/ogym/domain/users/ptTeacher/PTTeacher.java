@@ -1,7 +1,6 @@
 package com.B305.ogym.domain.users.ptTeacher;
 
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
-import com.B305.ogym.domain.mappingTable.PTTeacherSns;
 import com.B305.ogym.domain.users.common.UserBase;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -37,7 +36,7 @@ public class PTTeacher extends UserBase {
 
     // 자격증 리스트
     @Builder.Default
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "ptTeacher", cascade = CascadeType.ALL)
     private List<Certificate> certificates = new ArrayList<>();
 
     // 가격
@@ -49,7 +48,7 @@ public class PTTeacher extends UserBase {
     // SNS 링크
     @Builder.Default
     @OneToMany(mappedBy = "ptTeacher", cascade = CascadeType.ALL )
-    private List<PTTeacherSns> ptTeacherSns = new ArrayList<>();
+    private List<Sns> Snss = new ArrayList<>();
 
     // 경력 리스트
     @Builder.Default
@@ -80,6 +79,12 @@ public class PTTeacher extends UserBase {
         this.careers.add(career);
         if(career.getPtTeacher() != this){
             career.setPtTeacher(this);
+        }
+    }
+    public void addSns(Sns sns){
+        this.Snss.add(sns);
+        if(sns.getPtTeacher() != this){
+            sns.setPtTeacher(this);
         }
     }
 

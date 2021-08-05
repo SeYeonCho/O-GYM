@@ -38,10 +38,10 @@ public class InitDB {
     @PostConstruct
     public void init() {
         // initService 메서드 수행
+        initService.putAuth();
         initService.putPTStudent();
         initService.putPTTeacher();
         initService.putPTStudentPTTeacher();
-        initService.putAuth();
 
 //        initService.putCertificate();
 
@@ -142,22 +142,14 @@ public class InitDB {
             LocalDate startDate = LocalDate.of(2018, 02, 11);
             LocalDate endDate = LocalDate.of(2021, 07, 22);
 
-            Career career = Career.builder()
-//                .description("피지컬갤러리")
-                .role("원장")
-                .company("OGYM")
-                .startDate(startDate)
-                .endDate(endDate)
-                .build();
-
-            List<Career> careers = new ArrayList<>();
-            careers.add(career);
-
 //            Sns sns = Sns.builder()
 //                .platform("facebook")
 //                .url("https://www.instagram.com/physical_gallery_egg/?hl=ko")
 //                .build();
-
+            Authority role_ptteahcer = em.find(Authority.class, "ROLE_PTTEACHER");
+            if (role_ptteahcer == null) {
+                System.out.println("null");
+            }
             PTTeacher ptTeacher = PTTeacher.builder()
                 .password(passwordEncoder.encode("ssafy"))
                 .nickname("김계란")
@@ -173,11 +165,20 @@ public class InitDB {
 //                .sns(sns)
                 .price(500000)
                 .starRating(4)
-                .careers(careers)
                 .createdDate(LocalDateTime.now())
                 .modifiedDate(LocalDateTime.now())
                 .build();
 
+            Career career = Career.builder()
+//                .description("피지컬갤러리")
+                .role("원장")
+                .company("OGYM")
+                .startDate(startDate)
+                .endDate(endDate)
+                .build();
+
+            ptTeacher.setRole(role_ptteahcer);
+            ptTeacher.addCareer(career);
             ptTeacher.addCertificate(certificate1);
             ptTeacher.addCertificate(certificate2);
             ptTeacher.addCertificate(certificate3);

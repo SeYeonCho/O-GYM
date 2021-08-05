@@ -53,26 +53,26 @@ public class JwtFilter extends GenericFilterBean {
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
-    private Authentication getAuthentication(HttpServletRequest request) {
-        String authHeader = request.getHeader(AUTHORIZATION_HEADER);
-        if (authHeader == null) {
-            return null;
-        }
-        String jwt = resolveToken(request);
-        String requestURI = request.getRequestURI();
-
-        Claims claims = null;
-        try {
-            claims = tokenProvider.getClaims(jwt);
-        } catch (JwtException e) {
-            logger.debug("JwtException 발생");
-        }
-        Set<GrantedAuthority> roles = new HashSet<>();
-        String role = (String)claims.get("role");
-        roles.add(new SimpleGrantedAuthority("ROLE_" + role));
-
-        return new UsernamePasswordAuthenticationToken(new UserBase(claims), null, roles);
-    }
+//    private Authentication getAuthentication(HttpServletRequest request) {
+//        String authHeader = request.getHeader(AUTHORIZATION_HEADER);
+//        if (authHeader == null) {
+//            return null;
+//        }
+//        String jwt = resolveToken(request);
+//        String requestURI = request.getRequestURI();
+//
+//        Claims claims = null;
+//        try {
+//            claims = tokenProvider.getClaims(jwt);
+//        } catch (JwtException e) {
+//            logger.debug("JwtException 발생");
+//        }
+//        Set<GrantedAuthority> roles = new HashSet<>();
+//        String role = (String)claims.get("role");
+//        roles.add(new SimpleGrantedAuthority("ROLE_" + role));
+//
+//        return new UsernamePasswordAuthenticationToken(new UserBase(claims), null, roles);
+//    }
 
 
     private String resolveToken(HttpServletRequest request) {

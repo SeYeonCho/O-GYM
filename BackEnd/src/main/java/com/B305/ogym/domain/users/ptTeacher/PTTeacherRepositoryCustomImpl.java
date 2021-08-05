@@ -53,7 +53,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
     }
 
     @Override
-    public MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail) {
+    public MyStudentsHealthListResponse findMyStudentsHealth(Long teacherId) {
         List<StudentHealth> result = queryFactory
             .select(Projections.fields(StudentHealth.class,
                 pTStudent.username.as("username"),
@@ -65,7 +65,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             .from(pTStudentPTTeacher)
             .join(pTStudentPTTeacher.ptTeacher, pTTeacher)
             .join(pTStudentPTTeacher.ptStudent, pTStudent)
-            .where(pTStudentPTTeacher.ptTeacher.email.eq(teacherEmail))
+            .where(pTStudentPTTeacher.ptTeacher.id.eq(teacherId))
             .fetch();
 
         List<String> students = result.stream().map(o -> o.getUsername())
@@ -103,7 +103,6 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             .from(pTTeacher)
             .where(pTTeacher.id.eq(teacherId))
             .fetchOne(); // pTTeahcer의 정보
-
         Map<String, Object> map = new HashMap<>();
 
         req.stream().forEach(o -> {
@@ -112,21 +111,21 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
                     .select(Projections.fields(CertificateDto.class,
                         certificate.name.as("name"),
                         certificate.publisher.as("publisher"),
-                        certificate.date.as("date; ")))
+                        certificate.date.as("date")))
                     .from(certificate)
                     .where(certificate.ptTeacher.id.eq(teacherId))
                     .fetch();
                 map.put(o, certificates);
             } else if ("careers".equals(o)) {
                 List<CareerDto> careers = queryFactory
-                        .select(Projections.fields(CareerDto.class,
-                            career.company.as("company"),
-                            career.startDate.as("startDate"),
-                            career.endDate.as("endDate"),
-                            career.role.as("role")))
-                        .from(career)
-                        .where(career.ptTeacher.id.eq(teacherId))
-                        .fetch();
+                    .select(Projections.fields(CareerDto.class,
+                        career.company.as("company"),
+                        career.startDate.as("startDate"),
+                        career.endDate.as("endDate"),
+                        career.role.as("role")))
+                    .from(career)
+                    .where(career.ptTeacher.id.eq(teacherId))
+                    .fetch();
                 map.put(o, careers);
             } else {
                 map.put(o, result.get(check.get(o)));

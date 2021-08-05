@@ -1,6 +1,9 @@
 package com.B305.ogym.service;
 
 import com.B305.ogym.controller.dto.HealthDto;
+import com.B305.ogym.controller.dto.HealthDto.GetMyHealthResponse;
+import com.B305.ogym.domain.users.ptStudent.PTStudent;
+import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,10 +34,8 @@ public class HealthService {
         return myHealthResponse;
     }
 
-    private final UserService userService;
 
-    public HealthDto.MyStudentsHealthListResponse findMyStudentsHealth() {
-        String teacherEmail = userService.getMyUserWithAuthorities().getEmail();
-        return ptTeacherRepository.findMyStudentsHealth(teacherEmail);
+    public HealthDto.MyStudentsHealthListResponse findMyStudentsHealth(Long teacherId) {
+        return ptTeacherRepository.findMyStudentsHealth(teacherId);
     }
 }

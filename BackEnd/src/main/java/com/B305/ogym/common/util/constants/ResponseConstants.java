@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class ResponseConstants {
+
     public static final ResponseEntity<Void> OK =
         ResponseEntity.ok().build();
 
@@ -21,14 +22,16 @@ public class ResponseConstants {
         new ResponseEntity<>("Validation Failed.", HttpStatus.BAD_REQUEST);
 
 
-//    public static final ResponseEntity<String> DUPLICATION_EMAIL =
-//        new ResponseEntity<>("중복된 이메일입니다.", HttpStatus.CONFLICT);
-//
-//    public static final ResponseEntity<String> DUPLICATION_NICKNAME =
-//        new ResponseEntity<>("중복된 닉네임입니다.", HttpStatus.CONFLICT);
+    public static final ResponseEntity<String> DUPLICATION_EMAIL =
+        new ResponseEntity<>("중복된 이메일입니다.", HttpStatus.CONFLICT);
 
-    public static final ResponseEntity<String> DUPLICATION_USER =
-        new ResponseEntity<>("이미 존재하는 유저입니다.", HttpStatus.CONFLICT);
+    public static final ResponseEntity<String> DUPLICATION_NICKNAME =
+        new ResponseEntity<>("중복된 닉네임입니다.", HttpStatus.CONFLICT);
+
+    //    public static final ResponseEntity<String> DUPLICATION_USER =
+//        new ResponseEntity<>("이미 존재하는 유저입니다.", HttpStatus.CONFLICT);
+    public static final ResponseEntity<String> NOT_VALID_PARAM =
+        new ResponseEntity<>("입력하지 않은 파라미터가 존재합니다.", HttpStatus.CONFLICT);
 
     public static final ResponseEntity<String> USER_NOT_FOUND =
         new ResponseEntity<>(
