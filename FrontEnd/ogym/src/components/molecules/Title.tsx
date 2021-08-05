@@ -1,9 +1,16 @@
+import { SpanPropsType } from "../atoms/Span";
 
-const Title = (): JSX.Element => {
+
+export interface TitleProps {
+    children : React.ReactElement<SpanPropsType>
+}
+
+
+const Title = ({ children } : TitleProps): JSX.Element => {
     
     return (
         <>
-
+            { children }
         </>
     );
 }

@@ -49,31 +49,6 @@ const StyledLi = styled.li`
 
 `;
 
-const StyledLi = styled.li`
-  {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    padding: 8px 0px 8px 16px;
-    list-style: none;
-    height: 60px;
-  }
-  a {
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-    border-radius: 4px;
-  }
-  a:hover {
-    background-color: #1a83ff;
-  }
-
-
-`;
 
 const MainNavigation = (): JSX.Element => {
 
