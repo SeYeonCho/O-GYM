@@ -155,7 +155,8 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PUBLIC)
-    public static class CareerDto{
+    public static class CareerDto {
+
         private String role;
 
         private LocalDate startDate;
@@ -166,7 +167,7 @@ public class UserDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PUBLIC)
-    public static class CertificateDto{
+    public static class CertificateDto {
 
         private String name; // 자격증 명칭
 

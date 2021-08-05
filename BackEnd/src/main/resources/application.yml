@@ -1,3 +1,5 @@
+## spring 2.4 이후에는 group
+
 spring:
   profiles:
     group:

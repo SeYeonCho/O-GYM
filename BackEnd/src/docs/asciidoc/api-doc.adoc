@@ -9,25 +9,47 @@ endif::[]
 
 == 1. 개요
 
-== 2. 인증
+== 2. UserApi
+
 === 2-1. 회원가입
-==== request-fields
-include::{snippets}/userApi/signup/successful/request-fields.adoc[]
 
-==== Request Example
-include::{snippets}/userApi/signup/successful/http-request.adoc[]
+==== 학생 Request Field
 
-==== response-body
-include::{snippets}/userApi/signup/successful/response-body.adoc[]
+include::{snippets}/userApi/signup/student/successful/request-fields.adoc[]
 
-==== Response Example
-include::{snippets}/userApi/signup/successful/http-response.adoc[]
+==== 학생 회원가입 성공
 
-==== curl-request Example
-include::{snippets}/userApi/signup/successful/curl-request.adoc[]
+===== Request Example
 
+include::{snippets}/userApi/signup/student/successful/http-request.adoc[]
 
+===== Response Example
 
+include::{snippets}/userApi/signup/student/successful/http-response.adoc[]
+
+==== 트레이너 Request Field
+
+include::{snippets}/userApi/signup/teacher/successful/request-fields.adoc[]
+
+==== 트레이너 회원가입 성공
+
+===== Request Example
+
+include::{snippets}/userApi/signup/teacher/successful/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/userApi/signup/teacher/successful/http-response.adoc[]
+
+==== 회원가입 실패 (이메일 중복)
+
+===== Request Example
+
+include::{snippets}/userApi/signup/teacher/failure/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/userApi/signup/teacher/failure/http-response.adoc[]
 
 
 
