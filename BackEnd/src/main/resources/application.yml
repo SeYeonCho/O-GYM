@@ -29,7 +29,7 @@ spring:
     database: mysql
     hibernate:
       #  dialect : org.hibernate.dialect.MySQL57Dialect // spring boot make dialect automatically?
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         default_batch_fetch_size: 100
@@ -62,7 +62,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-
+  sql:
+    init:
+      mode: always
+      encoding: utf-8
 ---
 
 spring:
@@ -87,5 +90,4 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
-
 ---

@@ -4,10 +4,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Sns {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sns_id")
     private Long id;
 
@@ -30,6 +32,13 @@ public class Sns {
     private PTTeacher ptTeacher;
 
     public void setPtTeacher(PTTeacher ptTeacher){
+        this.ptTeacher = ptTeacher;
+    }
+
+    @Builder
+    public Sns(String url, String platform, PTTeacher ptTeacher){
+        this.url = url;
+        this.platform = platform;
         this.ptTeacher = ptTeacher;
     }
 }

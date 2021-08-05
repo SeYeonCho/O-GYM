@@ -48,7 +48,7 @@ public class PTTeacher extends UserBase {
     // SNS 링크
     @Builder.Default
     @OneToMany(mappedBy = "ptTeacher", cascade = CascadeType.ALL )
-    private List<Sns> Snss = new ArrayList<>();
+    private List<Sns> snss = new ArrayList<>();
 
     // 경력 리스트
     @Builder.Default
@@ -82,7 +82,7 @@ public class PTTeacher extends UserBase {
         }
     }
     public void addSns(Sns sns){
-        this.Snss.add(sns);
+        this.snss.add(sns);
         if(sns.getPtTeacher() != this){
             sns.setPtTeacher(this);
         }
