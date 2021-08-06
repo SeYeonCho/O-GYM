@@ -6,6 +6,8 @@ import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.users.common.Address;
 import com.B305.ogym.domain.users.common.Gender;
 import com.B305.ogym.domain.users.common.UserBase;
+import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -71,6 +73,7 @@ public class PTStudent extends UserBase {
         this.monthly.add(monthly);
     }
 
+    // 내 건강정보 조회
     public HealthDto.GetMyHealthResponse getMyHealthResponse(PTStudent ptStudent){
         List<Monthly> monthly = ptStudent.getMonthly();
 
@@ -105,4 +108,12 @@ public class PTStudent extends UserBase {
     }
 
 
+    public PTStudentPTTeacher makeReservation(PTTeacher ptTeacher, PTStudent ptStudent, LocalDateTime time) {
+        PTStudentPTTeacher ptStudentPTTeacher = PTStudentPTTeacher.builder()
+            .ptTeacher(ptTeacher)
+            .ptStudent(ptStudent)
+            .reservationDate(time)
+            .build();
+        return ptStudentPTTeacher;
+    }
 }

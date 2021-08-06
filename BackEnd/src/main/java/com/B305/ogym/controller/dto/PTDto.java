@@ -1,14 +1,18 @@
 package com.B305.ogym.controller.dto;
 
 import com.B305.ogym.domain.users.ptTeacher.Career;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.RequestParam;
 
 public class PTDto {
     @Getter
@@ -16,9 +20,9 @@ public class PTDto {
     public static class SaveReservationRequest {
 
         @NotNull
-        private int ptTeacherId;
+        private String ptTeacherEmail;
 
-        @NotEmpty
+        @FutureOrPresent(message = "잘못된 입력입니다")
         private LocalDateTime reservationTime;
     }
 

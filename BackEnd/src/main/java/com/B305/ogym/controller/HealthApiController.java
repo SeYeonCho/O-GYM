@@ -30,7 +30,6 @@ public class HealthApiController {
 
     @GetMapping("/myhealth")
     public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal UserBase user){
-        System.out.println("email"+user.getEmail());
         return ResponseEntity.ok(new SuccessResponseDto<HealthDto.GetMyHealthResponse>(
             200, "건강정보 조회에 성공했습니다.", healthService.getMyHealthResponse(user.getEmail())
         ));
