@@ -1,7 +1,3 @@
-
-
-![OGYM_로고-removebg-preview](/uploads/fb20fd2eb8d0b25111045109da7b0398/OGYM_로고-removebg-preview.png)
-
 # O-GYM
 
 ------
