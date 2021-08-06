@@ -1,0 +1,56 @@
+ifndef::snippets[]
+:snippets: ../../../build/generated-snippets
+endif::[]
+
+= REST API
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 1. 개요
+
+== 2. UserApi
+
+=== 2-1. 회원가입
+
+==== 학생 Request Field
+
+include::{snippets}/userApi/signup/student/successful/request-fields.adoc[]
+
+==== 학생 회원가입 성공
+
+===== Request Example
+
+include::{snippets}/userApi/signup/student/successful/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/userApi/signup/student/successful/http-response.adoc[]
+
+==== 트레이너 Request Field
+
+include::{snippets}/userApi/signup/teacher/successful/request-fields.adoc[]
+
+==== 트레이너 회원가입 성공
+
+===== Request Example
+
+include::{snippets}/userApi/signup/teacher/successful/http-request.adoc[]
+
+===== Response Example
+
+include::{snippets}/userApi/signup/teacher/successful/http-response.adoc[]
+
+==== 회원가입 실패 (이메일 중복)
+
+===== Response Example
+include::{snippets}/userApi/signup/duplicate/email/http-response.adoc[]
+
+==== 회원가입 실패 (닉네임 중복)
+
+===== Response Example
+
+include::{snippets}/userApi/signup/duplicate/nickname/http-response.adoc[]
+
+
+

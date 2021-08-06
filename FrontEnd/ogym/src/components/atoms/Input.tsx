@@ -6,11 +6,12 @@ import { InputState } from '../../recoil/atoms/InputState';
 
 export interface InputPropsType {
   type: string
-  inputType: string
+  inputType?: string
   value?: string | number
   inputName?: string
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   placeholder?: string
+  style?: object
 
 }
 
@@ -25,7 +26,7 @@ function Input({ type, inputType = 'loginEmail',  ...props }: InputPropsType): J
     setText({...text, [inputType]: event.target.value});
   }
 
-  return <input type={type} value={text[inputType]} onChange={onChange} placeholder={props.placeholder}/>;
+  return <input type={type} name={props.inputName} style={props.style} value={text[inputType]} onChange={onChange} placeholder={props.placeholder}/>;
 }
 
 export default Input; 

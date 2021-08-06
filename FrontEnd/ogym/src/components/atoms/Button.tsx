@@ -5,13 +5,24 @@ export interface ButtonPropsType {
     backgroundColor?: string;
     onclick?: Function;
     width: string;
+    margin: string;
     signInType: "facebook" | "google" | "naver" | undefined;
+    border?: string;
+    height?: string;
+    padding?: string;
+    borderRadius?: string;
+    color?: string;
 }
 
 const StyledButton = styled.button<ButtonPropsType>`
     background: ${props => props.backgroundColor || "white"};
     width: ${props => props.width || "auto"};
-    padding: 10px;
+    padding: ${props => props.padding || "10px"};
+    margin: ${props => props.margin || ""};
+    border: ${props => props.border || "none"};
+    height: ${props => props.height};
+    border-radius: ${props => props.borderRadius};
+    color: ${props => props.color || "black"};
 `;
 
 const NaverIcon = () : JSX.Element => {
@@ -32,7 +43,13 @@ const Button = (props: any): JSX.Element => {
             <StyledButton backgroundColor={props.backgroundColor}
                 width={props.width}
                 onClick={props.onclick}
-                signInType={ props.signInType }
+                signInType={props.signInType}
+                margin={props.margin}
+                border={props.border}
+                height={props.height}
+                padding={props.padding}
+                borderRadius={props.borderRadius}
+                color={props.color}
             >
                 {props.signInType === "facebook" ?
                     <FacebookFilled /> : ''}
@@ -40,7 +57,7 @@ const Button = (props: any): JSX.Element => {
                     <GoogleCircleFilled /> : ''}
                 {props.signInType === "naver" ?
                     <NaverIcon /> : '' }
-                {props.text}
+                {props.children}
             </StyledButton>
         </>
     )
