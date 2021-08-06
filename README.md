@@ -1,3 +1,18 @@
+<p align="center">
+    <img src="/uploads/fb20fd2eb8d0b25111045109da7b0398/OGYM_로고-removebg-preview.png" alt="OGYM_로고-removebg-preview" width="298">    
+</p>
+<p align="center">
+    SSAFY 2학기 공통 프로젝트 - OGYM
+</p>
+
+## Quick Links 
+
+- [OGYM이란?](#o-gym) 
+- [프로젝트 목표](#프로젝트-목표)
+- [기술스택](#기술-스택)
+- [WIKI 문서](#wiki)
+- [Architecture](#architecture)
+
 # O-GYM
 
 ------
@@ -6,7 +21,7 @@ COVID-19로 인해 UN-TACT 시대가 열렸고, 또한 건강을 유지하는 �
 
 
 
-## 프로젝트 목표
+# 프로젝트 목표
 
 ------
 
@@ -17,7 +32,7 @@ COVID-19로 인해 UN-TACT 시대가 열렸고, 또한 건강을 유지하는 �
 
 
 
-## 기술 스택
+# 기술 스택
 
 ------
 
@@ -25,9 +40,14 @@ COVID-19로 인해 UN-TACT 시대가 열렸고, 또한 건강을 유지하는 �
 
 
 
-## WIKI
+# WIKI
 
 ------
 
 프로젝트의 모든 정보는 [WIKI](https://lab.ssafy.com/s05-webmobile1-sub3/S05P13B305/-/wikis/Home)를 통해 참고하실 수 있습니다.
+
+# Architecture
+
+--- 
+
 
