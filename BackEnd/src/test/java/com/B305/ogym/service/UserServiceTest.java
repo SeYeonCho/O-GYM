@@ -1,6 +1,8 @@
 package com.B305.ogym.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.B305.ogym.controller.dto.UserDto.SaveUserRequest;
@@ -8,8 +10,10 @@ import com.B305.ogym.domain.authority.AuthorityRepository;
 import com.B305.ogym.domain.users.UserRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
+import com.B305.ogym.exception.user.UserDuplicateEmailException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -72,13 +76,17 @@ class UserServiceTest {
             .build();
     }
 
+    @DisplayName("이메일 중복 시 회원가입 실패")
     @Test
     public void emailDuplicate() throws Exception {
         //given
         SaveUserRequest studentRequest = createStudentRequest();
         //when
-//        when(userRepository.ex)
+        when(userRepository.existsByEmail("hello@naver.com")).thenReturn(true);
         //then
+        assertThrows(UserDuplicateEmailException.class, () -> userService.signup(studentRequest));
+
+        verify(userRepository, atLeastOnce()).existsByEmail("hello@naver.com");
     }
 
 
