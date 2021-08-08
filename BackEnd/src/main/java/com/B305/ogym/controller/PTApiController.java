@@ -9,9 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,17 +27,29 @@ public class PTApiController {
     private final PTService ptService;
 
     // PT 예약 생성
-    @PostMapping ("/makeReservation")
+    @PostMapping ("/reservation")
     public ResponseEntity<SuccessResponseDto> makeReservation(
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid PTDto.SaveReservationRequest request){
 
         System.out.println("Controller - useremail:" + user.getEmail());
 
-        ptService.makeReservation(user.getEmail(), request);
+        ptService.makeReservation(user, request);
 
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             201, "PT 예약이 정상적으로 이루어졌습니다.", new HashMap()
+        ));
+    }
+
+    @DeleteMapping("/reservation")
+    public ResponseEntity<SuccessResponseDto> cancleReservation(
+        @AuthenticationPrincipal UserBase user,
+        @RequestBody @Valid PTDto.CancelReservationRequest request
+    ){
+        System.out.println("controller" + user.getRole());
+        ptService.cancleReservation(user, request);
+        return ResponseEntity.ok(new SuccessResponseDto<Map>(
+            200, "PT 삭제에 성공했습니다.", new HashMap()
         ));
     }
 }

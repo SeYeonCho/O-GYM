@@ -21,21 +21,31 @@ public class ResponseConstants {
     public static final ResponseEntity<Object> VALIDATION_FAILED =
         new ResponseEntity<>("Validation Failed.", HttpStatus.BAD_REQUEST);
 
-
     public static final ResponseEntity<String> DUPLICATION_EMAIL =
         new ResponseEntity<>("중복된 이메일입니다.", HttpStatus.CONFLICT);
 
     public static final ResponseEntity<String> DUPLICATION_NICKNAME =
         new ResponseEntity<>("중복된 닉네임입니다.", HttpStatus.CONFLICT);
 
+    public static final ResponseEntity<String> DUPLICATION_RESERVATION =
+        new ResponseEntity<>("해당 시간에 예약할 수 없습니다.", HttpStatus.CONFLICT);
+
     //    public static final ResponseEntity<String> DUPLICATION_USER =
 //        new ResponseEntity<>("이미 존재하는 유저입니다.", HttpStatus.CONFLICT);
+
     public static final ResponseEntity<String> NOT_VALID_PARAM =
         new ResponseEntity<>("입력하지 않은 파라미터가 존재합니다.", HttpStatus.CONFLICT);
 
     public static final ResponseEntity<String> USER_NOT_FOUND =
         new ResponseEntity<>(
             "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.", HttpStatus.NOT_FOUND
+        );
+    public static final ResponseEntity<String> RESERVATION_NOT_FOUND =
+        new ResponseEntity<>("해당 예약을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+
+    public static final ResponseEntity<String> TEACHER_NOT_FOUND =
+        new ResponseEntity<>(
+            "선생님 정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND
         );
     public static final ResponseEntity<String> UNAUTHORIZED_USER =
         new ResponseEntity<>(

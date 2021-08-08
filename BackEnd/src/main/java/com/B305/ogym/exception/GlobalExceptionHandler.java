@@ -2,11 +2,17 @@ package com.B305.ogym.exception;
 
 import static com.B305.ogym.common.util.constants.ResponseConstants.DUPLICATION_EMAIL;
 import static com.B305.ogym.common.util.constants.ResponseConstants.DUPLICATION_NICKNAME;
+import static com.B305.ogym.common.util.constants.ResponseConstants.DUPLICATION_RESERVATION;
 import static com.B305.ogym.common.util.constants.ResponseConstants.NOT_VALID_PARAM;
+import static com.B305.ogym.common.util.constants.ResponseConstants.RESERVATION_NOT_FOUND;
+import static com.B305.ogym.common.util.constants.ResponseConstants.TEACHER_NOT_FOUND;
+import static com.B305.ogym.common.util.constants.ResponseConstants.UNAUTHORIZED_USER;
 import static com.B305.ogym.common.util.constants.ResponseConstants.USER_NOT_FOUND;
 import static com.B305.ogym.common.util.constants.ResponseConstants.VALIDATION_FAILED;
 
 import com.B305.ogym.exception.user.NotValidRequestParamException;
+import com.B305.ogym.exception.user.ReservationDuplicateException;
+import com.B305.ogym.exception.user.UnauthorizedException;
 import com.B305.ogym.exception.user.UserDuplicateEmailException;
 import com.B305.ogym.exception.user.UserDuplicateException;
 import com.B305.ogym.exception.user.UserDuplicateNicknameException;
@@ -62,12 +68,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         log.debug("중복 Nickname", ex);
         return DUPLICATION_NICKNAME;
     }
+    // 예약시간 중복에 대한 에러 핸들러
+    @ExceptionHandler(ReservationDuplicateException.class)
+    public final ResponseEntity<String> handleReservationDuplicateException(
+        ReservationDuplicateException ex){
+        log.debug("중복된 예약", ex);
+        return DUPLICATION_RESERVATION;
+    }
 
     // 존재하지 않는 유저 정보 조회에 대한 에러 핸들러
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         log.debug("존재하지 않는 유저", ex);
-        return USER_NOT_FOUND;
+        if(ex.getMessage().equals("TEACHER")) return TEACHER_NOT_FOUND;
+        else if(ex.getMessage().equals("CANCLE_RESERVATION")) return RESERVATION_NOT_FOUND;
+        else return USER_NOT_FOUND;
     }
 
     // 입력해야하는 파라미터 중에 입력하지 않은 파라미터가 존재하는 경우
@@ -75,6 +90,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<String> handleNotValidRequestParamException(NotValidRequestParamException ex) {
         log.debug("입력하지 않은 파라미터 존재", ex);
         return NOT_VALID_PARAM;
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public final ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex){
+        log.debug("Unauthorized request", ex);
+        return UNAUTHORIZED_USER;
     }
 
     // 5xx error handler : 서버에서 발생한 전반적인 에러에 대한 핸들러
