@@ -6,6 +6,7 @@ import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
+import com.B305.ogym.exception.user.UserNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -47,7 +48,8 @@ public class TokenProvider implements InitializingBean {
 
     public TokenProvider(
         @Value("${jwt.secret}") String secret,
-        @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds, UserRepository userRepository) {
+        @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds,
+        UserRepository userRepository) {
         this.secret = secret;
         this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
         this.userRepository = userRepository;
@@ -67,11 +69,12 @@ public class TokenProvider implements InitializingBean {
         long now = (new Date()).getTime();
         Date validity = new Date(now + this.tokenValidityInMilliseconds);
 
-        UserBase user = userRepository.findByEmail(authentication.getName());
+        UserBase user = userRepository.findByEmail(authentication.getName())
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
 
         return Jwts.builder()
-            .claim("id",user.getId())
-            .claim("email",user.getEmail())
+//            .claim("id",user.getId())
+            .claim("email", user.getEmail())
 //            .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities)
             .signWith(key, SignatureAlgorithm.HS512)

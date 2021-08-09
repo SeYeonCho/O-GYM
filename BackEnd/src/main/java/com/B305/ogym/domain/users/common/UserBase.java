@@ -67,7 +67,7 @@ public class UserBase extends BaseTimeEntity {
     private String role;
 
     public UserBase(Claims claims) {
-        this.id = Long.valueOf(claims.get("id").toString());
+//        this.id = Long.valueOf(claims.get("id").toString());
         this.email = claims.get("email").toString();
         this.role = claims.get("role").toString();
     }

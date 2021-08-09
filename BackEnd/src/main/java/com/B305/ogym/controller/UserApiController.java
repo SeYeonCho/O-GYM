@@ -51,7 +51,7 @@ public class UserApiController {
     public ResponseEntity<SuccessResponseDto> deleteMyUser(
         @AuthenticationPrincipal UserBase user
     ) {
-        userService.deleteUserBase(user.getId());
+        userService.deleteUserBase(user.getEmail());
         // Security Context에서도 지워야한다.
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "회원정보 삭제에 성공했습니다", new HashMap()
@@ -96,7 +96,7 @@ public class UserApiController {
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid UserDto.GetUserInfoRequest req) {
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user,req.getReq())
+            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(),req.getReq())
         ));
     }
 }

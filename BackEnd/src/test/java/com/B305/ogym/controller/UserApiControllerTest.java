@@ -264,24 +264,24 @@ class UserApiControllerTest {
             ));
     }
 
-    @WithUserDetails(value = "hello@naver.com")
-    @DisplayName("선생님 회원탈퇴 - 회원탈퇴 성공")
-    @Test
-    public void deleteUser_success() throws Exception {
-        //given
-        Long userId = 1L;
-
-        //when
-        doNothing().when(userService).deleteUserBase(userId);
-
-        //then
-//        mockMvc.perform(delete("/api/user")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .content()
-//            .andDo(print())
-//            .andExpect(status().isConflict())
-//            .andDo(document("userApi/signup/duplicate/nickname"
-//            ));
-    }
+//    @WithUserDetails(value = "hello@naver.com")
+//    @DisplayName("선생님 회원탈퇴 - 회원탈퇴 성공")
+//    @Test
+//    public void deleteUser_success() throws Exception {
+//        //given
+//        Long userId = 1L;
+//
+//        //when
+//        doNothing().when(userService).deleteUserBase(userId);
+//
+//        //then
+////        mockMvc.perform(delete("/api/user")
+////            .contentType(MediaType.APPLICATION_JSON)
+////            .content()
+////            .andDo(print())
+////            .andExpect(status().isConflict())
+////            .andDo(document("userApi/signup/duplicate/nickname"
+////            ));
+//    }
 
 }

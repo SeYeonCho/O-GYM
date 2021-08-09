@@ -53,7 +53,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
     }
 
     @Override
-    public MyStudentsHealthListResponse findMyStudentsHealth(Long teacherId) {
+    public MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail) {
         List<StudentHealth> result = queryFactory
             .select(Projections.fields(StudentHealth.class,
                 pTStudent.username.as("username"),
@@ -65,7 +65,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             .from(pTStudentPTTeacher)
             .join(pTStudentPTTeacher.ptTeacher, pTTeacher)
             .join(pTStudentPTTeacher.ptStudent, pTStudent)
-            .where(pTStudentPTTeacher.ptTeacher.id.eq(teacherId))
+            .where(pTStudentPTTeacher.ptTeacher.email.eq(teacherEmail))
             .fetch();
 
         List<String> students = result.stream().map(o -> o.getUsername())

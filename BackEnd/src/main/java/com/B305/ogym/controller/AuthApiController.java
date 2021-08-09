@@ -45,7 +45,6 @@ public class AuthApiController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
-
         return new ResponseEntity(
             new SuccessResponseDto<TokenDto>(200, "로그인에 성공했습니다.", new TokenDto(jwt)), httpHeaders,
             HttpStatus.OK);

@@ -27,12 +27,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 //            .map(userBase -> createUser(email, userBase))
 //            .orElseThrow(() -> new UsernameNotFoundException(email + " -> 데이터베이스에서 찾을 수 없습니다."));
         UserBase result;
-        result = userRepository.findOneWithAuthoritiesByEmail(email);
-        if(result==null) {
+        result = userRepository.findOneWithAuthoritiesByEmail(email)
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
+        if (result == null) {
             throw new UserNotFoundException("존재하지 않는 사용자입니다.");
         }
         System.out.println("loadUserByUsername");
-        return createUser(email,result);
+        return createUser(email, result);
     }
 
     private org.springframework.security.core.userdetails.User createUser(String username,
@@ -43,7 +44,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 //            .collect(Collectors.toList());
 
         List<GrantedAuthority> grantedAuthority = new ArrayList<>();
-        grantedAuthority.add(new SimpleGrantedAuthority(userBase.getAuthority().getAuthorityName()));
+        grantedAuthority
+            .add(new SimpleGrantedAuthority(userBase.getAuthority().getAuthorityName()));
         return new org.springframework.security.core.userdetails.User(userBase.getEmail(),
             userBase.getPassword(),
             grantedAuthority);

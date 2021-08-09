@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -28,6 +29,7 @@ public class PTApiController {
 
     // PT 예약 생성
     @PostMapping ("/reservation")
+    @PreAuthorize("hasAnyRole('PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> makeReservation(
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid PTDto.SaveReservationRequest request){
@@ -42,6 +44,7 @@ public class PTApiController {
     }
 
     @DeleteMapping("/reservation")
+    @PreAuthorize("hasAnyRole('PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> cancleReservation(
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid PTDto.CancelReservationRequest request

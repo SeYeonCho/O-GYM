@@ -7,6 +7,7 @@ import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.service.HealthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -20,18 +21,20 @@ public class HealthApiController {
     private final HealthService healthService;
 
     @GetMapping("/mystudents")
+    @PreAuthorize("hasAnyRole('PTTEACHER')")
     public ResponseEntity<SuccessResponseDto> getMyStudentsHealth(
         @AuthenticationPrincipal UserBase user
     ){
         return ResponseEntity.ok(new SuccessResponseDto<HealthDto.MyStudentsHealthListResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(user.getId())
+            200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(user.getEmail())
         ));
     }
 
     @GetMapping("/myhealth")
+    @PreAuthorize("hasAnyRole('PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal UserBase user){
         return ResponseEntity.ok(new SuccessResponseDto<MyHealthResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealthResponse(user)
+            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealthResponse(user.getEmail())
         ));
     }
 }

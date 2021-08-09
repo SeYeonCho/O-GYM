@@ -43,7 +43,8 @@ public class PTService {
         if (ptTeacher == null) {
             throw new UserNotFoundException("TEACHER");
         }
-        PTStudent ptStudent = ptStudentRepository.findByEmail(studentEmail);
+        PTStudent ptStudent = ptStudentRepository.findByEmail(studentEmail)
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일은 존재하지 않습니다."));
 
         try {
             PTStudentPTTeacher ptStudentPTTeacher = ptStudent

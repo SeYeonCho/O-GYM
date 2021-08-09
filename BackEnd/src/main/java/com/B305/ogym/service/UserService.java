@@ -8,6 +8,7 @@ import com.B305.ogym.domain.users.UserRepository;
 import com.B305.ogym.domain.users.common.Address;
 import com.B305.ogym.domain.users.common.Gender;
 import com.B305.ogym.domain.users.common.UserBase;
+import com.B305.ogym.domain.users.common.UserBaseRepository;
 import com.B305.ogym.domain.users.ptStudent.Monthly;
 import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
@@ -18,6 +19,7 @@ import com.B305.ogym.exception.user.NotValidRequestParamException;
 import com.B305.ogym.exception.user.UserDuplicateEmailException;
 import com.B305.ogym.exception.user.UserDuplicateException;
 import com.B305.ogym.exception.user.UserDuplicateNicknameException;
+import com.B305.ogym.exception.user.UserNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -87,13 +89,17 @@ public class UserService {
 //    }
 
     @Transactional
-    public void deleteUserBase(Long userId) {
-        userRepository.deleteById(userId); // 이렇게 해도 되나?
+    public void deleteUserBase(String userEmail) {
+        UserBase user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
+        userRepository.delete(user); // 이렇게 해도 되나? teacher 만들어서 해얗나ㅏ?
     }
 
     @Transactional
-    public Map<String, Object> getUserInfo(UserBase user, List<String> req) {
-        if ("ROLE_PTTEACHER".equals(user.getRole())) {
+    public Map<String, Object> getUserInfo(String userEmail, List<String> req) {
+        UserBase user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
+        if ("ROLE_PTTEACHER".equals(user.getAuthority().getAuthorityName())) {
             return ptTeacherRepository.getInfo(user.getId(), req);
         } else {
             return ptStudentRepository.getInfo(user.getId(), req);
