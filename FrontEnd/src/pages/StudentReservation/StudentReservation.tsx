@@ -1,8 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import 'antd/dist/antd.css';
 import { Layout, Menu } from 'antd';
-import { Row, Col } from 'antd';
+import { Row, Col, Button } from 'antd';
 import TrainerInfo from '../../components/organisms/TrainerInfo/TrainerInfo';
 import TrainerSearch from '../../components/organisms/TrainerSearch/TrainerSearch';
 import Payment from '../../components/organisms/Payment/Payment';
@@ -19,6 +19,8 @@ import {
   MailOutlined, 
   SettingOutlined
 } from '@ant-design/icons';
+import StudentCalendar from '../../components/molecules/StudentCalendar';
+import TimeSchedule from '../../components/molecules/TimeSchedule';
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -28,9 +30,11 @@ const Container = styled(Row)`
   display: flex;
 `;
 
+
 const StyledSider = styled(Sider)`
   overflow: auto;
   height: 100vh;
+  width: 100vw;
   /* position: fixed; */
   /* right: 0; */
   /* width: 100%; */
@@ -48,19 +52,26 @@ const StyledDiv = styled.div`
 
 function StudentReservation() {
 
+  const [selectReservation, setSelectReservation] = useState(false);
+
   const handleClick = (e: any) => {
     console.log('click ', e);
   };
+
+  const onClick = () => {
+    setSelectReservation(!selectReservation)
+  }
 
   return (
     <Container align='middle' justify='center' >
       <Col span={18}>
         <div style={{margin: 'auto'}}>
-          <TrainerInfo />
+          <TrainerInfo onClick={onClick}/>
         </div>
       </Col>
       <Col span={6}>
-        {/* <StyledSider><div className="logo" />
+        { selectReservation ?
+        <StyledSider><div className="logo" />
         <Menu
         onClick={handleClick}
         style={{ width: 256 }}
@@ -68,39 +79,28 @@ function StudentReservation() {
         defaultOpenKeys={['sub1']}
         mode="inline"
       >
-        <SubMenu key="sub1" icon={<MailOutlined />} title="Navigation One">
-          <Menu.ItemGroup key="g1" title="Item 1">
-            <Menu.Item key="1">Option 1</Menu.Item>
-            <Menu.Item key="2">Option 2</Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup key="g2" title="Item 2">
-            <Menu.Item key="3">Option 3</Menu.Item>
-            <Menu.Item key="4">Option 4</Menu.Item>
+        <SubMenu key="sub1" icon={<MailOutlined />} title="날짜선택">
+          <Menu.ItemGroup key="g1" title="날짜선택">
+          <StudentCalendar />
           </Menu.ItemGroup>
         </SubMenu>
-        <SubMenu key="sub2" icon={<AppstoreOutlined />} title="Navigation Two">
-          <Menu.Item key="5">Option 5</Menu.Item>
-          <Menu.Item key="6">Option 6</Menu.Item>
-          <SubMenu key="sub3" title="Submenu">
-            <Menu.Item key="7">Option 7</Menu.Item>
-            <Menu.Item key="8">Option 8</Menu.Item>
-          </SubMenu>
+        <SubMenu key="sub2" icon={<AppstoreOutlined />} title="시간선택">
+          <TimeSchedule />
         </SubMenu>
-        <SubMenu key="sub4" icon={<SettingOutlined />} title="Navigation Three">
-          <Menu.Item key="9">Option 9</Menu.Item>
-          <Menu.Item key="10">Option 10</Menu.Item>
-          <Menu.Item key="11">Option 11</Menu.Item>
-          <Menu.Item key="12">Option 12</Menu.Item>
-        </SubMenu>
-      </Menu></StyledSider> */}
+        <Button type="primary" onClick={onClick}>예약하기</Button>
+      </Menu></StyledSider>
+      :
+      <>
+      <StyledDiv>
+      <TrainerSearch />
+      </StyledDiv>
+      <StyledDiv>
+        <Payment />
+      </StyledDiv>
+      </>
+      }
 
 
-        <StyledDiv>
-          <TrainerSearch />
-        </StyledDiv>
-        <StyledDiv>
-          <Payment />
-        </StyledDiv>
       </Col>
     </Container>
   )

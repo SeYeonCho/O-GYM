@@ -145,7 +145,7 @@ class TrainerInfo extends React.Component {
                     />
                   </a>,
                 ]}
-                extra={<button>예약하기</button>}
+                extra={<button onClick={this.props.onClick}>예약하기</button>}
               >
                 <List.Item.Meta
                   avatar={

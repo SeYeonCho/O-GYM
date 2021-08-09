@@ -109,10 +109,10 @@ const MainNavigation = (): JSX.Element => {
                 </Link>
                 </Col>
                 <Col span={12} style={{backgroundColor: "#96C7ED", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                <Link to={'/PT예약취소'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+                <Link to={'/studentreservation'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
                   <img src={reserved} alt="예약" style={{width: "80%"}}/>
                 </Link>
-                <Link to={'/PT예약취소'}>
+                <Link to={'/studentreservation'}>
                   <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 예약 / 취소</p>
                 </Link>
                 </Col>
