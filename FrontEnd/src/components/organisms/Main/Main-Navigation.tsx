@@ -50,6 +50,10 @@ const StyledButton = styled(Button)`
     // background-image: url(${OGYM});
 `;
 
+const StyledCircledImage = styled(Image)`
+  clip-path : circle(50%);
+`;
+
 
 
 const MainNavigation = (): JSX.Element => {
@@ -68,7 +72,7 @@ const MainNavigation = (): JSX.Element => {
         <>
             <StyledButton onClick={clickMenuButton}
           shape="circle"
-          icon={<Image src={OGYM} preview={false} />}
+          icon={<StyledCircledImage src={OGYM} preview={false} />}
         >
         
             </StyledButton>

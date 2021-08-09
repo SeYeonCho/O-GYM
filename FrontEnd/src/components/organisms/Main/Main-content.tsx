@@ -7,6 +7,7 @@ import Button from "../../atoms/Button";
 import Span from "../../atoms/Span";
 import Box from "../../molecules/Box";
 import Title from "../../molecules/Title";
+import { useHistory } from 'react-router-dom';
 
 const StyledCarousel = styled(Carousel)`
 
@@ -42,7 +43,10 @@ const MainContent = (): JSX.Element => {
      const onChange = (a: any, b?: any, c?: any) :void  => {
         console.log(a, b, c);
       }
-      
+  
+  const history = useHistory();
+  
+  
       const contentStyle: any = {
         height: '160px',
         color: '#fff',
@@ -92,6 +96,7 @@ const MainContent = (): JSX.Element => {
               padding="15.3px 65.8px 15.7px 65.2px"
               borderRadius="6px"
               color="white"
+              onClick={()=> history.push('/login')}
             >Join Us</Button>
           </Box>
         </MainTextDiv>

@@ -3,7 +3,7 @@ import { FacebookFilled, GoogleCircleFilled } from '@ant-design/icons';
 
 export interface ButtonPropsType {
     backgroundColor?: string;
-    onclick?: Function;
+    onClick?: Function;
     width: string;
     margin: string;
     signInType: "facebook" | "google" | "naver" | undefined;
@@ -42,7 +42,7 @@ const Button = (props: any): JSX.Element => {
         <>
             <StyledButton backgroundColor={props.backgroundColor}
                 width={props.width}
-                onClick={props.onclick}
+                onClick={props.onClick}
                 signInType={props.signInType}
                 margin={props.margin}
                 border={props.border}
