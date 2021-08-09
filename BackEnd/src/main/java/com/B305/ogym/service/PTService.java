@@ -31,7 +31,9 @@ public class PTService {
     // 예약 생성
     @Transactional
     public void makeReservation(UserBase user, PTDto.SaveReservationRequest request) {
-        if(!user.getRole().equals("ROLE_PTSTUDENT")) throw new UnauthorizedException("선생님은 예약불가능");
+        if (!user.getRole().equals("ROLE_PTSTUDENT")) {
+            throw new UnauthorizedException("선생님은 예약불가능");
+        }
 
         String studentEmail = user.getEmail();
         String teacherEmail = request.getPtTeacherEmail();
@@ -54,27 +56,29 @@ public class PTService {
 
     @Transactional
     public void cancleReservation(UserBase user, CancelReservationRequest request) {
-        Optional<PTStudentPTTeacher> ptStudentPTTeacher = ptStudentPTTeacherRepository
-            .findById(Long.valueOf(request.getReservationId()));
-        if (ptStudentPTTeacher.isEmpty()) {
-            // 해당 예약이 존재하지 않는 경우
-            throw new UserNotFoundException("CANCLE_RESERVATION");
-        } else {
-            // 로그인한 사용자의 선생님/학생 역할을 고려하여 적절한 비교 ID를 thisId에 저장
-            Long thisId;
-            switch (user.getRole()){
-                case "ROLE_PTSTUDENT": thisId = ptStudentPTTeacher.get().getPtStudent().getId();
-                break;
-                case "ROLE_PTTEACHER": thisId = ptStudentPTTeacher.get().getPtTeacher().getId();
-                break;
-                default: throw new UnauthorizedException("허용되지 않는 기능입니다.");
-            }
+        PTStudentPTTeacher ptStudentPTTeacher = ptStudentPTTeacherRepository
+            .findById(Long.valueOf(request.getReservationId()))
+            .orElseThrow(() -> new UserNotFoundException("CANCLE_RESERVATION"));
 
-            if (thisId != user.getId()) {
-                // 삭제하려는 예약이 로그인한 사용자의 것이 아닌 경우
-                throw new UnauthorizedException("CANCLE_RESERVATION");
-            }
-            else ptStudentPTTeacherRepository.delete(ptStudentPTTeacher.get());
+        // 로그인한 사용자의 선생님/학생 역할을 고려하여 적절한 비교 ID를 thisId에 저장
+        Long thisId;
+        switch (user.getRole()) {
+            case "ROLE_PTSTUDENT":
+                thisId = ptStudentPTTeacher.getPtStudent().getId();
+                break;
+            case "ROLE_PTTEACHER":
+                thisId = ptStudentPTTeacher.getPtTeacher().getId();
+                break;
+            default:
+                throw new UnauthorizedException("허용되지 않는 기능입니다.");
         }
+
+        if (thisId != user.getId()) {
+            // 삭제하려는 예약이 로그인한 사용자의 것이 아닌 경우
+            throw new UnauthorizedException("CANCLE_RESERVATION");
+        } else {
+            ptStudentPTTeacherRepository.delete(ptStudentPTTeacher);
+        }
+
     }
 }

@@ -1,13 +1,14 @@
 package com.B305.ogym.domain.users.ptStudent;
 
-import com.B305.ogym.controller.dto.HealthDto;
-import com.B305.ogym.controller.dto.HealthDto.GetMyHealthResponse;
+import com.B305.ogym.controller.dto.HealthDto.MyHealthResponse;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.users.common.Address;
 import com.B305.ogym.domain.users.common.Gender;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
+import java.sql.Array;
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -50,6 +51,16 @@ public class PTStudent extends UserBase {
         Address address
 
     ) {
+        List<Monthly> monthly = new ArrayList<Monthly>();
+//        for(int i = 1; i <= 12; i++){
+//            Monthly data = Monthly.builder()
+//                .month(i)
+//                .weight(-1)
+//                .height(-1)
+//                .build();
+//            monthly.add(data);
+//        }
+
         return PTStudent.builder()
             .email(email)
             .password(password)
@@ -58,6 +69,7 @@ public class PTStudent extends UserBase {
             .gender(gender)
             .tel(tel)
             .address(address)
+//            .monthly(monthly)
             .build();
     }
 
@@ -70,19 +82,19 @@ public class PTStudent extends UserBase {
             .weight(weight)
             .ptStudent(this)
             .build();
-        this.monthly.add(monthly);
+        this.monthly.set(month-1, monthly);
     }
 
     // 내 건강정보 조회
-    public HealthDto.GetMyHealthResponse getMyHealthResponse(PTStudent ptStudent){
+    public MyHealthResponse getMyHealthResponse(PTStudent ptStudent){
         List<Monthly> monthly = ptStudent.getMonthly();
 
         List<Integer> heightList = new ArrayList<>();
         List<Integer> weightList = new ArrayList<>();
 
         for(int i = 0; i < 12; i++){
-            heightList.add(0);
-            weightList.add(0);
+            heightList.add(-1);
+            weightList.add(-1);
         }
 
         for(Monthly data : monthly){
@@ -94,13 +106,13 @@ public class PTStudent extends UserBase {
             weightList.set(month-1, weight);
         }
 
-        HealthDto.GetMyHealthResponse getMyHealthResponse =
-            GetMyHealthResponse.builder()
+        MyHealthResponse myHealthResponse =
+            MyHealthResponse.builder()
                 .heightList(heightList)
                 .weightList(weightList)
                 .build();
 
-        return getMyHealthResponse;
+        return myHealthResponse;
     }
 
     public void deleteMonthly(int month){

@@ -9,8 +9,8 @@ INSERT INTO authority (authority_name) VALUES
 ('ROLE_USER');
 
 INSERT INTO user_base (`role`,created_date,modified_date,address_detailed_address,address_street,address_zipcode,email,gender,nickname,password,profile_picture_addr,tel,username,authority) VALUES
-('Student','2021-08-05 20:36:28.655474000','2021-08-05 20:36:28.655474000','싸피 사무국','대전광역시 유성구 동서대로 98-39','34153','chuu@ssafy.com',1,'츄','$2a$10$LD3wHUZ28afzrOxJe/kixeV2ZpgTfYOFqK9c7PV7Cxw5ihVr13Qte',NULL,'010-2021-0721','김지우',NULL),
-('Student','2021-08-05 20:36:28.766994000','2021-08-05 20:36:28.766994000','싸피 사무국','광주광역시 광산구 하남산단 6번로 107','62218','olivia@ssafy.com',1,'올리비아 혜','$2a$10$I4FslU2TBpser/oY559sIe5oURyIzJL2W5UhBpTdFqqPyTPR7gqoO',NULL,'010-2001-1113','손혜주',NULL),
+('Student','2021-08-05 20:36:28.655474000','2021-08-05 20:36:28.655474000','싸피 사무국','대전광역시 유성구 동서대로 98-39','34153','chuu@ssafy.com',1,'츄','$2a$10$LD3wHUZ28afzrOxJe/kixeV2ZpgTfYOFqK9c7PV7Cxw5ihVr13Qte',NULL,'010-2021-0721','김지우','ROLE_PTSTUDENT'),
+('Student','2021-08-05 20:36:28.766994000','2021-08-05 20:36:28.766994000','싸피 사무국','광주광역시 광산구 하남산단 6번로 107','62218','olivia@ssafy.com',1,'올리비아 혜','$2a$10$I4FslU2TBpser/oY559sIe5oURyIzJL2W5UhBpTdFqqPyTPR7gqoO',NULL,'010-2001-1113','손혜주','ROLE_PTSTUDENT'),
 ('Teacher','2021-08-05 20:36:28.858993000','2021-08-05 20:36:28.858993000','싸피 사무국','서울시 강남구 테헤란로 212','06220','eggkim@ssafy.com',0,'김계란','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2021-0105','김성식','ROLE_PTTEACHER');
 
 INSERT INTO pt_teacher (description,major,price,star_rating,pt_teacher_id) VALUES

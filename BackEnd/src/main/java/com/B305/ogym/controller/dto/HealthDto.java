@@ -13,13 +13,13 @@ public class HealthDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class GetMyHealthResponse {
+    public static class MyHealthResponse {
 
         private List<Integer> heightList;
         private List<Integer> weightList;
 
         @Builder
-        public GetMyHealthResponse(List<Integer> heightList, List<Integer> weightList) {
+        public MyHealthResponse(List<Integer> heightList, List<Integer> weightList) {
             this.heightList = heightList;
             this.weightList = weightList;
         }
