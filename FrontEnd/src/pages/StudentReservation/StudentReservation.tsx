@@ -21,6 +21,7 @@ import {
 } from '@ant-design/icons';
 import StudentCalendar from '../../components/molecules/StudentCalendar';
 import TimeSchedule from '../../components/molecules/TimeSchedule';
+import MainNavigation from '../../components/organisms/Main/Main-Navigation';
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -64,6 +65,7 @@ function StudentReservation() {
 
   return (
     <Container align='middle' justify='center' >
+      <MainNavigation />
       <Col span={18}>
         <div style={{margin: 'auto'}}>
           <TrainerInfo onClick={onClick}/>

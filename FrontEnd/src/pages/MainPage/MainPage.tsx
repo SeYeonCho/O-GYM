@@ -5,7 +5,7 @@ import MainNavigation from "../../components/organisms/Main/Main-Navigation"
 const MainPage = () : JSX.Element => {
     return (
         <>
-            {/* <MainNavigation></MainNavigation> */}
+            <MainNavigation></MainNavigation>
             <MainContent></MainContent>
         </>);
 }
