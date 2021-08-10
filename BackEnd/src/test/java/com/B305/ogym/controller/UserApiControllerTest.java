@@ -128,7 +128,7 @@ class UserApiControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(teacherRequest)))
             .andDo(print())
-            .andExpect(status().isOk()) // 201 isCreated()
+            .andExpect(status().isCreated()) // 201 isCreated()
             .andDo(
                 document(
                     "userApi/signup/teacher/successful",
@@ -186,7 +186,7 @@ class UserApiControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(studentRequest)))
             .andDo(print())
-            .andExpect(status().isOk()) // 201 isCreated()
+            .andExpect(status().isCreated()) // 201 isCreated()
             .andDo(document("userApi/signup/student/successful", requestFields(
                 fieldWithPath("email").type(JsonFieldType.STRING)
                     .description("The user's email address"),

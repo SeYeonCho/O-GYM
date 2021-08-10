@@ -1,0 +1,76 @@
+|===
+|Path|Type|Description
+
+|`+email+`
+|`+String+`
+|The user's email address
+
+|`+password+`
+|`+String+`
+|The user's password
+
+|`+username+`
+|`+String+`
+|The user's username
+
+|`+nickname+`
+|`+String+`
+|The user's nickname
+
+|`+gender+`
+|`+Number+`
+|The user's gender
+
+|`+tel+`
+|`+String+`
+|The user's tel
+
+|`+zipCode+`
+|`+String+`
+|The user's zipCode
+
+|`+street+`
+|`+String+`
+|The user's street
+
+|`+detailedAddress+`
+|`+String+`
+|The user's detailedAddress
+
+|`+role+`
+|`+String+`
+|The user's role
+
+|`+monthlyHeights+`
+|`+Array+`
+|The user's monthlyHeights
+
+|`+monthlyWeights+`
+|`+Array+`
+|The user's monthlyWeights
+
+|`+major+`
+|`+String+`
+|학생의 경우 입력받지 않습니다
+
+|`+certificates+`
+|`+Array+`
+|학생의 경우 입력받지 않습니다
+
+|`+careers+`
+|`+Array+`
+|학생의 경우 입력받지 않습니다
+
+|`+price+`
+|`+Number+`
+|학생의 경우 입력받지 않습니다
+
+|`+description+`
+|`+String+`
+|학생의 경우 입력받지 않습니다
+
+|`+snsAddrs+`
+|`+Null+`
+|학생의 경우 입력받지 않습니다
+
+|===

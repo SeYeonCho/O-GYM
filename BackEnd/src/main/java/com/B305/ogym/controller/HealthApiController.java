@@ -34,7 +34,7 @@ public class HealthApiController {
     @PreAuthorize("hasAnyRole('PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal UserBase user){
         return ResponseEntity.ok(new SuccessResponseDto<MyHealthResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealthResponse(user.getEmail())
+            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealth(user.getEmail())
         ));
     }
 }

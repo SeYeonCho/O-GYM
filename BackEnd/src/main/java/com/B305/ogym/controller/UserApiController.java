@@ -10,6 +10,7 @@ import com.B305.ogym.service.UserService;
 import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -83,9 +84,8 @@ public class UserApiController {
     public ResponseEntity<SuccessResponseDto> signup(
         @RequestBody @Valid UserDto.SaveUserRequest userRequestDto) {
         userService.signup(userRequestDto);
-        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 가입에 성공했습니다.", new HashMap()
-        ));
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(new SuccessResponseDto<Map>(201, "회원 가입에 성공했습니다.", new HashMap()));
     }
 
 
@@ -96,7 +96,7 @@ public class UserApiController {
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid UserDto.GetUserInfoRequest req) {
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(),req.getReq())
+            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(), req.getReq())
         ));
     }
 }

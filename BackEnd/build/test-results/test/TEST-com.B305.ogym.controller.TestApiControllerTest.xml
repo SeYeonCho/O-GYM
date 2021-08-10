@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.B305.ogym.controller.TestApiControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-08-10T01:19:54" hostname="CHOSE" time="0.041">
+  <properties/>
+  <testcase name="단위테스트 예제" classname="com.B305.ogym.controller.TestApiControllerTest" time="0.041"/>
+  <system-out><![CDATA[2021-08-10 10:19:54.572  INFO 16352 --- [    Test worker] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2021-08-10 10:19:54.573  INFO 16352 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-10 10:19:54.573  INFO 16352 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
