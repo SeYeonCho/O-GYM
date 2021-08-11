@@ -8,8 +8,10 @@ import com.B305.ogym.controller.dto.UserDto.GetUserInfoRequest;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.service.UserService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -48,7 +50,7 @@ public class UserApiController {
 //    }
     // 사용자 회원 탈퇴
     @DeleteMapping("/user")
-    @PreAuthorize("hasAnyRole('PTTEACHER','ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> deleteMyUser(
         @AuthenticationPrincipal UserBase user
     ) {
@@ -90,13 +92,13 @@ public class UserApiController {
 
 
     // 사용자 회원 정보 조회
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('PTTEACHER','USER','PTSTUDENT')")
+    @GetMapping("/user/{req}")
+    @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getUserInfo(
         @AuthenticationPrincipal UserBase user,
-        @RequestBody @Valid UserDto.GetUserInfoRequest req) {
+        @PathVariable @NotEmpty List<String>  req) { // 어차피 입력하지 않으면 post로 받는 것 같다.
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(), req.getReq())
+            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(), req)
         ));
     }
 }

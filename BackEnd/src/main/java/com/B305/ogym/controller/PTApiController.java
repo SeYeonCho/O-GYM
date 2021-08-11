@@ -28,7 +28,7 @@ public class PTApiController {
 
     // 선생님 리스트 출력
     @GetMapping("/teacherlist")
-    @PreAuthorize("hasAnyRole('PTSTUDENT', 'PTTEACHER', 'USER')")
+    @PreAuthorize("hasAnyRole('PTSTUDENT', 'PTTEACHER')")
     public ResponseEntity<SuccessResponseDto> teacherList() {
 
         return ResponseEntity.ok(new SuccessResponseDto<PTDto.AllTeacherListResponse>(200,
