@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class PTApiController {
 
     private final PTService ptService;
+
+    // 선생님 리스트 출력
+    @GetMapping("/teacherlist")
+    @PreAuthorize("hasAnyRole('PTSTUDENT', 'PTTEACHER', 'USER')")
+    public ResponseEntity<SuccessResponseDto> teacherList() {
+
+        return ResponseEntity.ok(new SuccessResponseDto<PTDto.AllTeacherListResponse>(200,
+            "PT 선생님 리스트 불러오기에 성공하였습니다.", ptService.getTeacherList()));
+    }
 
     // PT 예약 생성
     @PostMapping("/reservation")

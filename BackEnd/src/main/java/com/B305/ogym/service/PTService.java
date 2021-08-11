@@ -1,5 +1,7 @@
 package com.B305.ogym.service;
 
+import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
+import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacherRepository;
@@ -12,6 +14,8 @@ import com.B305.ogym.exception.user.UnauthorizedException;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import com.sun.jdi.request.DuplicateRequestException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,5 +74,24 @@ public class PTService {
 
         ptStudentPTTeacherRepository.delete(ptStudentPTTeacher);
 
+    }
+
+    // 선생님 리스트 출력
+    @Transactional
+    public AllTeacherListResponse getTeacherList() {
+
+        List<PTTeacher> ptTeachers = ptTeacherRepository.findAll();
+
+        List<PTTeacherDto> ptTeacherDtos = new ArrayList<>();
+        for (int i = 0; i < ptTeachers.size(); i++) {
+            PTTeacher ptTeacher = ptTeachers.get(i);
+            ptTeacherDtos.add(ptTeacher.toPTTeacherDto());
+        }
+
+        AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
+            .teacherList(ptTeacherDtos)
+            .build();
+
+        return allTeacherListResponse;
     }
 }

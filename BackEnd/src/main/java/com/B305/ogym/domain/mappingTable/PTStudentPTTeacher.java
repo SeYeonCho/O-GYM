@@ -11,15 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.mapping.ToOne;
 
 @Entity
 @Getter
@@ -56,6 +53,7 @@ public class PTStudentPTTeacher {
     private PTTeacher ptTeacher; // 센세
 
     private LocalDateTime reservationDate; // 예약 월 일
+
 
 
 }
