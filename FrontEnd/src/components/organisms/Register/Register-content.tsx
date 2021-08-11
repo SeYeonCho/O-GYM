@@ -2,16 +2,45 @@ import * as React from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import "./registerstyles.css";
 import { Zipcode } from "../../../recoil/atoms/Zipcode";
 import { StreetAddress } from "../../../recoil/atoms/StreetAddress";
 import styled from "styled-components";
 import Postcode from "../../molecules/postcode/Postcode";
 import { useRecoilValue } from "recoil";
+import axios from "axios";
+import {useState} from 'react';
 
 
 const ErrorP = styled.p`
   color: red;
+`;
+
+const StyledForm = styled.form`
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
+const StyeldInput = styled.input`
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: black;
+`;
+
+const StyledLabel = styled.label`
+  line-height: 2;
+  text-align: left;
+  display: block;
+  margin-bottom: 3px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 200;
+  color: black;
 `;
 
 interface FormValues {
@@ -25,6 +54,7 @@ interface FormValues {
   detailedAddress: string;
   phone: string;
   gender: number;
+  role: string;
 }
 
 const schema = yup.object().shape({
@@ -56,6 +86,9 @@ const schema = yup.object().shape({
   gender: yup.number()
     .required()
     .typeError("성별을 선택해주세요"),
+  role: yup.string()
+    .required()
+    .typeError("가입목적을 선택해주세요"),
     
 });
 
@@ -70,64 +103,86 @@ function RegisterContent() {
 
   const onSubmit = (data: FormValues) => {
     console.log(data)
+    // axios.post("test", {
+    //   email : data.email,
+    //   password : data.password,
+    //   username : data.username,
+    //   nickname : data.nickname,
+    //   gender : data.gender,
+    //   tel : data.phone,
+    //   zip_code : data.zipcode,
+    //   street : data.streetAddress,
+    //   detailed_address : data.detailedAddress,
+    //   role : data.role
+    // })
+    
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} >
-      <label htmlFor="email">이메일</label>
-      <input type="text" placeholder="이메일"{...register("email")} maxLength={30}/>
+    <StyledForm onSubmit={handleSubmit(onSubmit)} >
+      <StyledLabel htmlFor="email">이메일</StyledLabel>
+      <StyeldInput type="text" placeholder="이메일"{...register("email")} maxLength={30}/>
       {errors.email?.message && <ErrorP>{errors.email?.message}</ErrorP>}
 
-      <label htmlFor="password">비밀번호</label>
-      <input type="password" placeholder="비밀번호(8~20자)" {...register("password")} maxLength={20} />
+      <StyledLabel htmlFor="password">비밀번호</StyledLabel>
+      <StyeldInput type="password" placeholder="비밀번호(8~20자)" {...register("password")} maxLength={20} />
       {errors.password?.message && <ErrorP>{errors.password?.message}</ErrorP>}
 
-      <label htmlFor="confirmPassword">비밀번호 확인</label>
-      <input type="password" placeholder="비밀번호 확인"{...register("confirmPassword")} maxLength={20}/>
+      <StyledLabel htmlFor="confirmPassword">비밀번호 확인</StyledLabel>
+      <StyeldInput type="password" placeholder="비밀번호 확인"{...register("confirmPassword")} maxLength={20}/>
       {errors.confirmPassword?.message && <ErrorP>{errors.confirmPassword?.message}</ErrorP>}
 
-      <label htmlFor="username">이름</label>
-      <input type="text" placeholder="이름"{...register("username")} maxLength={4}/>
+      <StyledLabel htmlFor="username">이름</StyledLabel>
+      <StyeldInput type="text" placeholder="이름"{...register("username")} maxLength={4}/>
       {errors.username?.message && <ErrorP>{errors.username?.message}</ErrorP>}
 
-      <label htmlFor="nickname">닉네임</label>
-      <input type="text" placeholder="닉네임"{...register("nickname")} />
+      <StyledLabel htmlFor="nickname">닉네임</StyledLabel>
+      <StyeldInput type="text" placeholder="닉네임"{...register("nickname")} />
       {errors.nickname?.message && <ErrorP>{errors.nickname?.message}</ErrorP>}
 
-      <label htmlFor="zipcode">주소검색</label>
+      <StyledLabel htmlFor="zipcode">주소검색</StyledLabel>
       <div style={{display: "flex"}}>
       <Postcode />
 
-      <input type="text" placeholder="우편 번호"{...register("zipcode")} value={zipcode} readOnly />
+      <StyeldInput type="text" placeholder="우편 번호"{...register("zipcode")} value={zipcode} readOnly />
       </div>
       {errors.zipcode?.message && <ErrorP>{errors.zipcode?.message}</ErrorP>}
 
-      <input type="text" placeholder="도로명 주소"{...register("streetAddress")} value={streetAddress} readOnly />
+      <StyeldInput type="text" placeholder="도로명 주소"{...register("streetAddress")} value={streetAddress} readOnly />
       {errors.streetAddress?.message && <ErrorP>{errors.streetAddress?.message}</ErrorP>}
 
-      <input type="text" placeholder="상세 주소"{...register("detailedAddress")} />
+      <StyeldInput type="text" placeholder="상세 주소"{...register("detailedAddress")} />
       {errors.detailedAddress?.message && <ErrorP>{errors.detailedAddress?.message}</ErrorP>}
 
-      <label htmlFor="phone">전화번호</label>
-      <input type="text" placeholder="phone"{...register("phone")} maxLength={12}/>
+      <StyledLabel htmlFor="phone">전화번호</StyledLabel>
+      <StyeldInput type="text" placeholder="phone"{...register("phone")} maxLength={12}/>
       {errors.phone?.message && <ErrorP>{errors.phone?.message}</ErrorP>}
       
-      <label htmlFor="gender">성별</label>
+      <StyledLabel htmlFor="gender">성별</StyledLabel>
       <select {...register("gender")} id="gender">
         <option value="">Select</option>
         <option value="0">남성</option>
         <option value="1">여성</option>
       </select>
       {errors.gender?.message && <ErrorP>{errors.gender?.message}</ErrorP>}
+
+      <StyledLabel htmlFor="role">가입목적</StyledLabel>
+      <select {...register("role")} id="role">
+        <option value="">Select</option>
+        <option value="ROLE_PTTEACHER">PT트레이너</option>
+        <option value="ROLE_PTSTUDENT">PT회원</option>
+      </select>
+      {errors.role?.message && <ErrorP>{errors.role?.message}</ErrorP>}
       
-      <input 
-        type="submit" 
+      <StyeldInput 
+        type="submit"
+        value="회원가입"
         onClick={() => {
           setValue('zipcode', `${zipcode}`);
           setValue('streetAddress', `${streetAddress}`);
       }} 
       />
-    </form>
+    </StyledForm>
   );
 }
 
