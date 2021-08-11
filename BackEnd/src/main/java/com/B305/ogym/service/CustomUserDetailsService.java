@@ -29,10 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         UserBase result;
         result = userRepository.findOneWithAuthoritiesByEmail(email)
             .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
-        if (result == null) {
-            throw new UserNotFoundException("존재하지 않는 사용자입니다.");
-        }
-        System.out.println("loadUserByUsername");
+
         return createUser(email, result);
     }
 
