@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -95,6 +96,7 @@ public class UserService {
         userRepository.delete(user); // 이렇게 해도 되나? teacher 만들어서 해얗나ㅏ?
     }
 
+    @Cacheable(key = "#userEmail", value = "getUserInfo")
     @Transactional
     public Map<String, Object> getUserInfo(String userEmail, List<String> req) {
         UserBase user = userRepository.findByEmail(userEmail)
