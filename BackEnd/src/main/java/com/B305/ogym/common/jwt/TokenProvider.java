@@ -1,5 +1,6 @@
 package com.B305.ogym.common.jwt;
 
+import com.B305.ogym.common.util.RedisUtil;
 import com.B305.ogym.controller.dto.AuthDto;
 import com.B305.ogym.controller.dto.AuthDto.TokenDto;
 import com.B305.ogym.domain.users.UserRepository;
@@ -8,6 +9,7 @@ import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
+import com.B305.ogym.exception.user.UnauthorizedException;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -44,6 +46,7 @@ public class TokenProvider implements InitializingBean {
     private final String secret;
     private final long accessTokenValidityInMilliseconds;
     private final long refreshTokenValidityInMilliseconds;
+    private final RedisUtil redisUtil;
 
     private Key key;
 
@@ -53,11 +56,12 @@ public class TokenProvider implements InitializingBean {
         @Value("${jwt.secret}") String secret,
         @Value("${jwt.access-token-validity-in-seconds}") long accessTokenValidityInSeconds,
         @Value("${jwt.refresh-token-validity-in-seconds}") long refreshTokenValidityInSeconds,
-        UserRepository userRepository) {
+        UserRepository userRepository, RedisUtil redisUtil) {
         this.secret = secret;
         this.accessTokenValidityInMilliseconds = accessTokenValidityInSeconds * 1000;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInSeconds * 1000;
         this.userRepository = userRepository;
+        this.redisUtil = redisUtil;
     }
 
     @Override
@@ -66,7 +70,8 @@ public class TokenProvider implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public TokenDto createToken(String email , String authorities) { // authentication Principal mail , Credential password
+    public TokenDto createToken(String email,
+        String authorities) { // authentication Principal mail , Credential password
 
         long now = (new Date()).getTime();
 //        Date validity = new Date(now + this.tokenValidityInMilliseconds);
@@ -74,7 +79,7 @@ public class TokenProvider implements InitializingBean {
             .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
 
         String accessToken = Jwts.builder()
-            .claim("email",user.getEmail())
+            .claim("email", user.getEmail())
             .claim(AUTHORITIES_KEY, authorities)
             .setExpiration(new Date(now + accessTokenValidityInMilliseconds))
             .signWith(key, SignatureAlgorithm.HS512)
@@ -86,7 +91,7 @@ public class TokenProvider implements InitializingBean {
             .signWith(key, SignatureAlgorithm.HS512)
             .compact();
 
-        return new TokenDto(accessToken,refreshToken);
+        return new TokenDto(accessToken, refreshToken);
 
 /*        return Jwts.builder()
 //            .claim("id",user.getId())
@@ -115,6 +120,10 @@ public class TokenProvider implements InitializingBean {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            System.out.println("validate 들어옴");
+            if (redisUtil.hasKeyBlackList(token)) {
+                throw new UnauthorizedException("이미 탈퇴한 회원입니다");
+            }
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             logger.info("잘못된 JWT 서명입니다.");
@@ -124,19 +133,21 @@ public class TokenProvider implements InitializingBean {
             logger.info("지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
             logger.info("JWT 토큰이 잘못되었습니다.");
+        } catch (UnauthorizedException e) {
+            logger.info("이미 탈퇴한 회원입니다.");
         }
         return false;
     }
 
     public Claims getClaims(String token) {
-        try{
+        try {
             return Jwts
                 .parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        }catch(ExpiredJwtException e){
+        } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
     }

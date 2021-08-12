@@ -71,8 +71,20 @@ spring:
   cache:
     type: redis
   redis:
-    host: localhost
-    port: 6379
+    lettuce:
+      pool:
+        max-active: 10
+        max-idle: 10
+        min-idle: 2
+    cache:
+      host: localhost
+      port: 6379
+    token:
+      host: localhost
+      port: 6380
+    blacklist:
+      host: localhost
+      port: 6381
 
 ---
 
@@ -105,5 +117,5 @@ spring:
     type: redis
   redis:
     host: i5b305.p.ssafy.io
-    port: 6379
+    port: 6100
 ---

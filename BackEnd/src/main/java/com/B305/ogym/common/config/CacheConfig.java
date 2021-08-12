@@ -35,10 +35,10 @@ public class CacheConfig {
 
     private final CacheProperties cacheProperties;
 
-    @Value("${spring.redis.host}")
+    @Value("${spring.redis.cache.host}")
     private String redisHost;
 
-    @Value("${spring.redis.port}")
+    @Value("${spring.redis.cache.port}")
     private int redisPort;
 
     @Bean(name = "redisCacheConnectionFactory")
@@ -90,11 +90,6 @@ public class CacheConfig {
         return cacheConfigurations;
     }
 
-    /**
-     * 캐시 매니저를 등록한다.  스프링에서 기본적으로 지원하는 캐시 저장소는 JDK의 ConcuurentHashMap이며 그 외 캐시 저장소를 사용하기 위해서는 캐시
-     * 매니저를 Bean으로 등록해서 사용해야 한다. withInitialCacheConfigurations에 캐시의 종류별로 만료기간을 설정한
-     * redisCacheConfigurationMap을
-     */
     @Bean
     public CacheManager redisCacheManager(
         @Qualifier("redisCacheConnectionFactory") RedisConnectionFactory redisConnectionFactory) {

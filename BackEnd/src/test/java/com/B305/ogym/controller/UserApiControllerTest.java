@@ -273,7 +273,7 @@ class UserApiControllerTest {
         String email = "teacher@naver.com";
 
         //when
-        doNothing().when(userService).deleteUserBase(email);
+        doNothing().when(userService).deleteUserBase(email, any());
 
         //then
         mockMvc.perform(delete("/api/user"))
@@ -292,7 +292,7 @@ class UserApiControllerTest {
 
         //when
         doThrow(new UserNotFoundException("해당하는 이메일이 존재하지 않습니다")).when(userService)
-            .deleteUserBase(email);
+            .deleteUserBase(email, any());
 
         //then
         mockMvc.perform(delete("/api/user"))
@@ -310,7 +310,7 @@ class UserApiControllerTest {
         String email = "student@naver.com";
 
         //when
-        doNothing().when(userService).deleteUserBase(email);
+        doNothing().when(userService).deleteUserBase(email, any());
 
         //then
         mockMvc.perform(delete("/api/user"))
@@ -329,7 +329,7 @@ class UserApiControllerTest {
 
         //when
         doThrow(new UserNotFoundException("해당하는 이메일이 존재하지 않습니다")).when(userService)
-            .deleteUserBase(email);
+            .deleteUserBase(email, any());
 
         //then
         mockMvc.perform(delete("/api/user"))

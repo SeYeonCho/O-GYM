@@ -1,17 +1,11 @@
 package com.B305.ogym.service;
 
-import com.B305.ogym.common.util.SecurityUtil;
+import com.B305.ogym.common.util.RedisUtil;
 import com.B305.ogym.controller.dto.UserDto;
 import com.B305.ogym.domain.authority.Authority;
 import com.B305.ogym.domain.authority.AuthorityRepository;
-import com.B305.ogym.domain.authority.RefreshToken;
-import com.B305.ogym.domain.authority.RefreshTokenRepository;
 import com.B305.ogym.domain.users.UserRepository;
-import com.B305.ogym.domain.users.common.Address;
-import com.B305.ogym.domain.users.common.Gender;
 import com.B305.ogym.domain.users.common.UserBase;
-import com.B305.ogym.domain.users.common.UserBaseRepository;
-import com.B305.ogym.domain.users.ptStudent.Monthly;
 import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
@@ -19,7 +13,6 @@ import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
 import com.B305.ogym.exception.user.NotValidRequestParamException;
 import com.B305.ogym.exception.user.UserDuplicateEmailException;
-import com.B305.ogym.exception.user.UserDuplicateException;
 import com.B305.ogym.exception.user.UserDuplicateNicknameException;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import java.util.List;
@@ -39,11 +32,10 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MonthlyRepository monthlyRepository;
-    //    private final PTStudentMonthlyRepository ptStudentMonthlyRepository;
     private final PTTeacherRepository ptTeacherRepository;
     private final PTStudentRepository ptStudentRepository;
     private final AuthorityRepository authorityRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
+    private final RedisUtil redisUtil;
 
 
     @Transactional
@@ -93,11 +85,10 @@ public class UserService {
 //    }
 
     @Transactional
-    public void deleteUserBase(String userEmail) {
-        Optional<RefreshToken> refreshToken = refreshTokenRepository.findById(userEmail);
-        if(refreshToken.isPresent()){
-            refreshTokenRepository.delete(refreshToken.get());
-        }
+    public void deleteUserBase(String userEmail, String accessToken) {
+        redisUtil.setBlackList(accessToken, userEmail, 1800);
+        //accessToken 블랙리스트에 저장
+        redisUtil.delete(userEmail);
         UserBase user = userRepository.findByEmail(userEmail)
             .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
         userRepository.delete(user); // 이렇게 해도 되나? teacher 만들어서 해얗나ㅏ?

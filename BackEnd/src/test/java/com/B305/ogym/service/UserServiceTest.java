@@ -124,7 +124,7 @@ class UserServiceTest {
         given(userRepository.findByEmail(email)).willReturn(Optional.of(user));
 
         //when
-        userService.deleteUserBase(email);
+        userService.deleteUserBase(user.getEmail(), email);
 
         //then
         verify(userRepository, atLeastOnce()).findByEmail(email);
@@ -139,7 +139,7 @@ class UserServiceTest {
         given(userRepository.findByEmail(email)).willReturn(Optional.of(user));
 
         //when
-        userService.deleteUserBase(email);
+        userService.deleteUserBase(user.getEmail(), email);
 
         //then
         verify(userRepository, atLeastOnce()).findByEmail(email);

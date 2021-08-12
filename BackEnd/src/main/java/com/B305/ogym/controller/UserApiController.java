@@ -10,8 +10,10 @@ import com.B305.ogym.service.UserService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -52,9 +54,9 @@ public class UserApiController {
     @DeleteMapping("/user")
     @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> deleteMyUser(
-        @AuthenticationPrincipal UserBase user
+        @AuthenticationPrincipal UserBase user, HttpServletRequest req
     ) {
-        userService.deleteUserBase(user.getEmail());
+        userService.deleteUserBase(user.getEmail(), req.getHeader("Authorization").substring(7));
         // Security Context에서도 지워야한다.
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "회원정보 삭제에 성공했습니다", new HashMap()
