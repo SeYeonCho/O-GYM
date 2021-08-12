@@ -1,0 +1,76 @@
+|===
+|Path|Type|Description
+
+|`+email+`
+|`+String+`
+|The user's email address
+
+|`+password+`
+|`+String+`
+|The user's password
+
+|`+username+`
+|`+String+`
+|The user's username
+
+|`+nickname+`
+|`+String+`
+|The user's nickname
+
+|`+gender+`
+|`+Number+`
+|The user's gender
+
+|`+tel+`
+|`+String+`
+|The user's tel
+
+|`+zipCode+`
+|`+String+`
+|The user's zipCode
+
+|`+street+`
+|`+String+`
+|The user's street
+
+|`+detailedAddress+`
+|`+String+`
+|The user's detailedAddress
+
+|`+role+`
+|`+String+`
+|The user's role
+
+|`+major+`
+|`+String+`
+|The user's major
+
+|`+certificates+`
+|`+Array+`
+|The user's certificates
+
+|`+careers+`
+|`+Array+`
+|The user's careers
+
+|`+price+`
+|`+Number+`
+|The user's price
+
+|`+description+`
+|`+String+`
+|The user's description
+
+|`+snsAddrs+`
+|`+Null+`
+|The user's snsAddrs
+
+|`+monthlyHeights+`
+|`+Null+`
+|트레이너의 경우 입력받지 않습니다.
+
+|`+monthlyWeights+`
+|`+Null+`
+|트레이너의 경우 입력받지 않습니다.
+
+|===

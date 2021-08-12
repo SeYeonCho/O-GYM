@@ -20,7 +20,7 @@ public class WithAuthUserSecurityContextFactory implements
         String role = annotation.role();
 
         UserBase authUser = UserBase.builder()
-            .email("testUserName")
+            .email(email)
             .authority(new Authority(role))
             .build();
 

@@ -1,0 +1,5 @@
+[source,bash]
+----
+$ echo '{"req":["id","email"]}' | http GET 'http://localhost:8080/api/user' \
+    'Content-Type:application/json;charset=UTF-8'
+----
