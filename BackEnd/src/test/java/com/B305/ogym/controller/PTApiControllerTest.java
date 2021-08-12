@@ -1,9 +1,12 @@
 package com.B305.ogym.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -14,9 +17,14 @@ import static org.springframework.test.web.servlet.setup.SharedHttpSessionConfig
 
 import com.B305.ogym.common.annotation.WithAuthUser;
 import com.B305.ogym.common.config.SecurityConfig;
+import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
+import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
+import com.B305.ogym.controller.dto.PTDto.reservationRequest;
+import com.B305.ogym.exception.user.UserNotFoundException;
 import com.B305.ogym.service.PTService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -68,27 +76,143 @@ class PTApiControllerTest {
             .build();
     }
 
-//    private SaveReservationRequest createReservation() {
-//        return SaveReservationRequest.builder()
-//            .ptTeacherEmail("teacher@naver.com")
-//            .build();
-//    }
 
-//    @DisplayName("PT 예약 성공")
-//    @Test
-//    public void PT_Reservation_Success() throws Exception {
-//        //given
-//        var request = createReservation();
-//
-//        //when
-//        doNothing().when(ptService).makeReservation(any(), request);
-//
-//        //then
-//        mockMvc.perform(post("/api/pt/reservation")
-//            .contentType(MediaType.APPLICATION_JSON)
-//            .content(objectMapper.writeValueAsString(request)))
-//            .andDo(print())
-//            .andExpect(status().isOk());
-//    }
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("선생님 리스트 불러오기 - 성공")
+    @Test
+    public void getTeacherList_Success() throws Exception {
+        AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
+            .teacherList(new ArrayList<PTTeacherDto>())
+            .build();
+        given(ptService.getTeacherList()).willReturn(allTeacherListResponse);
+
+        mockMvc.perform(get("/api/pt/teacherlist"))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약하기 - 성공")
+    @Test
+    public void makeReservation_Success() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doNothing().when(ptService).makeReservation(any(), any());
+
+        mockMvc.perform(post("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isCreated());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약하기 - 해당하는 선생님 이메일이 존재하지 않아 실패")
+    @Test
+    public void makeReservation_teacherNotFound() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doThrow(new UserNotFoundException("존재하지 않는 트레이너입니다.")).when(ptService)
+            .makeReservation(any(), any());
+
+        mockMvc.perform(post("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약하기 - 해당하는 학생 이메일이 존재하지 않아 실패")
+    @Test
+    public void makeReservation_studentNotFound() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doThrow(new UserNotFoundException("존재하지 않는 트레이너입니다.")).when(ptService)
+            .makeReservation(any(), any());
+
+        mockMvc.perform(post("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약 취소하기 - 성공")
+    @Test
+    public void cancelReservation_Success() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doNothing().when(ptService).cancleReservation(eq("student@naver.com"), eq(req));
+
+        mockMvc.perform(delete("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약 취소하기 - 요청한 학생이 존재하지 않아 실패")
+    @Test
+    public void cancelReservation_studentNotFound() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doThrow(new UserNotFoundException("존재하지 않는 학생입니다.")).when(ptService)
+            .cancleReservation(any(), any());
+
+        mockMvc.perform(delete("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약 취소하기 - 요청한 트레이너가 존재하지 않아 실패")
+    @Test
+    public void cancelReservation_teacherNotFound() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doThrow(new UserNotFoundException("존재하지 않는 트레이너입니다.")).when(ptService)
+            .cancleReservation(any(), any());
+
+        mockMvc.perform(delete("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("PT 예약 취소하기 - 제거 요청한 예약이 존재하지 않아 실패")
+    @Test
+    public void cancelReservation_reservationNotFound() throws Exception {
+        reservationRequest req = reservationRequest.builder()
+            .ptTeacherEmail("teacher@naver.com")
+            .build();
+
+        doThrow(new UserNotFoundException("존재하지 않는 예약입니다.")).when(ptService)
+            .cancleReservation(any(), any());
+
+        mockMvc.perform(delete("/api/pt/reservation")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
 
 }

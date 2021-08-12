@@ -349,14 +349,10 @@ class UserApiControllerTest {
         data.put("email", "teacher@naver.com");
 
         ArrayList<String> req = new ArrayList<>(Arrays.asList("id", "email"));
-        Map<String, Object> reqData = new HashMap<>();
-        reqData.put("req", req);
 
         given(userService.getUserInfo(email, req)).willReturn(data);
 
-        mockMvc.perform(get("/api/user")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(reqData)))
+        mockMvc.perform(get("/api/user/id,email"))
             .andDo(print())
             .andExpect(status().isOk())
             .andDo(document("userApi/getUserInfo/successful"));

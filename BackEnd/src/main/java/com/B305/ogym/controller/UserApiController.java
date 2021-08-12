@@ -96,7 +96,7 @@ public class UserApiController {
     @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getUserInfo(
         @AuthenticationPrincipal UserBase user,
-        @PathVariable @NotEmpty List<String>  req) { // 어차피 입력하지 않으면 post로 받는 것 같다.
+        @PathVariable @NotEmpty List<String> req) { // 어차피 입력하지 않으면 post로 받는 것 같다.
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(), req)
         ));
