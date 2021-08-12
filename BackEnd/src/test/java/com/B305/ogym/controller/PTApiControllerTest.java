@@ -1,6 +1,5 @@
 package com.B305.ogym.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -8,7 +7,6 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -23,15 +21,12 @@ import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import com.B305.ogym.service.PTService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
@@ -40,8 +35,6 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
-import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -152,7 +145,7 @@ class PTApiControllerTest {
             .ptTeacherEmail("teacher@naver.com")
             .build();
 
-        doNothing().when(ptService).cancleReservation(eq("student@naver.com"), eq(req));
+        doNothing().when(ptService).cancelReservation(eq("student@naver.com"), eq(req));
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
@@ -170,7 +163,7 @@ class PTApiControllerTest {
             .build();
 
         doThrow(new UserNotFoundException("존재하지 않는 학생입니다.")).when(ptService)
-            .cancleReservation(any(), any());
+            .cancelReservation(any(), any());
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
@@ -188,7 +181,7 @@ class PTApiControllerTest {
             .build();
 
         doThrow(new UserNotFoundException("존재하지 않는 트레이너입니다.")).when(ptService)
-            .cancleReservation(any(), any());
+            .cancelReservation(any(), any());
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
@@ -206,7 +199,7 @@ class PTApiControllerTest {
             .build();
 
         doThrow(new UserNotFoundException("존재하지 않는 예약입니다.")).when(ptService)
-            .cancleReservation(any(), any());
+            .cancelReservation(any(), any());
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)

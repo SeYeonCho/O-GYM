@@ -90,7 +90,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         log.debug("존재하지 않는 유저", ex);
         if(ex.getMessage().equals("TEACHER")) return TEACHER_NOT_FOUND;
-        else if(ex.getMessage().equals("CANCLE_RESERVATION")) return RESERVATION_NOT_FOUND;
+        else if(ex.getMessage().equals("CANCEL_RESERVATION")) return RESERVATION_NOT_FOUND;
         else return USER_NOT_FOUND;
     }
 

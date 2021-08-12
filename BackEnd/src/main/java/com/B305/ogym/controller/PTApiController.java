@@ -42,9 +42,7 @@ public class PTApiController {
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid PTDto.reservationRequest request) {
 
-        System.out.println("Controller - useremail:" + user.getEmail());
-
-        ptService.makeReservation(user, request);
+        ptService.makeReservation(user.getEmail(), request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(new SuccessResponseDto<Map>(201, "PT예약에 성공하였습니다.", new HashMap()));
@@ -56,8 +54,8 @@ public class PTApiController {
         @AuthenticationPrincipal UserBase user,
         @RequestBody @Valid PTDto.reservationRequest request
     ) {
-        System.out.println("controller" + user.getRole());
-        ptService.cancleReservation(user.getEmail(), request);
+        ptService.cancelReservation(user.getEmail(), request);
+
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "PT 삭제에 성공했습니다.", new HashMap()
         ));
