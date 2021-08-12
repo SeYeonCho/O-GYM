@@ -1,32 +1,33 @@
 package com.B305.ogym.domain.users.ptTeacher;
 
 
-import com.B305.ogym.controller.dto.HealthDto;
+import static com.B305.ogym.domain.mappingTable.QPTStudentPTTeacher.pTStudentPTTeacher;
+import static com.B305.ogym.domain.users.ptStudent.QMonthly.monthly;
+import static com.B305.ogym.domain.users.ptStudent.QPTStudent.pTStudent;
+import static com.B305.ogym.domain.users.ptTeacher.QCareer.career;
+import static com.B305.ogym.domain.users.ptTeacher.QCertificate.certificate;
+import static com.B305.ogym.domain.users.ptTeacher.QPTTeacher.pTTeacher;
 
 import com.B305.ogym.controller.dto.HealthDto.MyStudentsHealthListResponse;
 import com.B305.ogym.controller.dto.HealthDto.StudentHealth;
+import com.B305.ogym.controller.dto.PTDto.SearchDto;
 import com.B305.ogym.controller.dto.UserDto.CareerDto;
 import com.B305.ogym.controller.dto.UserDto.CertificateDto;
-import com.B305.ogym.domain.users.ptStudent.QMonthly;
+import com.B305.ogym.domain.users.common.Gender;
+import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import static com.B305.ogym.domain.mappingTable.QPTStudentPTTeacher.pTStudentPTTeacher;
-import static com.B305.ogym.domain.users.ptTeacher.QPTTeacher.pTTeacher;
-import static com.B305.ogym.domain.users.ptStudent.QPTStudent.pTStudent;
-import static com.B305.ogym.domain.users.ptStudent.QMonthly.monthly;
-import static com.B305.ogym.domain.users.ptTeacher.QCertificate.certificate;
-import static com.B305.ogym.domain.users.ptTeacher.QCareer.career;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom {
 
@@ -133,5 +134,56 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         });
 
         return map;
+    }
+
+    // 선생님 리스트 조건 검색
+    @Override
+    public Page<PTTeacher> searchAll(SearchDto searchDto, Pageable pageable) {
+
+        QueryResults<PTTeacher> results = queryFactory
+            .selectFrom(pTTeacher)
+            .where(
+                likeName(searchDto.getName()),
+                eqGender(searchDto.getGender()),
+                loeMaxPrice(searchDto.getMaxPrice()),
+                goeMinPrice(searchDto.getMinPrice())
+            )
+            .offset(pageable.getOffset())   // 페이징 처리(offset)
+            .limit(pageable.getPageSize())  // 페이징 처리(한 페이지에 출력할 개체 수)
+            .orderBy(pTTeacher.starRating.desc())   // 별점 높은 순으로 출력
+            .fetchResults();    // 결과 + count
+        return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+    }
+
+    // 이름 포함
+    private BooleanExpression likeName(String username) {
+        if (username == null) {
+            return null;
+        }
+        return pTTeacher.username.like("%" + username + "%");
+    }
+
+    // 성별 일치
+    private BooleanExpression eqGender(Gender gender) {
+        if (gender == null) {
+            return null;
+        }
+        return pTTeacher.gender.eq(gender);
+    }
+
+    // 최소 가격
+    private BooleanExpression loeMaxPrice(Integer maxPrice) {
+        if (maxPrice == null) {
+            return null;
+        }
+        return pTTeacher.price.loe(maxPrice);
+    }
+
+    // 최대 가격
+    private BooleanExpression goeMinPrice(Integer minPrice) {
+        if (minPrice == null) {
+            return null;
+        }
+        return pTTeacher.price.goe(minPrice);
     }
 }

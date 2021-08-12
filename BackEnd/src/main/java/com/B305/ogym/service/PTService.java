@@ -2,6 +2,7 @@ package com.B305.ogym.service;
 
 import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
 import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
+import com.B305.ogym.controller.dto.PTDto.SearchDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacherRepository;
@@ -15,6 +16,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,18 +78,25 @@ public class PTService {
 
     // 선생님 리스트 출력
     @Transactional
-    public AllTeacherListResponse getTeacherList() {
+    public AllTeacherListResponse getTeacherList(SearchDto searchDto, Pageable pageable) {
 
-        List<PTTeacher> ptTeachers = ptTeacherRepository.findAll();
+        // 조건 검색
+        Page<PTTeacher> ptTeachers = ptTeacherRepository.searchAll(searchDto, pageable);
 
+        // PTTeacher 에서 원하는 정보만 담아 PTTeacherDto로 변환
         List<PTTeacherDto> ptTeacherDtos = new ArrayList<>();
-        for (int i = 0; i < ptTeachers.size(); i++) {
-            PTTeacher ptTeacher = ptTeachers.get(i);
+        for (int i = 0; i < ptTeachers.getNumberOfElements(); i++) {
+            PTTeacher ptTeacher = ptTeachers.getContent().get(i);
             ptTeacherDtos.add(ptTeacher.toPTTeacherDto());
         }
 
+        // Content와 Paging 정보를 함께 Response 객체에 담아 반환
         AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
             .teacherList(ptTeacherDtos)
+            .pageable(ptTeachers.getPageable())
+            .totalPages(ptTeachers.getTotalPages())
+            .totalElements(ptTeachers.getTotalElements())
+            .numberOfElements(ptTeachers.getNumberOfElements())
             .build();
 
         return allTeacherListResponse;

@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
@@ -22,6 +23,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.jni.Local;
+import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -74,6 +76,13 @@ public class PTDto {
 
         private List<PTTeacherDto> teacherList;
 
+        private Pageable pageable;  // pagination 에 대한 정보
+
+        private int totalPages; // 전체 페이지 수
+        private long totalElements; // 전체 요소의 수
+
+        private int numberOfElements; // 현재 페이지에 조회된 요소의 수
+
     }
 
     @Getter
@@ -122,7 +131,7 @@ public class PTDto {
         private List<LocalDateTime> reservations = new ArrayList<>();
 
         // 자격증 정보
-        private  List<CertificateDto> certificates = new ArrayList<>();
+        private List<CertificateDto> certificates = new ArrayList<>();
 
 
     }
@@ -161,6 +170,22 @@ public class PTDto {
     }
 
     /////////////////////////////////////////////////////////////
+
+    @Getter
+    @Builder
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    @AllArgsConstructor
+    public static class SearchDto {
+
+        @Builder.Default
+        private String name = null;
+        @Builder.Default
+        private Gender gender = null;
+        @Builder.Default
+        private Integer minPrice = null;
+        @Builder.Default
+        private Integer maxPrice = null;
+    }
 
 
     @Getter
