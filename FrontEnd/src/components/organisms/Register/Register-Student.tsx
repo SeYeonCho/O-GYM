@@ -8,7 +8,8 @@ import styled from "styled-components";
 import Postcode from "../../molecules/postcode/Postcode";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import { useHistory } from "react-router";
 
 
 const ErrorP = styled.p`
@@ -54,7 +55,9 @@ interface FormValues {
   detailedAddress: string;
   phone: string;
   gender: number;
-  role: string;
+  height: number;
+  weight: number;
+  // role: string;
 }
 
 const schema = yup.object().shape({
@@ -82,18 +85,26 @@ const schema = yup.object().shape({
     .required("상세 주소를 입력해주세요"),
   phone: yup.string()
     .required("전화번호를 입력해주세요")
-    .max(12, "올바른 전화번호 형식이 아닙니다"),
+    .max(14, "올바른 전화번호 형식이 아닙니다"),
   gender: yup.number()
     .required()
     .typeError("성별을 선택해주세요"),
-  role: yup.string()
-    .required()
-    .typeError("가입목적을 선택해주세요"),
-    
+  height: yup.number()
+    .required('키를 입력해주세요')
+    .min(130, '키를 다시 입력해주세요')
+    .max(230, '키를 다시 입력해주세요'),
+  weight: yup.number()
+    .required('몸무게를 입력해주세요')
+    .min(35, '체중을 다시 입력해주세요')
+    .max(200, '체중을 다시 입력해주세요')
+  // role: yup.string()
+  //   .required()
+  //   .typeError("가입목적을 선택해주세요"),
 });
 
-function RegisterContent() {
-
+function RegisterStudent() {
+  const history = useHistory();
+  const [inputPhone, setInputPhone] = useState('');
   const zipcode = useRecoilValue(Zipcode)
   const streetAddress = useRecoilValue(StreetAddress)
   
@@ -102,21 +113,79 @@ function RegisterContent() {
   });
 
   const onSubmit = (data: FormValues) => {
-    console.log(data)
-    // axios.post("test", {
-    //   email : data.email,
-    //   password : data.password,
-    //   username : data.username,
-    //   nickname : data.nickname,
-    //   gender : data.gender,
-    //   tel : data.phone,
-    //   zip_code : data.zipcode,
-    //   street : data.streetAddress,
-    //   detailed_address : data.detailedAddress,
-    //   role : data.role
+    let today = new Date();
+    let month = today.getMonth()
+
+    let heights: number[] = []
+    for (let i = 0; i < 12; i++) {
+      if (i < month+1) {
+        heights.push(data.height)
+      } else {
+        heights.push(-1)
+      }
+    }
+    let weights: number[] = []
+    for (let i = 0; i < 12; i++) {
+      if (i < month+1) {
+        weights.push(data.weight)
+      } else {
+        weights.push(-1)
+      }
+    }
+
+    // console.log(data)
+    // console.log({
+    // "email" : data.email,
+    // "password" : data.password,
+    // "username" : data.username,
+    // "nickname" : data.nickname,
+    // "gender" : data.gender,
+    // "tel" : data.phone,
+    // "zipCode" : data.zipcode,
+    // "street" : data.streetAddress,
+    // "detailedAddress" : data.detailedAddress,
+    // "role" : "ROLE_PTSTUDENT",
+    // "monthlyHeights" : heights,
+    // "monthlyWeights" : weights
     // })
+    axios.post("/api/user", {
+    "email" : data.email,
+    "password" : data.password,
+    "username" : data.username,
+    "nickname" : data.nickname,
+    "gender" : data.gender,
+    "tel" : data.phone,
+    "zipCode" : data.zipcode,
+    "street" : data.streetAddress,
+    "detailedAddress" : data.detailedAddress,
+    "role" : "ROLE_PTSTUDENT",
+    "monthlyHeights" : heights,
+    "monthlyWeights" : weights
+    })
     
+  
+}
+
+  // useEffect(() => {
+  //   axios.get('/api/hello')
+  //   .then(response => console.log(response))
+  // }, [])
+
+  const phoneChange = (e) => {
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(e.target.value)) {
+      setInputPhone(e.target.value);
+    }
   }
+
+  useEffect(() => {
+    if (inputPhone.length === 10) {
+      setInputPhone(inputPhone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
+    }
+    if (inputPhone.length === 13) {
+      setInputPhone(inputPhone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+    }
+  }, [inputPhone]);
 
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)} >
@@ -155,7 +224,7 @@ function RegisterContent() {
       {errors.detailedAddress?.message && <ErrorP>{errors.detailedAddress?.message}</ErrorP>}
 
       <StyledLabel htmlFor="phone">전화번호</StyledLabel>
-      <StyeldInput type="text" placeholder="phone"{...register("phone")} maxLength={12}/>
+      <StyeldInput type="text" placeholder="phone"{...register("phone")} maxLength={14}  onChange={phoneChange} value={inputPhone} />
       {errors.phone?.message && <ErrorP>{errors.phone?.message}</ErrorP>}
       
       <StyledLabel htmlFor="gender">성별</StyledLabel>
@@ -166,13 +235,21 @@ function RegisterContent() {
       </select>
       {errors.gender?.message && <ErrorP>{errors.gender?.message}</ErrorP>}
 
-      <StyledLabel htmlFor="role">가입목적</StyledLabel>
+      <StyledLabel htmlFor="height">키</StyledLabel>
+      <StyeldInput type="number" placeholder="키"{...register("height")} min={130} max={230} />
+      {errors.height?.message && <ErrorP>{errors.height?.message}</ErrorP>}
+
+      <StyledLabel htmlFor="weight">체중</StyledLabel>
+      <StyeldInput type="number" placeholder="체중"{...register("weight")} min={35} max={200} />
+      {errors.weight?.message && <ErrorP>{errors.weight?.message}</ErrorP>}
+
+      {/* <StyledLabel htmlFor="role">가입목적</StyledLabel>
       <select {...register("role")} id="role">
         <option value="">Select</option>
         <option value="ROLE_PTTEACHER">PT트레이너</option>
         <option value="ROLE_PTSTUDENT">PT회원</option>
       </select>
-      {errors.role?.message && <ErrorP>{errors.role?.message}</ErrorP>}
+      {errors.role?.message && <ErrorP>{errors.role?.message}</ErrorP>} */}
       
       <StyeldInput 
         type="submit"
@@ -186,4 +263,4 @@ function RegisterContent() {
   );
 }
 
-export default RegisterContent;
+export default RegisterStudent;

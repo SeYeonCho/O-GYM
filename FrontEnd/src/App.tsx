@@ -9,12 +9,11 @@ import LoginPage from './pages/LoginPage/LoginPage';
 function App() {
   return (
     <>
-      <LoginPage/>
-      {/* <Router>
+      <Router>
         <Route exact path='/' component={MainPage} />
         <Route exact path='/studentreservation' component={StudentReservation} />
         <Route exact path='/login' component={LoginPage} />
-      </Router> */}
+      </Router>
     </>
   );
 }
