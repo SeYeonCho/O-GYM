@@ -93,5 +93,5 @@ INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
 (163,10,48,2),
 (164,11,47,2);
 
-INSERT INTO pt_student_pt_teacher (reservation_date,pt_student_id,pt_teacher_id) VALUES
-('2021-07-28 13:00:00',1,3);
+INSERT INTO pt_student_pt_teacher (reservation_date,pt_student_id,pt_teacher_id,description) VALUES
+('2021-07-28 13:00:00',1,3,'이두');

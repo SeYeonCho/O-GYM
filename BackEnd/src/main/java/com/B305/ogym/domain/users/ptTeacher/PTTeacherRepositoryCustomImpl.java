@@ -13,6 +13,7 @@ import com.B305.ogym.controller.dto.HealthDto.StudentHealth;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
 import com.B305.ogym.controller.dto.UserDto.CareerDto;
 import com.B305.ogym.controller.dto.UserDto.CertificateDto;
+import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.users.common.Gender;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
@@ -214,10 +215,24 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
     @Override
     public List<LocalDateTime> reservationTime(String teacherEmail) {
         return em.createQuery("select st.reservationDate "
-            + " From PTTeacher t "
-            + " join t.ptStudentPTTeachers st "
+            + " from PTStudentPTTeacher st "
+            + " join st.ptTeacher t "
             + " where t.email =: teacherEmail", LocalDateTime.class)
             .setParameter("teacherEmail", teacherEmail)
+            .getResultList();
+    }
+
+
+
+    @Override
+    public List<PTStudentPTTeacher> getReservationTime(String teacherEmail){
+        return em.createQuery("select pt"
+            + " from PTStudentPTTeacher pt"
+            + " join fetch pt.ptTeacher t"
+            + " join fetch pt.ptStudent s"
+            + " where t.email =: teacherEmail"
+            + " order by pt.reservationDate",PTStudentPTTeacher.class)
+            .setParameter("teacherEmail",teacherEmail)
             .getResultList();
     }
 }

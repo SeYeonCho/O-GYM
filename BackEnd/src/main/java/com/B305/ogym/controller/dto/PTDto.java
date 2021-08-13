@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -39,12 +40,16 @@ public class PTDto {
         @FutureOrPresent(message = "현재/미래만 입력 가능합니다")
         private LocalDateTime reservationTime;
 
+        @NotBlank
+        private String description;
+
         @Builder
-        public reservationRequest(String ptTeacherEmail, LocalDateTime reservationTime) {
+        public reservationRequest(String ptTeacherEmail, LocalDateTime reservationTime,
+            String description) {
             this.ptTeacherEmail = ptTeacherEmail;
             this.reservationTime = reservationTime;
+            this.description = description;
         }
-
     }
 //
 //    @Getter
@@ -197,32 +202,21 @@ public class PTDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class GetTeacherReservationListResponse {
+    public static class reservationDto{
+        private String description; // 설명
+        private String nickname ; // 상대방 닉네임
+        private String username ; // 상대방 이름
+        private String email ; // 상대방 이메일
+        private LocalDateTime reservationTime ; // 예약 시간,
 
-        private List<Reservation> teacherList;
-
-        static class Reservation {
-
-            private String username;
-            private String nickname;
-            private int gender;
-            private String profile_url;
-            private int price;
-            private String sns_addrs;
-            private String major;
-            private float star_rating;
-            private String description;
-            private List<Career> careers;
-            private List<ReservationTime> alreadyReserveTime;
-
-        }
-
-        static class ReservationTime {
-
-            private String reservationId;
-            private LocalDateTime time;
+        @Builder
+        public reservationDto(String description, String nickname, String username, String email,
+            LocalDateTime reservationTime) {
+            this.description = description;
+            this.nickname = nickname;
+            this.username = username;
+            this.email = email;
+            this.reservationTime = reservationTime;
         }
     }
-
-
 }

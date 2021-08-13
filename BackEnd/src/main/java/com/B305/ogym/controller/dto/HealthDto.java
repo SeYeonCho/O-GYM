@@ -57,16 +57,17 @@ public class HealthDto {
 
     @Getter
     @NoArgsConstructor(access = AccessLevel.PUBLIC)
-    @Data
     public static class MyStudentsHealthListResponse {
 
         private List<StudentHealth> studentHealthList;
-
+        public void setStudentHealthList(List<StudentHealth> studentHealthList){
+            studentHealthList = studentHealthList;
+        }
 
     }
 
     @NoArgsConstructor
-    @Data
+    @Getter
     public static class StudentHealth {
 
         private String username;

@@ -3,9 +3,13 @@ package com.B305.ogym.service;
 import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
 import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
+import com.B305.ogym.controller.dto.PTDto.reservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacherRepository;
+import com.B305.ogym.domain.users.UserRepository;
+import com.B305.ogym.domain.users.common.UserBase;
+import com.B305.ogym.domain.users.common.UserBaseRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
@@ -15,6 +19,7 @@ import com.sun.jdi.request.DuplicateRequestException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +34,7 @@ public class PTService {
     private final PTTeacherRepository ptTeacherRepository;
     private final PTStudentRepository ptStudentRepository;
     private final PTStudentPTTeacherRepository ptStudentPTTeacherRepository;
+    private final UserRepository userRepository;
 
     // 예약 생성
     @Transactional
@@ -36,7 +42,7 @@ public class PTService {
 
         String ptTeacherEmail = request.getPtTeacherEmail();
         LocalDateTime time = request.getReservationTime();
-
+        String description = request.getDescription();
         // 선생님 정보 찾을 수 없음
         PTTeacher ptTeacher = ptTeacherRepository.findByEmail(ptTeacherEmail)
             .orElseThrow(() -> new UserNotFoundException("TEACHER"));
@@ -48,7 +54,7 @@ public class PTService {
         // 해당 시간에 예약이 이미 존재함
         try {
             PTStudentPTTeacher ptStudentPTTeacher = ptStudent
-                .makeReservation(ptTeacher, ptStudent, time);
+                .makeReservation(ptTeacher, ptStudent, time, description);
             ptStudentPTTeacherRepository.save(ptStudentPTTeacher);
         } catch (RuntimeException ex) {
             throw new DuplicateRequestException("중복된 예약");
@@ -103,6 +109,45 @@ public class PTService {
     }
 
     public List<LocalDateTime> getTeacherReservationTime(String teacherEmail) {
+        if (!userRepository.existsByEmail(teacherEmail)) {
+            throw new UserNotFoundException("해당 이메일이 존재하지 않습니다.");
+        }
         return ptTeacherRepository.reservationTime(teacherEmail);
+    }
+
+    public List getReservationTime(String email) {
+        UserBase user = userRepository.findByEmail(email).orElseThrow(() ->
+            new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
+        List<reservationDto> result = new ArrayList<>();
+        if ("ROLE_PTTEACHER".equals(user.getAuthority().getAuthorityName())) {
+            ptTeacherRepository.getReservationTime(email).stream().forEach(
+                o -> {
+                    result.add(
+                        reservationDto.builder()
+                            .description(o.getDescription())
+                            .reservationTime(o.getReservationDate())
+                            .nickname(o.getPtStudent().getNickname())
+                            .username(o.getPtStudent().getUsername())
+                            .email(o.getPtStudent().getEmail())
+                            .build()
+                    );
+                }
+            );
+        } else {
+            ptStudentRepository.getReservationTime(email).stream().forEach(
+                o -> {
+                    result.add(
+                        reservationDto.builder()
+                            .description(o.getDescription())
+                            .reservationTime(o.getReservationDate())
+                            .nickname(o.getPtTeacher().getNickname())
+                            .username(o.getPtTeacher().getUsername())
+                            .email(o.getPtTeacher().getEmail())
+                            .build()
+                    );
+                }
+            );
+        }
+        return result;
     }
 }

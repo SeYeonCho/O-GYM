@@ -6,6 +6,7 @@ import static com.B305.ogym.domain.users.ptStudent.QPTStudent.pTStudent;
 
 import com.B305.ogym.controller.dto.UserDto.CareerDto;
 import com.B305.ogym.controller.dto.UserDto.CertificateDto;
+import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.mappingTable.QPTStudentPTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.QPTTeacher;
 import com.querydsl.core.Tuple;
@@ -75,5 +76,17 @@ public class PTStudentRepositoryCustomImpl implements PTStudentRepositoryCustom 
         // 엔티티 받아오고
         // find ->
         return map;
+    }
+    @Override
+    public List<PTStudentPTTeacher> getReservationTime(String studentEmail){
+        return em.createQuery("select pt"
+            + " from PTStudentPTTeacher pt"
+            + " join fetch pt.ptTeacher t"
+            + " join fetch pt.ptStudent s"
+            + " where s.email =: studentEmail"
+            + " order by pt.reservationDate",PTStudentPTTeacher.class)
+            .setParameter("studentEmail",studentEmail)
+            .getResultList();
+
     }
 }

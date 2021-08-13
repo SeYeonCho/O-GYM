@@ -85,4 +85,17 @@ public class PTApiController {
         ));
     }
 
+    // PT 선생님에 대한 예약된 시간 조히
+    @GetMapping("/reservation")
+    @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
+    public ResponseEntity<SuccessResponseDto> getReservationTime(
+        @AuthenticationPrincipal UserBase user
+    ) {
+
+        return ResponseEntity.ok(new SuccessResponseDto<List>(
+            200, "예약 시간 조회에 성공했습니다.", ptService.getReservationTime(user.getEmail())
+        ));
+    }
+
+
 }

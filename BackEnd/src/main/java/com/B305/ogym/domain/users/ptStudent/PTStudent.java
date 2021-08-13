@@ -120,11 +120,12 @@ public class PTStudent extends UserBase {
     }
 
 
-    public PTStudentPTTeacher makeReservation(PTTeacher ptTeacher, PTStudent ptStudent, LocalDateTime time) {
+    public PTStudentPTTeacher makeReservation(PTTeacher ptTeacher, PTStudent ptStudent, LocalDateTime time,String description) {
         PTStudentPTTeacher ptStudentPTTeacher = PTStudentPTTeacher.builder()
             .ptTeacher(ptTeacher)
             .ptStudent(ptStudent)
             .reservationDate(time)
+            .description(description)
             .build();
         return ptStudentPTTeacher;
     }

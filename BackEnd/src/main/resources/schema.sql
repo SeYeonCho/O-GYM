@@ -143,6 +143,7 @@ CREATE TABLE `monthly` (
 CREATE TABLE `pt_student_pt_teacher` (
                                          `pt_student_pt_teacher_id` bigint NOT NULL AUTO_INCREMENT,
                                          `reservation_date` datetime(6) DEFAULT NULL,
+                                         `description` varchar(255) not null,
                                          `pt_student_id` bigint DEFAULT NULL,
                                          `pt_teacher_id` bigint DEFAULT NULL,
                                          PRIMARY KEY (`pt_student_pt_teacher_id`),
