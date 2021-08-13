@@ -70,7 +70,7 @@ public class PTService {
 
         // 선생님 정보 찾을 수 없음
         PTTeacher ptTeacher = ptTeacherRepository.findByEmail(request.getPtTeacherEmail())
-            .orElseThrow(() -> new UserNotFoundException("CANCEL_RESERVATION"));
+            .orElseThrow(() -> new UserNotFoundException("이미 탈퇴한 선생님입니다."));
 
         // 예약정보 찾을 수 없음
         PTStudentPTTeacher ptStudentPTTeacher = ptStudentPTTeacherRepository
@@ -97,15 +97,14 @@ public class PTService {
         }
 
         // Content와 Paging 정보를 함께 Response 객체에 담아 반환
-        AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
+
+        return AllTeacherListResponse.builder()
             .teacherList(ptTeacherDtos)
             .pageable(ptTeachers.getPageable())
             .totalPages(ptTeachers.getTotalPages())
             .totalElements(ptTeachers.getTotalElements())
             .numberOfElements(ptTeachers.getNumberOfElements())
             .build();
-
-        return allTeacherListResponse;
     }
 
     public List<LocalDateTime> getTeacherReservationTime(String teacherEmail) {
@@ -115,12 +114,12 @@ public class PTService {
         return ptTeacherRepository.reservationTime(teacherEmail);
     }
 
-    public List getReservationTime(String email) {
+    public List<reservationDto> getReservationTime(String email) {
         UserBase user = userRepository.findByEmail(email).orElseThrow(() ->
             new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
         List<reservationDto> result = new ArrayList<>();
         if ("ROLE_PTTEACHER".equals(user.getAuthority().getAuthorityName())) {
-            ptTeacherRepository.getReservationTime(email).stream().forEach(
+            ptTeacherRepository.getReservationTime(email).forEach(
                 o -> {
                     result.add(
                         reservationDto.builder()
@@ -134,7 +133,7 @@ public class PTService {
                 }
             );
         } else {
-            ptStudentRepository.getReservationTime(email).stream().forEach(
+            ptStudentRepository.getReservationTime(email).forEach(
                 o -> {
                     result.add(
                         reservationDto.builder()

@@ -1,6 +1,7 @@
 package com.B305.ogym.controller;
 
-import static org.mockito.BDDMockito.given;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -17,11 +18,15 @@ import com.B305.ogym.common.annotation.WithAuthUser;
 import com.B305.ogym.common.config.SecurityConfig;
 import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
 import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
+import com.B305.ogym.controller.dto.PTDto.SearchDto;
+import com.B305.ogym.controller.dto.PTDto.reservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import com.B305.ogym.service.PTService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,6 +36,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -74,19 +80,21 @@ class PTApiControllerTest {
             .build();
     }
 
-//    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
-//    @DisplayName("선생님 리스트 불러오기 - 성공")
-//    @Test
-//    public void getTeacherList_Success() throws Exception {
-//        AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
-//            .teacherList(new ArrayList<PTTeacherDto>())
-//            .build();
-//        given(ptService.getTeacherList()).willReturn(allTeacherListResponse);
-//
-//        mockMvc.perform(get("/api/pt/teacherlist"))
-//            .andDo(print())
-//            .andExpect(status().isOk());
-//    }
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("선생님 리스트 불러오기 - 성공")
+    @Test
+    public void getTeacherList_Success() throws Exception {
+        AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
+            .teacherList(new ArrayList<PTTeacherDto>())
+            .build();
+        SearchDto searchDto = SearchDto.builder().build();
+        given(ptService.getTeacherList(searchDto, Pageable.ofSize(10)))
+            .willReturn(allTeacherListResponse);
+
+        mockMvc.perform(get("/api/pt/teacherlist"))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
 
     @WithAuthUser(email = "teacher@naver.com", role = "ROLE_PTSTUDENT")
     @DisplayName("PT 예약하기 - 성공")
@@ -194,6 +202,68 @@ class PTApiControllerTest {
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(req)))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("선생님 예약 불가 시간 조회 - 성공")
+    @Test
+    public void getTeacherReservationTime_success() throws Exception {
+        String teacherEmail = "teacher@naver.com";
+        List<LocalDateTime> reservationList = new ArrayList<>();
+        given(ptService.getTeacherReservationTime(teacherEmail)).willReturn(reservationList);
+
+        assertEquals(ptService.getReservationTime(teacherEmail), reservationList);
+
+        mockMvc.perform(get("/api/pt/reservation/teacher@naver.com"))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("선생님 예약 불가 시간 조회 - 실패")
+    @Test
+    public void getTeacherReservationTime_failure() throws Exception {
+        String teacherEmail = "teacher@naver.com";
+        given(ptService.getTeacherReservationTime(teacherEmail))
+            .willThrow(new UserNotFoundException("해당 선생님은 이미 탈퇴한 회원입니다."));
+
+        assertThrows(UserNotFoundException.class,
+            () -> ptService.getTeacherReservationTime(teacherEmail));
+
+        mockMvc.perform(get("/api/pt/reservation/teacher@naver.com"))
+            .andDo(print())
+            .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "userEmail@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("유저의 예약된 시간 조회 - 성공")
+    @Test
+    public void getReservationTime_success() throws Exception {
+        String userEmail = "userEmail@naver.com";
+        List<reservationDto> reservationList = new ArrayList<>();
+        given(ptService.getReservationTime(userEmail)).willReturn(reservationList);
+
+        assertEquals(ptService.getReservationTime(userEmail), reservationList);
+
+        mockMvc.perform(get("/api/pt/reservation"))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @WithAuthUser(email = "userEmail@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("유저의 예약된 시간 조회 - 실패")
+    @Test
+    public void getReservationTime_failure() throws Exception {
+        String userEmail = "userEmail@naver.com";
+        given(ptService.getReservationTime(userEmail))
+            .willThrow(new UserNotFoundException("해당 유저는 이미 탈퇴한 회원입니다."));
+
+        assertThrows(UserNotFoundException.class,
+            () -> ptService.getReservationTime(userEmail));
+
+        mockMvc.perform(get("/api/pt/reservation"))
             .andDo(print())
             .andExpect(status().isNotFound());
     }

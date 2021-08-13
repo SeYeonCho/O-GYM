@@ -13,10 +13,9 @@ import static com.B305.ogym.common.util.constants.ResponseConstants.VALIDATION_F
 
 import com.B305.ogym.exception.health.HealthDuplicateException;
 import com.B305.ogym.exception.user.NotValidRequestParamException;
-import com.B305.ogym.exception.user.ReservationDuplicateException;
+import com.B305.ogym.exception.pt.ReservationDuplicateException;
 import com.B305.ogym.exception.user.UnauthorizedException;
 import com.B305.ogym.exception.user.UserDuplicateEmailException;
-import com.B305.ogym.exception.user.UserDuplicateException;
 import com.B305.ogym.exception.user.UserDuplicateNicknameException;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -60,27 +59,32 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 이미 존재하는 Email 가입에 대한 에러 핸들러
     @ExceptionHandler(UserDuplicateEmailException.class)
-    public final ResponseEntity<String> handleUserDuplicateEmailException(UserDuplicateEmailException ex) {
+    public final ResponseEntity<String> handleUserDuplicateEmailException(
+        UserDuplicateEmailException ex) {
         log.debug("중복 Email", ex);
         return DUPLICATION_EMAIL;
     }
+
     // 이미 존재하는 Nickname 가입에 대한 에러 핸들러
     @ExceptionHandler(UserDuplicateNicknameException.class)
-    public final ResponseEntity<String> handleUserDuplicateNicknameException(UserDuplicateNicknameException ex) {
+    public final ResponseEntity<String> handleUserDuplicateNicknameException(
+        UserDuplicateNicknameException ex) {
         log.debug("중복 Nickname", ex);
         return DUPLICATION_NICKNAME;
     }
+
     // 예약시간 중복에 대한 에러 핸들러
     @ExceptionHandler(ReservationDuplicateException.class)
     public final ResponseEntity<String> handleReservationDuplicateException(
-        ReservationDuplicateException ex){
+        ReservationDuplicateException ex) {
         log.debug("중복된 예약", ex);
         return DUPLICATION_RESERVATION;
     }
+
     // 건강정보 중복에 대한 에러 핸들러
     @ExceptionHandler(HealthDuplicateException.class)
     public final ResponseEntity<String> handleHealthDuplicateException(
-        ReservationDuplicateException ex){
+        ReservationDuplicateException ex) {
         log.debug("중복된 month정보", ex);
         return DUPLICATION_MONTH;
     }
@@ -89,20 +93,26 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public final ResponseEntity<String> handleUserNotFoundException(UserNotFoundException ex) {
         log.debug("존재하지 않는 유저", ex);
-        if(ex.getMessage().equals("TEACHER")) return TEACHER_NOT_FOUND;
-        else if(ex.getMessage().equals("CANCEL_RESERVATION")) return RESERVATION_NOT_FOUND;
-        else return USER_NOT_FOUND;
+        if (ex.getMessage().equals("TEACHER")) {
+            return TEACHER_NOT_FOUND;
+        } else if (ex.getMessage().equals("CANCEL_RESERVATION")) {
+            return RESERVATION_NOT_FOUND;
+        } else {
+            return USER_NOT_FOUND;
+        }
     }
+
 
     // 입력해야하는 파라미터 중에 입력하지 않은 파라미터가 존재하는 경우
     @ExceptionHandler(NotValidRequestParamException.class)
-    public final ResponseEntity<String> handleNotValidRequestParamException(NotValidRequestParamException ex) {
+    public final ResponseEntity<String> handleNotValidRequestParamException(
+        NotValidRequestParamException ex) {
         log.debug("입력하지 않은 파라미터 존재", ex);
         return NOT_VALID_PARAM;
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public final ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex){
+    public final ResponseEntity<String> handleUnauthorizedException(UnauthorizedException ex) {
         log.debug("Unauthorized request", ex);
         return UNAUTHORIZED_USER;
     }

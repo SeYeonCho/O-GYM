@@ -1,4 +1,4 @@
-package com.B305.ogym.exception.user;
+package com.B305.ogym.exception.pt;
 
 import org.aspectj.bridge.Message;
 
