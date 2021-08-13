@@ -2,18 +2,12 @@ package com.B305.ogym.service;
 
 import com.B305.ogym.controller.dto.HealthDto;
 import com.B305.ogym.controller.dto.HealthDto.MyHealthResponse;
-import com.B305.ogym.controller.dto.HealthDto.SetMyHealthRequest;
 import com.B305.ogym.domain.users.UserRepository;
-import com.B305.ogym.domain.users.common.UserBase;
-import com.B305.ogym.domain.users.ptStudent.Monthly;
 import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
-import com.B305.ogym.exception.health.HealthDuplicateException;
-import com.B305.ogym.exception.user.UnauthorizedException;
 import com.B305.ogym.exception.user.UserNotFoundException;
-import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +32,7 @@ public class HealthService {
 
 
     public HealthDto.MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail) {
-        if (!ptTeacherRepository.existByEmail(teacherEmail)) {
+        if (!ptTeacherRepository.existsByEmail(teacherEmail)) {
             throw new UserNotFoundException("해당하는 이메일이 존재하지 않습니다.");
         }
         return ptTeacherRepository.findMyStudentsHealth(teacherEmail);

@@ -115,11 +115,11 @@ class HealthServiceTest {
     public void findMyStudentsHealth_success() throws Exception {
         //given
         var user = createTeacher();
-        given(ptTeacherRepository.existByEmail(user.getEmail())).willReturn(true);
+        given(ptTeacherRepository.existsByEmail(user.getEmail())).willReturn(true);
         //when
         healthService.findMyStudentsHealth(user.getEmail());
         //then
-        verify(ptTeacherRepository, atLeastOnce()).existByEmail(user.getEmail());
+        verify(ptTeacherRepository, atLeastOnce()).existsByEmail(user.getEmail());
     }
 
     //예외처리 코드 생기면 테스트
@@ -128,13 +128,13 @@ class HealthServiceTest {
     public void findMyStudentsHealth_failure() throws Exception {
         //given
         var user = createTeacher();
-        given(ptTeacherRepository.existByEmail(user.getEmail()))
+        given(ptTeacherRepository.existsByEmail(user.getEmail()))
             .willThrow(new UserNotFoundException("이미 탈퇴한 회원입니다"));
         //when
         assertThrows(UserNotFoundException.class,
             () -> healthService.findMyStudentsHealth(user.getEmail()));
         //then
-        verify(ptTeacherRepository, atLeastOnce()).existByEmail(user.getEmail());
+        verify(ptTeacherRepository, atLeastOnce()).existsByEmail(user.getEmail());
     }
 
 }
