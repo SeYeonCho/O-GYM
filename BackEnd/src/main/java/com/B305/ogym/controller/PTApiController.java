@@ -6,6 +6,7 @@ import com.B305.ogym.controller.dto.SuccessResponseDto;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.service.PTService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,4 +71,18 @@ public class PTApiController {
             200, "PT 삭제에 성공했습니다.", new HashMap()
         ));
     }
+
+
+    // PT 선생님에 대한 예약된 시간 조히
+    @GetMapping("/reservation/{teacherEmail}")
+    @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
+    public ResponseEntity<SuccessResponseDto> getTeacherReservationTime(
+        @PathVariable String teacherEmail
+    ) {
+
+        return ResponseEntity.ok(new SuccessResponseDto<List>(
+            200, "해당 선생님의 예약된 시간 조회에 성공했습니다.", ptService.getTeacherReservationTime(teacherEmail)
+        ));
+    }
+
 }

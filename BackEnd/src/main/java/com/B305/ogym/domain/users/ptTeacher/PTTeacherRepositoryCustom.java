@@ -2,6 +2,7 @@ package com.B305.ogym.domain.users.ptTeacher;
 
 import com.B305.ogym.controller.dto.HealthDto.MyStudentsHealthListResponse;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,4 +18,6 @@ public interface PTTeacherRepositoryCustom {
     Map<String, Object> getInfo(String teacherEmail, List<String> req);
 
     Page<PTTeacher> searchAll(SearchDto searchDto, Pageable pageable);
+
+    List<LocalDateTime> reservationTime(String teacherEmail);
 }

@@ -101,4 +101,8 @@ public class PTService {
 
         return allTeacherListResponse;
     }
+
+    public List<LocalDateTime> getTeacherReservationTime(String teacherEmail) {
+        return ptTeacherRepository.reservationTime(teacherEmail);
+    }
 }

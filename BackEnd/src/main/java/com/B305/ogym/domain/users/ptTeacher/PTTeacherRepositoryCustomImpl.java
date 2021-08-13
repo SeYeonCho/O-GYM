@@ -20,6 +20,7 @@ import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -192,9 +193,10 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         return pTTeacher.price.goe(minPrice);
     }
 
+
     // 최대 나이
     private BooleanExpression loeMaxAge(Integer maxAge) {
-        if(maxAge == null) {
+        if (maxAge == null) {
             return null;
         }
         return pTTeacher.age.loe(maxAge);
@@ -202,9 +204,22 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
 
     // 최소 나이
     private BooleanExpression goeMinAge(Integer minAge) {
-        if(minAge == null) {
+        if (minAge == null) {
             return null;
         }
         return pTTeacher.age.goe(minAge);
+
+    }
+
+    @Override
+    public List<LocalDateTime> reservationTime(String teacherEmail) {
+        return em.createQuery("select st.reservationDate "
+            + " From PTTeacher t "
+            + " join t.ptStudentPTTeachers st "
+            + " where t.email =: teacherEmail", LocalDateTime.class)
+            .setParameter("teacherEmail", teacherEmail)
+            .getResultList();
     }
 }
+
+
