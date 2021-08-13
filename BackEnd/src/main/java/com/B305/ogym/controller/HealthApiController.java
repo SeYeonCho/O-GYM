@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/health")
 @RequiredArgsConstructor
 public class HealthApiController {
+
     private final HealthService healthService;
 
     @GetMapping("/mystudents")
     @PreAuthorize("hasAnyRole('PTTEACHER')")
     public ResponseEntity<SuccessResponseDto> getMyStudentsHealth(
         @AuthenticationPrincipal UserBase user
-    ){
+    ) {
         return ResponseEntity.ok(new SuccessResponseDto<HealthDto.MyStudentsHealthListResponse>(
             200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(user.getEmail())
         ));
@@ -32,7 +33,7 @@ public class HealthApiController {
 
     @GetMapping("/myhealth")
     @PreAuthorize("hasAnyRole('PTSTUDENT')")
-    public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal UserBase user){
+    public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal UserBase user) {
         return ResponseEntity.ok(new SuccessResponseDto<MyHealthResponse>(
             200, "건강정보 조회에 성공했습니다.", healthService.getMyHealth(user.getEmail())
         ));

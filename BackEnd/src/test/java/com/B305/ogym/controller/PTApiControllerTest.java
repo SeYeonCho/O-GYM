@@ -45,9 +45,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @WebMvcTest(controllers = PTApiController.class, excludeFilters = {
     @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)}
 )
-//@ActiveProfiles("test") // 테스트에서 사용할 profile
 @MockBean(JpaMetamodelMappingContext.class) // @EnableJPaAuditing 사용시 추가해야하는 어노테이션
-//@AutoConfigureMockMvc(addFilters = false)
 class PTApiControllerTest {
 
     @MockBean
@@ -68,7 +66,6 @@ class PTApiControllerTest {
             .addFilters(new CharacterEncodingFilter("UTF-8", true))
             .build();
     }
-
 
 //    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
 //    @DisplayName("선생님 리스트 불러오기 - 성공")
@@ -119,7 +116,7 @@ class PTApiControllerTest {
             .andExpect(status().isNotFound());
     }
 
-    @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
+    @WithAuthUser(email = "teacher@naver.com", role = "ROLE_PTTEACHER")
     @DisplayName("PT 예약하기 - 해당하는 학생 이메일이 존재하지 않아 실패")
     @Test
     public void makeReservation_studentNotFound() throws Exception {
@@ -142,7 +139,7 @@ class PTApiControllerTest {
     @Test
     public void cancelReservation_Success() throws Exception {
         reservationRequest req = reservationRequest.builder()
-            .ptTeacherEmail("teacher@naver.com")
+            .ptTeacherEmail("student@naver.com")
             .build();
 
         doNothing().when(ptService).cancelReservation(eq("student@naver.com"), eq(req));
@@ -159,7 +156,7 @@ class PTApiControllerTest {
     @Test
     public void cancelReservation_studentNotFound() throws Exception {
         reservationRequest req = reservationRequest.builder()
-            .ptTeacherEmail("teacher@naver.com")
+            .ptTeacherEmail("student@naver.com")
             .build();
 
         doThrow(new UserNotFoundException("존재하지 않는 학생입니다.")).when(ptService)
