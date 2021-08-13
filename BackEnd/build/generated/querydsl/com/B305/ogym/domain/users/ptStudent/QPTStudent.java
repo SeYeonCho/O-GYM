@@ -27,6 +27,9 @@ public class QPTStudent extends EntityPathBase<PTStudent> {
     // inherited
     public final com.B305.ogym.domain.users.common.QAddress address;
 
+    //inherited
+    public final NumberPath<Integer> age;
+
     // inherited
     public final com.B305.ogym.domain.authority.QAuthority authority;
 
@@ -84,6 +87,7 @@ public class QPTStudent extends EntityPathBase<PTStudent> {
         super(type, metadata, inits);
         this._super = new com.B305.ogym.domain.users.common.QUserBase(type, metadata, inits);
         this.address = _super.address;
+        this.age = _super.age;
         this.authority = _super.authority;
         this.createdDate = _super.createdDate;
         this.email = _super.email;

@@ -149,6 +149,7 @@ public class PTTeacher extends UserBase {
         PTTeacherDto ptTeacherDto = PTTeacherDto.builder().username(this.getUsername())
             .gender(this.getGender())
             .nickname(this.getNickname())
+            .age(this.getAge())
             .tel(this.getTel())
             .email(this.getEmail())
             .profilePicture(this.getProfilePicture())

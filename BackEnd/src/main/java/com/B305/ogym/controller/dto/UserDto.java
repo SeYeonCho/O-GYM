@@ -11,10 +11,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,7 +33,7 @@ public class UserDto {
     public static class SaveUserRequest {
 
         @NotEmpty
-        @Size(min = 3, max = 50, message = "이메일 똑바로 입력하세요.")
+        @Size(min = 3, max = 50, message = "이메일을 올바르게 입력하세요.")
         @Pattern(regexp = "\\S+@\\S+(.com)$")
         private String email;
 
@@ -41,8 +43,13 @@ public class UserDto {
         private String password;
 
         @NotEmpty
-        @Size(min = 2, max = 10, message = "올바르게 이름을 입력하세요.")
+        @Size(min = 2, max = 10, message = "이름을 올바르게 입력하세요.")
         private String username;
+
+        @NotEmpty
+        @Positive(message = "나이를 올바르게 입력하세요.")
+        @Max(value = 150, message = "나이를 올바르게 입력하세요.")
+        private int age;
 
         @NotEmpty
         @Size(min = 3, max = 50, message = "닉네임은 2자 이상 10자 이하로 입력해주세요.")

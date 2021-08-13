@@ -26,6 +26,8 @@ public class QUserBase extends EntityPathBase<UserBase> {
 
     public final QAddress address;
 
+    public final NumberPath<Integer> age = createNumber("age", Integer.class);
+
     public final com.B305.ogym.domain.authority.QAuthority authority;
 
     //inherited

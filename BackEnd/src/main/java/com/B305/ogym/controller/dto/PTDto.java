@@ -97,6 +97,9 @@ public class PTDto {
         // 성별
         private Gender gender;
 
+        // 나이
+        private int age;
+
         // 닉네임
         private String nickname;
 
@@ -181,6 +184,10 @@ public class PTDto {
         private String name = null;
         @Builder.Default
         private Gender gender = null;
+        @Builder.Default
+        private Integer minAge = null;
+        @Builder.Default
+        private Integer maxAge = null;
         @Builder.Default
         private Integer minPrice = null;
         @Builder.Default

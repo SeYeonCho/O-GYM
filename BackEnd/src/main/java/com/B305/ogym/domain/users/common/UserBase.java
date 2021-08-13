@@ -39,6 +39,8 @@ public class UserBase extends BaseTimeEntity {
 
     private String password; // 비밀번호
 
+    private int age; // 나이
+
     @Embedded
     private Address address; // 주소
 

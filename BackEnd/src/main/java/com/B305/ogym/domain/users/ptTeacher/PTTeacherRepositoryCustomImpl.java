@@ -45,6 +45,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         check.put("email", pTTeacher.email);
         check.put("username", pTTeacher.username);
         check.put("nickname", pTTeacher.nickname);
+        check.put("age", pTTeacher.age);
         check.put("gender", pTTeacher.gender);
         check.put("tel", pTTeacher.tel);
         check.put("address", pTTeacher.address);
@@ -148,7 +149,9 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
                 likeName(searchDto.getName()),
                 eqGender(searchDto.getGender()),
                 loeMaxPrice(searchDto.getMaxPrice()),
-                goeMinPrice(searchDto.getMinPrice())
+                goeMinPrice(searchDto.getMinPrice()),
+                loeMaxAge(searchDto.getMaxAge()),
+                goeMinAge(searchDto.getMinAge())
             )
             .offset(pageable.getOffset())   // 페이징 처리(offset)
             .limit(pageable.getPageSize())  // 페이징 처리(한 페이지에 출력할 개체 수)
@@ -187,5 +190,21 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             return null;
         }
         return pTTeacher.price.goe(minPrice);
+    }
+
+    // 최대 나이
+    private BooleanExpression loeMaxAge(Integer maxAge) {
+        if(maxAge == null) {
+            return null;
+        }
+        return pTTeacher.age.loe(maxAge);
+    }
+
+    // 최소 나이
+    private BooleanExpression goeMinAge(Integer minAge) {
+        if(minAge == null) {
+            return null;
+        }
+        return pTTeacher.age.goe(minAge);
     }
 }
