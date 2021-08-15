@@ -80,6 +80,7 @@ public class TokenProvider implements InitializingBean {
 
         String accessToken = Jwts.builder()
             .claim("email", user.getEmail())
+            .claim("nickname",user.getNickname())
             .claim(AUTHORITIES_KEY, authorities)
             .setExpiration(new Date(now + accessTokenValidityInMilliseconds))
             .signWith(key, SignatureAlgorithm.HS512)
