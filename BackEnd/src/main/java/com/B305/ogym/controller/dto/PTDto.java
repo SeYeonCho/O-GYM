@@ -219,4 +219,17 @@ public class PTDto {
             this.reservationTime = reservationTime;
         }
     }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class nowReservationDto{
+        private String teacherNickname;
+        private String studentNickname;
+
+        @Builder
+        public nowReservationDto(String teacherNickname, String studentNickname) {
+            this.teacherNickname = teacherNickname;
+            this.studentNickname = studentNickname;
+        }
+    }
 }

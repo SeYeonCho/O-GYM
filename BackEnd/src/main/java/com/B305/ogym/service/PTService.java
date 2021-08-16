@@ -3,6 +3,7 @@ package com.B305.ogym.service;
 import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
 import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
+import com.B305.ogym.controller.dto.PTDto.nowReservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
@@ -147,6 +148,18 @@ public class PTService {
                 }
             );
         }
+        return result;
+    }
+    public nowReservationDto getNowReservation(String teacherEmail, String studentEmail){
+        List<String> nowReservation = ptStudentPTTeacherRepository
+            .getNowReservation(teacherEmail, studentEmail, LocalDateTime.now());
+        if(nowReservation == null) {
+            return null;
+        }
+        nowReservationDto result = nowReservationDto.builder()
+            .teacherNickname(nowReservation.get(0))
+            .studentNickname(nowReservation.get(1))
+            .build();
         return result;
     }
 }
