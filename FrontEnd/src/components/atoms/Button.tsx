@@ -23,6 +23,7 @@ const StyledButton = styled.button<ButtonPropsType>`
     height: ${props => props.height};
     border-radius: ${props => props.borderRadius};
     color: ${props => props.color || "black"};
+    cursor: pointer;
 `;
 
 const NaverIcon = () : JSX.Element => {

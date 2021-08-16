@@ -1,4 +1,4 @@
-import { Modal, Button, Image, Row, Col } from "antd";
+import { Modal, Typography, Button, Image, Row, Col, message } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -8,7 +8,11 @@ import conference from "../../../assets/pages/mainPage/navButton/conference.png"
 import onlineBooking from "../../../assets/pages/mainPage/navButton/online-booking.png"
 import reserved from "../../../assets/pages/mainPage/navButton/reserved.png"
 import work from "../../../assets/pages/mainPage/navButton/work.png"
-
+// @ts-ignore
+import jwt_decode from "jwt-decode";
+import { useEffect } from "react";
+import { useHistory } from "react-router";
+const { Text } = Typography;
 const StyledModal = styled(Modal)`
   position: fixed;
   top: 0px;
@@ -54,19 +58,68 @@ const StyledCircledImage = styled(Image)`
   clip-path : circle(50%);
 `;
 
+const LoggedDiv = styled.div`
+  display: flex;
+
+`;
 
 
 const MainNavigation = (): JSX.Element => {
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
+    const [logged, setLogged] = useState<string>('');
+    const [role, setRole] = useState<string>('');
+  const history = useHistory();
+  try {
+
     
+    useEffect(() => {
+      const accessToken = localStorage.getItem('accessToken');
+    
+      if (accessToken != null) {
+        
+        const decoded: {
+          nickname,role
+        } = jwt_decode(accessToken);
+        if (decoded['nickname']) {
+          setLogged(decoded['nickname']);
+          setRole(decoded['role']);
+        }
+        else {
+        
+        }
+      }
+    }, [])
+    
+      
+    }
+
+    catch (error) {
+      
+    }
+  
+  
     const clickMenuButton = () => {
         setIsVisible(!isVisible)
     }
 
     const clickModalClose = () => {
         setIsVisible(!isVisible)
-    }
+  }
+  
+  const clickLoginButton = () => {
+    history.push('/login');
+  }
+  const clickLogoutButton = () => {
+    history.push('/');
+    console.log('test')
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    setLogged('');
+    setRole('');
+    message.info('성공적으로 로그아웃 되었습니다');
+    setIsVisible(!isVisible);
+  }
 
     return (
         <>
@@ -78,7 +131,42 @@ const MainNavigation = (): JSX.Element => {
             </StyledButton>
 
             <StyledModal
-                title="O-GYM"
+          title={
+            <Row>
+              <Col span={8}>O-GYM</Col>
+
+                {
+                  logged !== '' ? (
+                    <Col span={7} offset={5}>
+                    <LoggedDiv>
+
+                    <Text>
+                      {logged}님
+                      
+                      환영합니다
+                      </Text>
+
+                      <Button type="primary" onClick={
+                        clickLogoutButton
+                      }>
+                        Logout
+                      </Button>
+                    </LoggedDiv>
+                    </Col>
+                  )
+                    :
+                    <Col span={2} offset={10}>
+
+                    <Button type="primary"
+                      onClick={ clickLoginButton}
+                    >
+                      Login
+                        </Button>  
+                    </Col>
+                }
+              
+            </Row>
+          }
                 visible={isVisible}
                 onOk={clickModalClose}
                 onCancel={clickModalClose}
@@ -88,54 +176,110 @@ const MainNavigation = (): JSX.Element => {
             >
               {/* 모달 내용 */}
               <Row style={{flex: 1, display: "flex", alignItems: "stretch"}}>
-                <Col span={12} style={{backgroundColor: "#F08C8C", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                  <Link to={'/내건강분석'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                  <img src={barChart} alt="내 건강분석" style={{width: "80%"}}/>
-                  </Link>
-                  <Link to={'/내건강분석'}>
-                  <p style={{color: "white", fontSize: "1.5rem"}}>내 건강 분석</p>
-                  </Link>
-                </Col>
-                <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-                <Link to={'/내학생관리'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                <img src={work} alt="내 학생 관리" style={{width: "80%"}}/>
-                </Link>
-                <Link to={'/내학생관리'}>
-                <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>내 학생 관리</p>
-                </Link>
-                </Col>
-                <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-                <Link to={'/예약현황확인'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                <img src={onlineBooking} alt="예약 현황 확인" style={{width: "80%"}}/>
-                </Link>
-                <Link to={'/예약현황확인'}>
-                <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>예약 현황 확인</p>
-                </Link>
-                </Col>
-                <Col span={12} style={{backgroundColor: "#96C7ED", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                <Link to={'/studentreservation'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                  <img src={reserved} alt="예약" style={{width: "80%"}}/>
-                </Link>
-                <Link to={'/studentreservation'}>
-                  <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 예약 / 취소</p>
-                </Link>
-                </Col>
-                <Col span={12} style={{backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                <Link to={'/화상채팅접속'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                  <img src={conference} alt="예약" style={{width: "80%"}}/>
-                </Link>
-                <Link to={'/화상채팅접속'}>
-                  <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
-                </Link>
-                </Col>
-                <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-                <Link to={'/화상채팅접속'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+
+            {role === 'ROLE_PTSTUDENT' ? 
+            
+            <Col span={12} style={{ backgroundColor: "#F08C8C", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+              <Link to={'/내건강분석'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+              <img src={barChart} alt="내 건강분석" style={{width: "80%"}}/>
+              </Link>
+              <Link to={'/내건강분석'}>
+              <p style={{color: "white", fontSize: "1.5rem"}}>내 건강 분석</p>
+              </Link>
+            </Col>
+          
+              :
+              
+              <Col span={12} style={{ backgroundColor: "#F08C8C", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+
+              </Col>
+            }
+            
+            {role === 'ROLE_PTTEACHER' ?
+            
+            <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+            <Link to={'/내학생관리'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+            <img src={work} alt="내 학생 관리" style={{width: "80%"}}/>
+            </Link>
+            <Link to={'/내학생관리'}>
+            <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>내 학생 관리</p>
+            </Link>
+              </Col>
+              
+              :
+              <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+              </Col>
+            }
+            
+            {role === 'ROLE_PTTEACHER' ?
+            <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+            <Link to={'/예약현황확인'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+            <img src={onlineBooking} alt="예약 현황 확인" style={{width: "80%"}}/>
+            </Link>
+            <Link to={'/예약현황확인'}>
+            <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>예약 현황 확인</p>
+            </Link>
+              </Col>
+              
+              :
+              <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+              </Col>
+            }
+
+            {role === 'ROLE_PTSTUDENT' ?
+            
+            <Col span={12} style={{backgroundColor: "#96C7ED", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+            <Link to={'/studentreservation'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+              <img src={reserved} alt="예약" style={{width: "80%"}}/>
+            </Link>
+            <Link to={'/studentreservation'}>
+              <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 예약 / 취소</p>
+            </Link>
+              </Col>
+              
+              :
+
+              <Col span={12} style={{backgroundColor: "#96C7ED", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+              </Col>
+
+              
+              
+              
+            }
+                
+            {role === 'ROLE_PTSTUDENT' ?
+              <Col span={12} style={{backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+              <Link to={'/화상채팅접속'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
                 <img src={conference} alt="예약" style={{width: "80%"}}/>
-                </Link>
-                <Link to={'화상채팅접속'}>
-                <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 개설하기</p>
-                </Link>
+              </Link>
+              <Link to={'/화상채팅접속'}>
+                <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
+              </Link>
+              </Col>
+
+              :
+              <Col span={12} style={{backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+              </Col>
+            }
+                
+            {role === 'ROLE_PTTEACHER' ? 
+            
+            <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
+            <Link to={'/화상채팅접속'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+            <img src={conference} alt="예약" style={{width: "80%"}}/>
+            </Link>
+            <Link to={'화상채팅접속'}>
+            <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 개설하기</p>
+            </Link>
+              </Col>
+              
+              :
+
+              <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
                 </Col>
+            }
+                
+                
               </Row>
             </StyledModal>
             
