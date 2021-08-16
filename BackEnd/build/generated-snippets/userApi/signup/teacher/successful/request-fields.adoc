@@ -1,80 +1,119 @@
+=== Request Fields
 |===
-|Path|Type|Description
+|필드|타입|필수값|설명|제한
 
-|`+email+`
-|`+String+`
-|The user's email address
+|email
+|String
+|true
+|트레이너의 이메일 주소
+|최소 3글자, 최대 50글자 이내로 입력해주세요. @*.com의 양식을 갖추어야 합니다.
 
-|`+password+`
-|`+String+`
-|The user's password
+|password
+|String
+|true
+|트레이너의 비밀번호
+|최소 3글자, 최대 20글자 이내로 입력해주세요.
 
-|`+username+`
-|`+String+`
-|The user's username
+|username
+|String
+|true
+|트레이너의 이름
+|최소 2글자, 최대 10글자 이내로 입력해주세요.
 
-|`+nickname+`
-|`+String+`
-|The user's nickname
+|nickname
+|String
+|true
+|트레이너의 별명
+|최소 2글자, 최대 10글자 이내로 입력해주세요.
 
-|`+age+`
-|`+Number+`
-|The user's age
+|age
+|Number
+|true
+|트레이너의 나이
+|150세 이하로 입력해주세요.
 
-|`+gender+`
-|`+Number+`
-|The user's gender
+|gender
+|Number
+|true
+|트레이너의 성별
+|0 (MAN), 1 (WOMAN) 중 하나로 입력해주세요.
 
-|`+tel+`
-|`+String+`
-|The user's tel
+|tel
+|String
+|true
+|트레이너의 전화번호
+|000-000(3글자 혹은 4글자)-000의 형식으로 입력해주세요.
 
-|`+zipCode+`
-|`+String+`
-|The user's zipCode
+|zipCode
+|String
+|true
+|트레이너의 우편번호
+|5글자로 입력해주세요.
 
-|`+street+`
-|`+String+`
-|The user's street
+|street
+|String
+|true
+|트레이너의 도로명 주소
+|
 
-|`+detailedAddress+`
-|`+String+`
-|The user's detailedAddress
+|detailedAddress
+|String
+|true
+|트레이너의 상세 주소
+|
 
-|`+role+`
-|`+String+`
-|The user's role
+|role
+|String
+|true
+|트레이너의 권한
+|
 
-|`+major+`
-|`+String+`
-|The user's major
+|major
+|String
+|true
+|트레이너의 전공
+|
 
-|`+certificates+`
-|`+Array+`
-|The user's certificates
+|certificates
+|Array
+|true
+|트레이너의 자격증 목록
+|
 
-|`+careers+`
-|`+Array+`
-|The user's careers
+|careers
+|Array
+|true
+|트레이너의 경력 목록
+|
 
-|`+price+`
-|`+Number+`
-|The user's price
+|price
+|Number
+|true
+|트레이너의 가격
+|
 
-|`+description+`
-|`+String+`
-|The user's description
+|description
+|String
+|true
+|트레이너의 자기 소개
+|
 
-|`+snsAddrs+`
-|`+Null+`
-|The user's snsAddrs
+|snsAddrs
+|Array
+|true
+|트레이너의 SNS 주소 목록
+|
 
-|`+monthlyHeights+`
-|`+Null+`
+|monthlyHeights
+|Null
+|true
 |트레이너의 경우 입력받지 않습니다.
+|
 
-|`+monthlyWeights+`
-|`+Null+`
+|monthlyWeights
+|Null
+|true
 |트레이너의 경우 입력받지 않습니다.
+|
 
 |===

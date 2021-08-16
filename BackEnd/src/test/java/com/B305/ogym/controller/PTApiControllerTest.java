@@ -1,5 +1,7 @@
 package com.B305.ogym.controller;
 
+import static com.B305.ogym.ApiDocumentUtils.getDocumentRequest;
+import static com.B305.ogym.ApiDocumentUtils.getDocumentResponse;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Mockito.*;
@@ -8,7 +10,10 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -21,11 +26,14 @@ import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
 import com.B305.ogym.controller.dto.PTDto.reservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
+import com.B305.ogym.domain.users.common.Gender;
 import com.B305.ogym.exception.user.UserNotFoundException;
 import com.B305.ogym.service.PTService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -41,6 +49,7 @@ import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -76,6 +85,7 @@ class PTApiControllerTest {
     public reservationRequest createReservationRequset(String email) {
         return reservationRequest.builder()
             .ptTeacherEmail(email)
+            .reservationTime(LocalDateTime.parse("2021-08-28T13:00:00"))
             .description("상체")
             .build();
     }
@@ -84,16 +94,51 @@ class PTApiControllerTest {
     @DisplayName("선생님 리스트 불러오기 - 성공")
     @Test
     public void getTeacherList_Success() throws Exception {
+        List<PTTeacherDto> result = new ArrayList<>();
+        result.add(PTTeacherDto.builder()
+            .age(21)
+            .username("서현진")
+            .gender(Gender.WOMAN)
+            .nickname("오해영")
+            .tel("010-2021-0105")
+            .email("eggkim5@ssafy.com")
+            .starRating((float) 4.8)
+            .major("특공무술")
+            .price(200000)
+            .description("좋았어. 거짓은 머리털만큼도 없다! 신뢰와 정직으로 모시겠습니다")
+            .snsList(new ArrayList<>())
+            .careers(new ArrayList<>())
+            .reservations(new ArrayList<>())
+            .certificates(new ArrayList<>())
+            .build());
         AllTeacherListResponse allTeacherListResponse = AllTeacherListResponse.builder()
-            .teacherList(new ArrayList<PTTeacherDto>())
+            .teacherList(result)
             .build();
         SearchDto searchDto = SearchDto.builder().build();
-        given(ptService.getTeacherList(searchDto, Pageable.ofSize(10)))
+        given(ptService.getTeacherList(any(), any()))
             .willReturn(allTeacherListResponse);
 
-        mockMvc.perform(get("/api/pt/teacherlist"))
+        mockMvc.perform(
+            get("/api/pt/teacherlist?page=0&size=10&name=서현진&gender=WOMAN&minPrice=100&maxPrice=200000&minAge=1&maxAge=100")
+                .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andDo(document(
+                "PTApi/getTeacherList/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestParameters(
+                    parameterWithName("page").description("현재 페이지 번호").optional(),
+                    parameterWithName("size").description("한번에 보낼 컬럼의 개수").optional(),
+                    parameterWithName("name").description("검색할 선생님 이름").optional(),
+                    parameterWithName("gender").description("성별").optional(),
+                    parameterWithName("minPrice").description("최소 가격").optional(),
+                    parameterWithName("maxPrice").description("최대 가격").optional(),
+                    parameterWithName("minAge").description("최소 나이").optional(),
+                    parameterWithName("maxAge").description("최대 나이").optional()
+                )
+            ));
+
     }
 
     @WithAuthUser(email = "teacher@naver.com", role = "ROLE_PTSTUDENT")
@@ -106,9 +151,22 @@ class PTApiControllerTest {
 
         mockMvc.perform(post("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isCreated());
+            .andExpect(status().isCreated())
+            .andDo(document(
+                "PTApi/makeReservation/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestFields(
+                    fieldWithPath("ptTeacherEmail").description("예약할 대상 PT 트레이너의 이메일"),
+                    fieldWithPath("reservationTime").description("PT 예약 시간")
+                        .attributes(key("constraint")
+                            .value("yyyy-MM-dd'T'HH:mm:ss")),
+                    fieldWithPath("description").description("예약시간에 진행될 PT 내용에 대한 간략한 설명")
+                )
+            ));
     }
 
     @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
@@ -122,9 +180,15 @@ class PTApiControllerTest {
 
         mockMvc.perform(post("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound())
+            .andDo(document(
+                "PTApi/getTeacherList/TeacherNotFound",
+                getDocumentRequest(),
+                getDocumentResponse()
+            ));
     }
 
     @WithAuthUser(email = "teacher@naver.com", role = "ROLE_PTTEACHER")
@@ -133,14 +197,19 @@ class PTApiControllerTest {
     public void makeReservation_studentNotFound() throws Exception {
         reservationRequest req = createReservationRequset("teacher@naver.com");
 
-        doThrow(new UserNotFoundException("존재하지 않는 트레이너입니다.")).when(ptService)
+        doThrow(new UserNotFoundException("존재하지 않는 학생입니다.")).when(ptService)
             .makeReservation(any(), any());
 
         mockMvc.perform(post("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isNotFound());
+            .andExpect(status().isNotFound()).andDo(document(
+            "PTApi/getTeacherList/StudentNotFound",
+            getDocumentRequest(),
+            getDocumentResponse()
+        ));
     }
 
     @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
@@ -153,9 +222,22 @@ class PTApiControllerTest {
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andDo(document(
+                "PTApi/cancelReservation/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestFields(
+                    fieldWithPath("ptTeacherEmail").description("예약된 PT 트레이너의 이메일"),
+                    fieldWithPath("reservationTime").description("PT 취소 예약 시간")
+                        .attributes(key("constraint")
+                            .value("yyyy-MM-dd'T'HH:mm:ss")),
+                    fieldWithPath("description").description("PT 예약 취소 사유")
+                )
+            ));
     }
 
     @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
@@ -169,7 +251,8 @@ class PTApiControllerTest {
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound());
     }
@@ -185,7 +268,8 @@ class PTApiControllerTest {
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound());
     }
@@ -201,7 +285,8 @@ class PTApiControllerTest {
 
         mockMvc.perform(delete("/api/pt/reservation")
             .contentType(MediaType.APPLICATION_JSON)
-            .content(objectMapper.writeValueAsString(req)))
+            .content(objectMapper.writeValueAsString(req))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound());
     }
@@ -211,14 +296,24 @@ class PTApiControllerTest {
     @Test
     public void getTeacherReservationTime_success() throws Exception {
         String teacherEmail = "teacher@naver.com";
-        List<LocalDateTime> reservationList = new ArrayList<>();
+        List<LocalDateTime> reservationList = new ArrayList<>(
+            Collections.singletonList(LocalDateTime.parse("2021-08-28T13:00:00")));
         given(ptService.getTeacherReservationTime(teacherEmail)).willReturn(reservationList);
 
-        assertEquals(ptService.getReservationTime(teacherEmail), reservationList);
+        assertEquals(ptService.getTeacherReservationTime(teacherEmail), reservationList);
 
-        mockMvc.perform(get("/api/pt/reservation/teacher@naver.com"))
+        mockMvc.perform(get("/api/pt/reservation/{teacherEmail}", teacherEmail)
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andDo(document(
+                "PTApi/getTeacherReservationTime/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                pathParameters(
+                    parameterWithName("teacherEmail").description("예약이 불가능한 시간을 조회할 트레이너 이메일")
+                )
+            ));
     }
 
     @WithAuthUser(email = "student@naver.com", role = "ROLE_PTSTUDENT")
@@ -232,7 +327,8 @@ class PTApiControllerTest {
         assertThrows(UserNotFoundException.class,
             () -> ptService.getTeacherReservationTime(teacherEmail));
 
-        mockMvc.perform(get("/api/pt/reservation/teacher@naver.com"))
+        mockMvc.perform(get("/api/pt/reservation/teacher@naver.com")
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound());
     }
@@ -243,13 +339,26 @@ class PTApiControllerTest {
     public void getReservationTime_success() throws Exception {
         String userEmail = "userEmail@naver.com";
         List<reservationDto> reservationList = new ArrayList<>();
+        reservationList.add(reservationDto.builder()
+            .description("이두 운동")
+            .nickname("김계란")
+            .username("김성식")
+            .email("eggkim@ssafy.com")
+            .reservationTime(LocalDateTime.parse("2021-07-28T04:00:00"))
+            .build());
         given(ptService.getReservationTime(userEmail)).willReturn(reservationList);
 
         assertEquals(ptService.getReservationTime(userEmail), reservationList);
 
-        mockMvc.perform(get("/api/pt/reservation"))
+        mockMvc.perform(get("/api/pt/reservation")
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
-            .andExpect(status().isOk());
+            .andExpect(status().isOk())
+            .andDo(document(
+                "PTApi/getReservationTime/successful",
+                getDocumentRequest(),
+                getDocumentResponse()
+            ));
     }
 
     @WithAuthUser(email = "userEmail@naver.com", role = "ROLE_PTSTUDENT")
@@ -263,7 +372,8 @@ class PTApiControllerTest {
         assertThrows(UserNotFoundException.class,
             () -> ptService.getReservationTime(userEmail));
 
-        mockMvc.perform(get("/api/pt/reservation"))
+        mockMvc.perform(get("/api/pt/reservation")
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound());
     }

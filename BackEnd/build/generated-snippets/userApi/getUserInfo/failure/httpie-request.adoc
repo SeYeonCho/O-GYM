@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http GET 'http://localhost:8080/api/user/id,email' \
-    'Authorization:overStringLength7'
+$ http GET 'https://i5b305.ssafy.io/api/user/id,email' \
+    'Authorization:JWT ACCESS TOKEN'
 ----

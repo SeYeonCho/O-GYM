@@ -37,6 +37,7 @@ public class HealthDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class SetMyHealthRequest {
+
         @Min(1)
         @Max(12)
         @NotNull
@@ -48,7 +49,7 @@ public class HealthDto {
         private int weight;
 
         @Builder
-        public SetMyHealthRequest(int month, int height, int weight){
+        public SetMyHealthRequest(int month, int height, int weight) {
             this.month = month;
             this.height = height;
             this.weight = weight;
@@ -60,7 +61,8 @@ public class HealthDto {
     public static class MyStudentsHealthListResponse {
 
         private List<StudentHealth> studentHealthList;
-        public void setStudentHealthList(List<StudentHealth> studentHealthList){
+
+        public void setStudentHealthList(List<StudentHealth> studentHealthList) {
             this.studentHealthList = studentHealthList;
         }
 
@@ -91,6 +93,7 @@ public class HealthDto {
             }
             weightList.add(weight);
         }
+
         @Builder
         public StudentHealth(String username, String nickname, int age,
             Gender gender, String profileUrl, List<Integer> heightList,
@@ -100,6 +103,8 @@ public class HealthDto {
             this.age = age;
             this.gender = gender;
             this.profileUrl = profileUrl;
+            this.heightList = heightList;
+            this.weightList = weightList;
         }
     }
 

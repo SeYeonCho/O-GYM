@@ -1,0 +1,16 @@
+|===
+|Path|Type|Description
+
+|`+statusCode+`
+|`+Number+`
+|HTTP 상태 코드
+
+|`+message+`
+|`+String+`
+|메시지
+
+|`+data+`
+|`+Object+`
+|반환 데이터
+
+|===

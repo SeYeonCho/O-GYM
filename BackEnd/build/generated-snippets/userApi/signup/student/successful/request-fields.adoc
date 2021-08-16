@@ -1,80 +1,119 @@
+=== Request Fields
 |===
-|Path|Type|Description
+|필드|타입|필수값|설명|제한
 
-|`+email+`
-|`+String+`
-|The user's email address
+|email
+|String
+|true
+|학생의 이메일 주소
+|최소 3글자, 최대 50글자 이내로 입력해주세요. @*.com의 양식을 갖추어야 합니다.
 
-|`+password+`
-|`+String+`
-|The user's password
+|password
+|String
+|true
+|학생의 비밀번호
+|최소 3글자, 최대 20글자 이내로 입력해주세요.
 
-|`+username+`
-|`+String+`
-|The user's username
+|username
+|String
+|true
+|학생의 이름
+|최소 2글자, 최대 10글자 이내로 입력해주세요.
 
-|`+nickname+`
-|`+String+`
-|The user's nickname
+|nickname
+|String
+|true
+|학생의 별명
+|최소 2글자, 최대 10글자 이내로 입력해주세요.
 
-|`+age+`
-|`+Number+`
-|The user's age
+|age
+|Number
+|true
+|학생의 나이
+|150세 이하로 입력해주세요.
 
-|`+gender+`
-|`+Number+`
-|The user's gender
+|gender
+|Number
+|true
+|학생의 성별
+|0 (MAN), 1 (WOMAN) 중 하나로 입력해주세요.
 
-|`+tel+`
-|`+String+`
-|The user's tel
+|tel
+|String
+|true
+|학생의 전화번호
+|000-000(3글자 혹은 4글자)-000의 형식으로 입력해주세요.
 
-|`+zipCode+`
-|`+String+`
-|The user's zipCode
+|zipCode
+|String
+|true
+|학생의 우편번호
+|5글자로 입력해주세요.
 
-|`+street+`
-|`+String+`
-|The user's street
+|street
+|String
+|true
+|학생의 도로명 주소
+|
 
-|`+detailedAddress+`
-|`+String+`
-|The user's detailedAddress
+|detailedAddress
+|String
+|true
+|학생의 상세 주소
+|
 
-|`+role+`
-|`+String+`
-|The user's role
+|role
+|String
+|true
+|학생의 권한
+|
 
-|`+monthlyHeights+`
-|`+Array+`
-|The user's monthlyHeights
+|monthlyHeights
+|Array
+|true
+|학생의 월별 신장 목록
+|
 
-|`+monthlyWeights+`
-|`+Array+`
-|The user's monthlyWeights
+|monthlyWeights
+|Array
+|true
+|학생의 월별 체중 목록
+|
 
-|`+major+`
-|`+String+`
+|major
+|String
+|
 |학생의 경우 입력받지 않습니다
+|
 
-|`+certificates+`
-|`+Array+`
+|certificates
+|Array
+|
 |학생의 경우 입력받지 않습니다
+|
 
-|`+careers+`
-|`+Array+`
+|careers
+|Array
+|
 |학생의 경우 입력받지 않습니다
+|
 
-|`+price+`
-|`+Number+`
+|price
+|Number
+|
 |학생의 경우 입력받지 않습니다
+|
 
-|`+description+`
-|`+String+`
+|description
+|String
+|
 |학생의 경우 입력받지 않습니다
+|
 
-|`+snsAddrs+`
-|`+Null+`
+|snsAddrs
+|Null
+|
 |학생의 경우 입력받지 않습니다
+|
 
 |===

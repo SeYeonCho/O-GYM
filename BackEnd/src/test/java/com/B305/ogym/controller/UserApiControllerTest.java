@@ -1,11 +1,18 @@
 package com.B305.ogym.controller;
 
+import static com.B305.ogym.ApiDocumentUtils.getDocumentRequest;
+import static com.B305.ogym.ApiDocumentUtils.getDocumentResponse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
@@ -13,6 +20,12 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.subsectionWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.SharedHttpSessionConfigurer.sharedHttpSession;
@@ -28,6 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -95,6 +109,7 @@ class UserApiControllerTest {
             .price(1000)
             .description("트레이너")
             .age(20)
+            .snsAddrs(new ArrayList<>())
             .build();
     }
 
@@ -136,47 +151,66 @@ class UserApiControllerTest {
             .andDo(
                 document(
                     "userApi/signup/teacher/successful",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
                     requestFields(
                         fieldWithPath("email").type(JsonFieldType.STRING)
-                            .description("The user's email address"),
+                            .description("트레이너의 이메일 주소")
+                            .attributes(key("constraint")
+                                .value("최소 3글자, 최대 50글자 이내로 입력해주세요. @*.com의 양식을 갖추어야 합니다.")),
                         fieldWithPath("password").type(JsonFieldType.STRING)
-                            .description("The user's password"),
+                            .description("트레이너의 비밀번호")
+                            .attributes(key("constraint")
+                                .value("최소 3글자, 최대 20글자 이내로 입력해주세요.")),
                         fieldWithPath("username").type(JsonFieldType.STRING)
-                            .description("The user's username"),
+                            .description("트레이너의 이름")
+                            .attributes(key("constraint")
+                                .value("최소 2글자, 최대 10글자 이내로 입력해주세요.")),
                         fieldWithPath("nickname").type(JsonFieldType.STRING)
-                            .description("The user's nickname"),
+                            .description("트레이너의 별명")
+                            .attributes(key("constraint")
+                                .value("최소 2글자, 최대 10글자 이내로 입력해주세요.")),
                         fieldWithPath("age").type(JsonFieldType.NUMBER)
-                            .description("The user's age"),
+                            .description("트레이너의 나이")
+                            .attributes(key("constraint")
+                                .value("150세 이하로 입력해주세요.")),
                         fieldWithPath("gender").type(JsonFieldType.NUMBER)
-                            .description("The user's gender"),
+                            .description("트레이너의 성별")
+                            .attributes(key("constraint")
+                                .value("0 (MAN), 1 (WOMAN) 중 하나로 입력해주세요.")),
                         fieldWithPath("tel").type(JsonFieldType.STRING)
-                            .description("The user's tel"),
+                            .description("트레이너의 전화번호")
+                            .attributes(key("constraint")
+                                .value("000-000(3글자 혹은 4글자)-000의 형식으로 입력해주세요.")),
                         fieldWithPath("zipCode").type(JsonFieldType.STRING)
-                            .description("The user's zipCode"),
+                            .description("트레이너의 우편번호")
+                            .attributes(key("constraint")
+                                .value("5글자로 입력해주세요.")),
                         fieldWithPath("street").type(JsonFieldType.STRING)
-                            .description("The user's street"),
+                            .description("트레이너의 도로명 주소"),
                         fieldWithPath("detailedAddress").type(JsonFieldType.STRING)
-                            .description("The user's detailedAddress"),
+                            .description("트레이너의 상세 주소"),
                         fieldWithPath("role").type(JsonFieldType.STRING)
-                            .description("The user's role"),
+                            .description("트레이너의 권한"),
                         fieldWithPath("major").type(JsonFieldType.STRING)
-                            .description("The user's major"),
+                            .description("트레이너의 전공"),
                         fieldWithPath("certificates").type(JsonFieldType.ARRAY)
-                            .description("The user's certificates"),
+                            .description("트레이너의 자격증 목록"),
                         fieldWithPath("careers").type(JsonFieldType.ARRAY)
-                            .description("The user's careers"),
+                            .description("트레이너의 경력 목록"),
                         fieldWithPath("price").type(JsonFieldType.NUMBER)
-                            .description("The user's price"),
+                            .description("트레이너의 가격"),
                         fieldWithPath("description").type(JsonFieldType.STRING)
-                            .description("The user's description"),
-                        fieldWithPath("snsAddrs").type(JsonFieldType.NULL)
-                            .description("The user's snsAddrs")
+                            .description("트레이너의 자기 소개"),
+                        fieldWithPath("snsAddrs").type(JsonFieldType.ARRAY)
+                            .description("트레이너의 SNS 주소 목록")
                     ).and(
                         fieldWithPath("monthlyHeights").type(JsonFieldType.NULL)
                             .description("트레이너의 경우 입력받지 않습니다."),
                         fieldWithPath("monthlyWeights").type(JsonFieldType.NULL)
                             .description("트레이너의 경우 입력받지 않습니다.")
-                    )));
+                    )
+                ));
     }
 
     @DisplayName("학생 회원가입 - 모든 유효성 검사에 통과했다면 회원가입 성공")
@@ -193,46 +227,72 @@ class UserApiControllerTest {
             .content(objectMapper.writeValueAsString(studentRequest)))
             .andDo(print())
             .andExpect(status().isCreated()) // 201 isCreated()
-            .andDo(document("userApi/signup/student/successful", requestFields(
-                fieldWithPath("email").type(JsonFieldType.STRING)
-                    .description("The user's email address"),
-                fieldWithPath("password").type(JsonFieldType.STRING)
-                    .description("The user's password"),
-                fieldWithPath("username").type(JsonFieldType.STRING)
-                    .description("The user's username"),
-                fieldWithPath("nickname").type(JsonFieldType.STRING)
-                    .description("The user's nickname"),
-                fieldWithPath("age").type(JsonFieldType.NUMBER)
-                    .description("The user's age"),
-                fieldWithPath("gender").type(JsonFieldType.NUMBER)
-                    .description("The user's gender"),
-                fieldWithPath("tel").type(JsonFieldType.STRING)
-                    .description("The user's tel"),
-                fieldWithPath("zipCode").type(JsonFieldType.STRING)
-                    .description("The user's zipCode"),
-                fieldWithPath("street").type(JsonFieldType.STRING)
-                    .description("The user's street"),
-                fieldWithPath("detailedAddress").type(JsonFieldType.STRING)
-                    .description("The user's detailedAddress"),
-                fieldWithPath("role").type(JsonFieldType.STRING)
-                    .description("The user's role"),
-                fieldWithPath("monthlyHeights").type(JsonFieldType.ARRAY)
-                    .description("The user's monthlyHeights"),
-                fieldWithPath("monthlyWeights").type(JsonFieldType.ARRAY)
-                    .description("The user's monthlyWeights"))
-                .and(
-                    fieldWithPath("major").type(JsonFieldType.STRING)
-                        .description("학생의 경우 입력받지 않습니다").optional(),
-                    fieldWithPath("certificates").type(JsonFieldType.ARRAY)
-                        .description("학생의 경우 입력받지 않습니다").optional(),
-                    fieldWithPath("careers").type(JsonFieldType.ARRAY)
-                        .description("학생의 경우 입력받지 않습니다").optional(),
-                    fieldWithPath("price").type(JsonFieldType.NUMBER)
-                        .description("학생의 경우 입력받지 않습니다").optional(),
-                    fieldWithPath("description").type(JsonFieldType.STRING)
-                        .description("학생의 경우 입력받지 않습니다").optional(),
-                    fieldWithPath("snsAddrs").type(JsonFieldType.NULL)
-                        .description("학생의 경우 입력받지 않습니다").optional()
+            .andDo(document("userApi/signup/student/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestFields(
+                    fieldWithPath("email").type(JsonFieldType.STRING)
+                        .description("학생의 이메일 주소")
+                        .attributes(key("constraint")
+                            .value("최소 3글자, 최대 50글자 이내로 입력해주세요. @*.com의 양식을 갖추어야 합니다.")),
+                    fieldWithPath("password").type(JsonFieldType.STRING)
+                        .description("학생의 비밀번호")
+                        .attributes(key("constraint")
+                            .value("최소 3글자, 최대 20글자 이내로 입력해주세요.")),
+                    fieldWithPath("username").type(JsonFieldType.STRING)
+                        .description("학생의 이름")
+                        .attributes(key("constraint")
+                            .value("최소 2글자, 최대 10글자 이내로 입력해주세요.")),
+                    fieldWithPath("nickname").type(JsonFieldType.STRING)
+                        .description("학생의 별명")
+                        .attributes(key("constraint")
+                            .value("최소 2글자, 최대 10글자 이내로 입력해주세요.")),
+                    fieldWithPath("age").type(JsonFieldType.NUMBER)
+                        .description("학생의 나이")
+                        .attributes(key("constraint")
+                            .value("150세 이하로 입력해주세요.")),
+                    fieldWithPath("gender").type(JsonFieldType.NUMBER)
+                        .description("학생의 성별")
+                        .attributes(key("constraint")
+                            .value("0 (MAN), 1 (WOMAN) 중 하나로 입력해주세요.")),
+                    fieldWithPath("tel").type(JsonFieldType.STRING)
+                        .description("학생의 전화번호")
+                        .attributes(key("constraint")
+                            .value("000-000(3글자 혹은 4글자)-000의 형식으로 입력해주세요.")),
+                    fieldWithPath("zipCode").type(JsonFieldType.STRING)
+                        .description("학생의 우편번호")
+                        .attributes(key("constraint")
+                            .value("5글자로 입력해주세요.")),
+                    fieldWithPath("street").type(JsonFieldType.STRING)
+                        .description("학생의 도로명 주소"),
+                    fieldWithPath("detailedAddress").type(JsonFieldType.STRING)
+                        .description("학생의 상세 주소"),
+                    fieldWithPath("role").type(JsonFieldType.STRING)
+                        .description("학생의 권한"),
+                    fieldWithPath("monthlyHeights").type(JsonFieldType.ARRAY)
+                        .description("학생의 월별 신장 목록"),
+                    fieldWithPath("monthlyWeights").type(JsonFieldType.ARRAY)
+                        .description("학생의 월별 체중 목록"))
+                    .and(
+                        fieldWithPath("major").type(JsonFieldType.STRING)
+                            .description("학생의 경우 입력받지 않습니다").optional(),
+                        fieldWithPath("certificates").type(JsonFieldType.ARRAY)
+                            .description("학생의 경우 입력받지 않습니다").optional(),
+                        fieldWithPath("careers").type(JsonFieldType.ARRAY)
+                            .description("학생의 경우 입력받지 않습니다").optional(),
+                        fieldWithPath("price").type(JsonFieldType.NUMBER)
+                            .description("학생의 경우 입력받지 않습니다").optional(),
+                        fieldWithPath("description").type(JsonFieldType.STRING)
+                            .description("학생의 경우 입력받지 않습니다").optional(),
+                        fieldWithPath("snsAddrs").type(JsonFieldType.NULL)
+                            .description("학생의 경우 입력받지 않습니다").optional()
+                    ), responseFields(
+                    fieldWithPath("statusCode").type(JsonFieldType.NUMBER)
+                        .description("HTTP 상태 코드"),
+                    fieldWithPath("message").type(JsonFieldType.STRING)
+                        .description("메시지"),
+                    fieldWithPath("data").type(JsonFieldType.OBJECT)
+                        .description("반환 데이터")
                 )));
     }
 
@@ -250,7 +310,9 @@ class UserApiControllerTest {
             .content(objectMapper.writeValueAsString(teacherRequest)))
             .andDo(print())
             .andExpect(status().isConflict())
-            .andDo(document("userApi/signup/duplicate/email"
+            .andDo(document("userApi/signup/duplicate/email",
+                getDocumentRequest(),
+                getDocumentResponse()
             ));
     }
 
@@ -268,7 +330,9 @@ class UserApiControllerTest {
             .content(objectMapper.writeValueAsString(teacherRequest)))
             .andDo(print())
             .andExpect(status().isConflict())
-            .andDo(document("userApi/signup/duplicate/nickname"
+            .andDo(document("userApi/signup/duplicate/nickname",
+                getDocumentRequest(),
+                getDocumentResponse()
             ));
     }
 
@@ -284,10 +348,13 @@ class UserApiControllerTest {
 
         //then
         mockMvc.perform(delete("/api/user")
-            .header("Authorization", "overStringLength7"))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andDo(document("userApi/delete/teacher/successful"
+            .andDo(document("userApi/delete/teacher/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestHeaders(headerWithName("Authorization").description("JWT Access Token"))
             ));
     }
 
@@ -304,10 +371,13 @@ class UserApiControllerTest {
 
         //then
         mockMvc.perform(delete("/api/user")
-            .header("Authorization", "overStringLength7"))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andDo(document("userApi/delete/teacher/failure"
+            .andDo(document("userApi/delete/teacher/failure",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestHeaders(headerWithName("Authorization").description("JWT Access Token"))
             ));
     }
 
@@ -323,10 +393,21 @@ class UserApiControllerTest {
 
         //then
         mockMvc.perform(delete("/api/user")
-            .header("Authorization", "overStringLength7"))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andDo(document("userApi/delete/student/successful"
+            .andDo(document("userApi/delete/student/successful",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestHeaders(headerWithName("Authorization").description("JWT Access Token")),
+                responseFields(
+                    fieldWithPath("statusCode").type(JsonFieldType.NUMBER)
+                        .description("HTTP 상태 코드"),
+                    fieldWithPath("message").type(JsonFieldType.STRING)
+                        .description("메시지"),
+                    fieldWithPath("data").type(JsonFieldType.OBJECT)
+                        .description("반환 데이터")
+                )
             ));
     }
 
@@ -343,10 +424,13 @@ class UserApiControllerTest {
 
         //then
         mockMvc.perform(delete("/api/user")
-            .header("Authorization", "overStringLength7"))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andDo(document("userApi/delete/student/failure"
+            .andDo(document("userApi/delete/student/failure",
+                getDocumentRequest(),
+                getDocumentResponse(),
+                requestHeaders(headerWithName("Authorization").description("JWT Access Token"))
             ));
     }
 
@@ -359,15 +443,27 @@ class UserApiControllerTest {
         data.put("id", 1);
         data.put("email", "teacher@naver.com");
 
-        ArrayList<String> req = new ArrayList<>(Arrays.asList("id", "email"));
+        List<String> req = Arrays.asList("id", "email");
+        System.out.println(req);
 
-        given(userService.getUserInfo(email, req)).willReturn(data);
+        given(userService.getUserInfo(any(), any())).willReturn(data);
 
-        mockMvc.perform(get("/api/user/id,email")
-            .header("Authorization", "overStringLength7"))
+        mockMvc.perform(get("/api/user/{req}", req)
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isOk())
-            .andDo(document("userApi/getUserInfo/successful"));
+            .andDo(
+                document(
+                    "userApi/getUserInfo/successful",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    requestHeaders(headerWithName("Authorization").description("JWT Access Token")),
+                    pathParameters(
+                        parameterWithName("req").description("요청할 유저 정보의 항목이 담긴 리스트")
+                    )
+                ));
+
+//        verify(userService, atLeastOnce()).getUserInfo(eq(email), eq(req));
     }
 
     @WithAuthUser(email = "teacher@naver.com", role = "ROLE_PTTEACHER")
@@ -382,10 +478,13 @@ class UserApiControllerTest {
             .willThrow(new UserNotFoundException("해당하는 유저가 존재하지 않습니다"));
 
         mockMvc.perform(get("/api/user/id,email")
-            .header("Authorization", "overStringLength7"))
+            .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound())
-            .andDo(document("userApi/getUserInfo/failure"));
+            .andDo(document("userApi/getUserInfo/failure",
+                getDocumentRequest(),
+                getDocumentResponse()
+            ));
     }
 
 

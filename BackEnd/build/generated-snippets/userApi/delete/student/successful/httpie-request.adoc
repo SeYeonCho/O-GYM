@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ http DELETE 'http://localhost:8080/api/user' \
-    'Authorization:overStringLength7'
+$ http DELETE 'https://i5b305.ssafy.io/api/user' \
+    'Authorization:JWT ACCESS TOKEN'
 ----

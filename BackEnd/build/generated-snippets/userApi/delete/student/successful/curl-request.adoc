@@ -1,5 +1,5 @@
 [source,bash]
 ----
-$ curl 'http://localhost:8080/api/user' -i -X DELETE \
-    -H 'Authorization: overStringLength7'
+$ curl 'https://i5b305.ssafy.io/api/user' -i -X DELETE \
+    -H 'Authorization: JWT ACCESS TOKEN'
 ----

@@ -76,7 +76,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
 
         List<StudentHealth> result = new ArrayList<>();
 
-        students.stream().forEach(o -> {
+        students.forEach(o -> {
             StudentHealth studentHealth = StudentHealth.builder()
                 .username(o.getUsername())
                 .nickname(o.getNickname())
@@ -88,7 +88,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             monthly.sort((o1, o2) -> {
                 return o1.getMonth() - o2.getMonth();
             });
-            monthly.stream().forEach(m -> {
+            monthly.forEach(m -> {
                 studentHealth.addWeight(m.getWeight());
                 studentHealth.addHeight(m.getHeight());
             });
