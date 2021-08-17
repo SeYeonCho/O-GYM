@@ -50,10 +50,10 @@ public class PTApiController {
     @PostMapping("/reservation")
     @PreAuthorize("hasAnyRole('PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> makeReservation(
-        @AuthenticationPrincipal UserBase user,
+        @AuthenticationPrincipal String userEmail,
         @RequestBody @Valid PTDto.reservationRequest request) {
 
-        ptService.makeReservation(user.getEmail(), request);
+        ptService.makeReservation(userEmail, request);
 
         return ResponseEntity.status(HttpStatus.CREATED)
             .body(new SuccessResponseDto<Map>(201, "PT예약에 성공하였습니다.", new HashMap()));
@@ -63,10 +63,10 @@ public class PTApiController {
     @DeleteMapping("/reservation")
     @PreAuthorize("hasAnyRole('PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> cancelReservation(
-        @AuthenticationPrincipal UserBase user,
+        @AuthenticationPrincipal String userEmail,
         @RequestBody @Valid PTDto.reservationRequest request
     ) {
-        ptService.cancelReservation(user.getEmail(), request);
+        ptService.cancelReservation(userEmail, request);
 
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "PT 삭제에 성공했습니다.", new HashMap()
@@ -90,11 +90,11 @@ public class PTApiController {
     @GetMapping("/reservation")
     @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getReservationTime(
-        @AuthenticationPrincipal UserBase user
+        @AuthenticationPrincipal String userEmail
     ) {
 
         return ResponseEntity.ok(new SuccessResponseDto<List>(
-            200, "예약 시간 조회에 성공했습니다.", ptService.getReservationTime(user.getEmail())
+            200, "예약 시간 조회에 성공했습니다.", ptService.getReservationTime(userEmail)
         ));
     }
 
@@ -102,16 +102,9 @@ public class PTApiController {
     @GetMapping("/nowreservation")
     @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getNowReservation(
-        @AuthenticationPrincipal UserBase user
+        @AuthenticationPrincipal String userEmail
     ) {
-        nowReservationDto result = null;
-        if ("ROLE_PTTEACHER".equals(user.getRole())) {
-            result = ptService.getNowReservation(user.getEmail(), null);
-        } else if ("ROLE_PTSTUDENT".equals(user.getRole())) {
-            result = ptService.getNowReservation(null, user.getEmail());
-        } else {
-            System.out.println("asd");
-        }
+        nowReservationDto result = ptService.getNowReservation(userEmail);
         return ResponseEntity.ok(new SuccessResponseDto<nowReservationDto>(
             200, "현재 예약 정보 조회에 성공했습니다.", result)
         );

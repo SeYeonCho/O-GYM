@@ -38,9 +38,9 @@ public class UserApiController {
     @DeleteMapping("/user")
     @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> deleteMyUser(
-        @AuthenticationPrincipal UserBase user, HttpServletRequest req
+        @AuthenticationPrincipal String userEmail, HttpServletRequest req
     ) {
-        userService.deleteUserBase(user.getEmail(), req.getHeader("Authorization").substring(7));
+        userService.deleteUserBase(userEmail, req.getHeader("Authorization").substring(7));
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "회원정보 삭제에 성공했습니다", new HashMap()
         ));
@@ -64,10 +64,10 @@ public class UserApiController {
     @GetMapping("/user/{req}")
     @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getUserInfo(
-        @AuthenticationPrincipal UserBase user,
+        @AuthenticationPrincipal String userEmail,
         @PathVariable @NotEmpty List<String> req) {
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(), req)
+            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(userEmail, req)
         ));
     }
 }

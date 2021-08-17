@@ -105,7 +105,7 @@ public class TokenProvider implements InitializingBean {
             Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        return new UsernamePasswordAuthenticationToken(new UserBase(claims), null, authorities);
+        return new UsernamePasswordAuthenticationToken(claims.get("email"), null, authorities);
     }
 
     /*

@@ -20,6 +20,7 @@ import com.sun.jdi.request.DuplicateRequestException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -154,7 +155,15 @@ public class PTService {
     }
 
     // 현재 예약정보를 조회
-    public nowReservationDto getNowReservation(String teacherEmail, String studentEmail) {
+    public nowReservationDto getNowReservation(String userEmail) {
+        String teacherEmail = null;
+        String studentEmail = null;
+        UserBase user = userRepository.findByEmail(userEmail).orElseThrow();
+        if("ROLE_PTTEACHER".equals(user.getAuthority())){
+            teacherEmail = userEmail;
+        }else{
+            studentEmail = userEmail;
+        }
         List<String> nowReservation = ptStudentPTTeacherRepository
             .getNowReservation(teacherEmail, studentEmail, LocalDateTime.now());
         if (nowReservation == null) {
@@ -166,4 +175,6 @@ public class PTService {
             .build();
         return result;
     }
+
+
 }
