@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Career {
 
     @Builder
-    public Career(String company, LocalDate startDate, LocalDate endDate,String role) {
+    public Career(String company, LocalDate startDate, LocalDate endDate, String role) {
         this.role = role;
         this.company = company;
         this.startDate = startDate;
@@ -34,19 +34,19 @@ public class Career {
     @Column(name = "career_id")
     private Long id; // 대리키
 
-    private String role;
+    private String role; // 역할
 
-    // 시작일, 종료일
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate startDate; // 시작일
+    private LocalDate endDate; // 종료일
 
-    private String company;
+    private String company; // 회사
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pt_teacher_id")
-    private PTTeacher ptTeacher;
+    private PTTeacher ptTeacher; // 선생님
 
-    public static Career CreateCareer(String company , LocalDate startDate , LocalDate endDate,String role   ){
+    public static Career CreateCareer(String company, LocalDate startDate, LocalDate endDate,
+        String role) {
         return Career.builder()
             .company(company)
             .startDate(startDate)
@@ -55,7 +55,7 @@ public class Career {
             .build();
     }
 
-    public void setPtTeacher(PTTeacher ptTeacher){
+    public void setPtTeacher(PTTeacher ptTeacher) {
         this.ptTeacher = ptTeacher;
     }
 }

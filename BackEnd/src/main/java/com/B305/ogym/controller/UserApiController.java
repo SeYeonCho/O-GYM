@@ -1,15 +1,16 @@
 package com.B305.ogym.controller;
 
-import static com.B305.ogym.controller.dto.UserDto.SaveUserRequest;
-
 import com.B305.ogym.controller.dto.SuccessResponseDto;
 import com.B305.ogym.controller.dto.UserDto;
-import com.B305.ogym.controller.dto.UserDto.GetUserInfoRequest;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.service.UserService;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.validation.constraints.NotEmpty;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -31,72 +32,42 @@ public class UserApiController {
         this.userService = userService;
     }
 
-    @GetMapping("/hello")
-    public ResponseEntity<String> hello() {
-        return ResponseEntity.ok("hello");
-    }
-
-    //    @PostMapping("/signup")
-//    public ResponseEntity<SuccessResponseDto> signup(
-//        @RequestBody @Valid SaveUserRequest signupRequest
-//    ) {
-//        userService.signup(signupRequest);
-//        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-//            200, "회원가입이 성공했습니다", new HashMap()
-//        ));
-//    }
-    // 사용자 회원 탈퇴
+    /*
+     * 회원탈퇴 기능을 구현한 메서드
+     */
     @DeleteMapping("/user")
-    @PreAuthorize("hasAnyRole('PTTEACHER','ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> deleteMyUser(
-        @AuthenticationPrincipal UserBase user
+        @AuthenticationPrincipal UserBase user, HttpServletRequest req
     ) {
-        userService.deleteUserBase(user.getId());
-        // Security Context에서도 지워야한다.
+        userService.deleteUserBase(user.getEmail(), req.getHeader("Authorization").substring(7));
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "회원정보 삭제에 성공했습니다", new HashMap()
         ));
     }
 
-//    // 학생 회원가입
-//    @PostMapping("/user/student")
-//    public ResponseEntity<SuccessResponseDto> signupStudent(
-//        @RequestBody @Valid SaveStudentRequest studentRequestDto
-//    ) {
-//        userService.signup(studentRequestDto);
-//        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-//            200, "회원 가입에  성공했습니다.", new HashMap()
-//        ));
-//    }
-//
-//    // 선생 회원가입
-//    @PostMapping("/user/teacher")
-//    public ResponseEntity<SuccessResponseDto> signupTeacher(
-//        @RequestBody @Valid UserDto.SaveTeacherRequest teacherRequestDto) {
-//        userService.signup(teacherRequestDto);
-//        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-//            200, "회원 가입에 성공했습니다.", new HashMap()
-//        ));
-//    }
-
+    /*
+     * 회원가입 기능을 구현한 메서드
+     */
     @PostMapping("/user")
     public ResponseEntity<SuccessResponseDto> signup(
         @RequestBody @Valid UserDto.SaveUserRequest userRequestDto) {
         userService.signup(userRequestDto);
-        return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 가입에 성공했습니다.", new HashMap()
-        ));
+        return ResponseEntity.status(HttpStatus.CREATED)
+            .body(new SuccessResponseDto<Map>(201, "회원 가입에 성공했습니다.", new HashMap()));
     }
 
 
-    // 사용자 회원 정보 조회
-    @GetMapping("/user")
-    @PreAuthorize("hasAnyRole('PTTEACHER','USER','PTSTUDENT')")
+    /*
+     * 사용자의 회원정보를 조회하기 위한 메서드
+     */
+    @GetMapping("/user/{req}")
+    @PreAuthorize("hasAnyRole('PTTEACHER','PTSTUDENT')")
     public ResponseEntity<SuccessResponseDto> getUserInfo(
         @AuthenticationPrincipal UserBase user,
-        @RequestBody @Valid UserDto.GetUserInfoRequest req) {
+        @PathVariable @NotEmpty List<String> req) {
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
-            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user,req.getReq())
+            200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(user.getEmail(), req)
         ));
     }
 }

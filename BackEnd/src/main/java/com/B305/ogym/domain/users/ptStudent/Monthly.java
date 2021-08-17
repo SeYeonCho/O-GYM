@@ -21,9 +21,9 @@ import lombok.NoArgsConstructor;
 @Table(name = "monthly",
     uniqueConstraints = {
         @UniqueConstraint(
-            columnNames = {"pt_Student_id","month"}
+            columnNames = {"pt_Student_id", "month"}
         )
-    })  // ptStudent, month 컬럼을 묶어서 UNIQUE 설정
+    })
 public class Monthly {
 
     @Id
@@ -31,7 +31,7 @@ public class Monthly {
     @Column(name = "monthly_id")
     private Long id;   // 대리 키
 
-    @Column(name="month")
+    @Column(name = "month")
     private int month; // 달
 
     private int height; // 키

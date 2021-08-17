@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class Certificate {
 
     @Builder
-    public Certificate(String name,  String publisher , LocalDate date) {
+    public Certificate(String name, String publisher, LocalDate date) {
         this.name = name;
         this.publisher = publisher;
         this.date = date;
@@ -44,9 +44,9 @@ public class Certificate {
 
     private LocalDate date; // 획득일
 
-    public void setPtTeacher(PTTeacher ptTeacher){
-        this.ptTeacher= ptTeacher;
-        if(!ptTeacher.getCertificates().contains(this)){
+    public void setPtTeacher(PTTeacher ptTeacher) {
+        this.ptTeacher = ptTeacher;
+        if (!ptTeacher.getCertificates().contains(this)) {
             this.ptTeacher.getCertificates().add(this);
         }
     }

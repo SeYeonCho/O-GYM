@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - HealthApiControllerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>HealthApiControllerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.B305.ogym.controller.html">com.B305.ogym.controller</a> &gt; HealthApiControllerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">3</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.169s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">내 건강 정보 확인 - 실패</td>
+<td class="success">getMyHealth_failure()</td>
+<td class="success">0.018s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">내 건강 정보 확인 - 성공</td>
+<td class="success">getMyHealth_success()</td>
+<td class="success">0.114s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">내 학생들의 건강 정보 확인 - 성공</td>
+<td class="success">getMyStudentsHealth_success()</td>
+<td class="success">0.037s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>2021-08-17 11:05:25.028  INFO 22164 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.B305.ogym.controller.HealthApiControllerTest], using SpringBootContextLoader
+2021-08-17 11:05:25.029  INFO 22164 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.B305.ogym.controller.HealthApiControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-08-17 11:05:25.029  INFO 22164 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.B305.ogym.controller.HealthApiControllerTest]: HealthApiControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2021-08-17 11:05:25.033  INFO 22164 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.B305.ogym.OgymApplication for test class com.B305.ogym.controller.HealthApiControllerTest
+2021-08-17 11:05:25.034  INFO 22164 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2021-08-17 11:05:25.035  INFO 22164 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@238045cf, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3f350f0, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@4b0ee38, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@52ffbcfe, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@73f02553, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6a9d9f0d, org.springframework.test.context.transaction.TransactionalTestExecutionListener@695f6d48, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@46e824d1, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@34404be2, org.springframework.test.context.event.EventPublishingTestExecutionListener@3223df90, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@2004c1b1, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@27cda7cc, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@11e4e78c, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@3d17657f, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@3b182225, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@71a1114d, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@474f4072]
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.5.2)
+
+2021-08-17 11:05:25.105  INFO 22164 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : Starting HealthApiControllerTest using Java 11.0.1 on DESKTOP-H7093P3 with PID 22164 (started by juhyu in C:\ssafy-common-sub3\BackEnd)
+2021-08-17 11:05:25.106  INFO 22164 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : No active profile set, falling back to default profiles: default
+2021-08-17 11:05:26.011  INFO 22164 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d96b347d-9cd8-4f1d-9f33-18f23d29a3e3
+
+2021-08-17 11:05:26.146  INFO 22164 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@9cb253, org.springframework.security.web.context.SecurityContextPersistenceFilter@3f7ed13, org.springframework.security.web.header.HeaderWriterFilter@30f89851, org.springframework.security.web.csrf.CsrfFilter@4f7f881f, org.springframework.security.web.authentication.logout.LogoutFilter@3cf39fad, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@57154329, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@7cb20cf0, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@3fe193ca, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@19af625e, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@192b2556, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6de50c32, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@42109314, org.springframework.security.web.session.SessionManagementFilter@307ba473, org.springframework.security.web.access.ExceptionTranslationFilter@7f3b6a5, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@76193b79]
+2021-08-17 11:05:26.208  INFO 22164 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-17 11:05:26.208  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-17 11:05:26.209  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-08-17 11:05:26.228  INFO 22164 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : Started HealthApiControllerTest in 1.189 seconds (JVM running for 6.982)
+2021-08-17 11:05:26.246  INFO 22164 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-17 11:05:26.246  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-17 11:05:26.247  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/health/myhealth
+       Parameters = {}
+          Headers = [Authorization:&quot;JWT ACCESS TOKEN&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.B305.ogym.controller.HealthApiController
+           Method = com.B305.ogym.controller.HealthApiController#getMyHealth(UserBase)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;statusCode&quot;:200,&quot;message&quot;:&quot;건강정보 조회에 성공했습니다.&quot;,&quot;data&quot;:{&quot;heightList&quot;:[160,160,160,160,160,161],&quot;weightList&quot;:[44,43,46,42,43,40]}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2021-08-17 11:05:26.351  INFO 22164 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-17 11:05:26.351  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-17 11:05:26.352  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/health/myhealth
+       Parameters = {}
+          Headers = [Authorization:&quot;JWT ACCESS TOKEN&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.B305.ogym.controller.HealthApiController
+           Method = com.B305.ogym.controller.HealthApiController#getMyHealth(UserBase)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = com.B305.ogym.exception.user.UserNotFoundException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 404
+    Error message = null
+          Headers = [Content-Type:&quot;text/plain;charset=UTF-8&quot;, Content-Length:&quot;72&quot;]
+     Content type = text/plain;charset=UTF-8
+             Body = 가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+2021-08-17 11:05:26.372  INFO 22164 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-17 11:05:26.372  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-17 11:05:26.373  INFO 22164 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+
+MockHttpServletRequest:
+      HTTP Method = GET
+      Request URI = /api/health/mystudents
+       Parameters = {}
+          Headers = [Authorization:&quot;JWT ACCESS TOKEN&quot;]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = com.B305.ogym.controller.HealthApiController
+           Method = com.B305.ogym.controller.HealthApiController#getMyStudentsHealth(UserBase)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = null
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 200
+    Error message = null
+          Headers = [Content-Type:&quot;application/json;charset=UTF-8&quot;]
+     Content type = application/json;charset=UTF-8
+             Body = {&quot;statusCode&quot;:200,&quot;message&quot;:&quot;건강정보 조회에 성공했습니다.&quot;,&quot;data&quot;:{&quot;studentHealthList&quot;:[{&quot;username&quot;:&quot;김지우&quot;,&quot;nickname&quot;:&quot;츄&quot;,&quot;age&quot;:21,&quot;gender&quot;:&quot;WOMAN&quot;,&quot;profileUrl&quot;:null,&quot;heightList&quot;:[160,160,160,160,160,161],&quot;weightList&quot;:[44,43,46,42,43,40]}]}}
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.1.1</a> at 2021. 8. 17. 오전 11:05:30</p>
+</div>
+</div>
+</body>
+</html>

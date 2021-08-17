@@ -18,6 +18,7 @@ public class Address {
         this.street = street;
         this.detailedAddress = detailedAddress;
     }
+
     @Column(name = "address_zipcode")
     private String zipCode; // 우편번호
 

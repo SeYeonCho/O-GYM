@@ -21,22 +21,22 @@ public class Sns {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "sns_id")
-    private Long id;
+    private Long id; // 대리키
 
-    private String url;
+    private String url; // URL
 
     private String platform; // 어떤 플랫폼
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pt_teacher_id")
-    private PTTeacher ptTeacher;
+    private PTTeacher ptTeacher; // 선생님
 
-    public void setPtTeacher(PTTeacher ptTeacher){
+    public void setPtTeacher(PTTeacher ptTeacher) {
         this.ptTeacher = ptTeacher;
     }
 
     @Builder
-    public Sns(String url, String platform, PTTeacher ptTeacher){
+    public Sns(String url, String platform, PTTeacher ptTeacher) {
         this.url = url;
         this.platform = platform;
         this.ptTeacher = ptTeacher;

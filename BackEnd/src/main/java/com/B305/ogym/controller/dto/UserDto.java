@@ -10,11 +10,11 @@ import com.B305.ogym.domain.users.ptTeacher.Sns;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -31,18 +31,22 @@ public class UserDto {
     public static class SaveUserRequest {
 
         @NotEmpty
-        @Size(min = 3, max = 50, message = "이메일 똑바로 입력하세요.")
+        @Size(min = 3, max = 50, message = "이메일을 올바르게 입력하세요.")
         @Pattern(regexp = "\\S+@\\S+(.com)$")
         private String email;
 
-        //    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         @NotEmpty
         @Size(min = 3, max = 20, message = "비밀번호는 3자이상 20자 이하로 입력해주세요.")
         private String password;
 
         @NotEmpty
-        @Size(min = 2, max = 10, message = "올바르게 이름을 입력하세요.")
+        @Size(min = 2, max = 10, message = "이름을 올바르게 입력하세요.")
         private String username;
+
+        @NotNull
+        @Positive(message = "나이를 올바르게 입력하세요.")
+        @Max(value = 150, message = "나이를 올바르게 입력하세요.")
+        private int age;
 
         @NotEmpty
         @Size(min = 3, max = 50, message = "닉네임은 2자 이상 10자 이하로 입력해주세요.")
@@ -69,10 +73,10 @@ public class UserDto {
         private String role;
 
         // --------------------------
-//        @NotEmpty
+
         private List<Integer> monthlyHeights;
 
-        //        @NotEmpty
+
         private List<Integer> monthlyWeights;
 
         public PTStudent toPTStudentEntity() {
@@ -93,28 +97,23 @@ public class UserDto {
                 .username(username)
                 .nickname(nickname)
                 .gender(gender)
+                .age(age)
                 .tel(tel)
                 .address(address)
                 .build();
         }
         // ----------
 
-        //        @NotBlank
         private String major;
 
-        //        @NotEmpty
         private List<Certificate> certificates;
 
-        //        @NotEmpty
         public List<Career> careers;
 
-        //        @NotNull
         private int price;
 
-        //        @NotBlank
         private String description;
 
-        //        @NotEmpty
         private List<Sns> snsAddrs;
 
         public PTTeacher toPTTeacherEntity() {
@@ -135,6 +134,7 @@ public class UserDto {
                 .username(username)
                 .nickname(nickname)
                 .gender(gender)
+                .age(age)
                 .tel(tel)
                 .address(address)
                 .description(description)
@@ -177,5 +177,15 @@ public class UserDto {
 
         private LocalDate date; // 획득일
     }
+
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PUBLIC)
+    public static class SnsDto {
+
+        private String url; // 주소
+
+        private String platform; // 플랫폼
+    }
+
 
 }

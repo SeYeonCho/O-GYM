@@ -1,11 +1,15 @@
 package com.B305.ogym.domain.authority;
 
-import lombok.*;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
@@ -19,5 +23,5 @@ public class Authority {
 
     @Id
     @Column(name = "authority_name", length = 50)
-    private String authorityName;
+    private String authorityName; // 권한 이름
 }

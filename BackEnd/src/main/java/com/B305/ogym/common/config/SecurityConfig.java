@@ -17,6 +17,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
+/*
+    Spring Security 환경설정
+ */
+
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -51,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 , "/favicon.ico"
                 , "/error"
             );
-        web.ignoring().antMatchers("/docs/**");
+        web.ignoring().antMatchers("/api/docs/**");
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 
@@ -82,7 +87,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/api/authenticate").permitAll()
             .antMatchers("/api/user").permitAll()
-            .antMatchers("/api/health/myhealth").permitAll()
+            .antMatchers("/api/reissue").permitAll()
+            .antMatchers("/api/hello").permitAll()
+            .antMatchers("/api/docs/api-doc.html").permitAll()
+
             .anyRequest().authenticated()
 
             .and()

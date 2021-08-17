@@ -1,14 +1,11 @@
 package com.B305.ogym.service;
 
-import com.B305.ogym.common.util.SecurityUtil;
+import com.B305.ogym.common.util.RedisUtil;
 import com.B305.ogym.controller.dto.UserDto;
 import com.B305.ogym.domain.authority.Authority;
 import com.B305.ogym.domain.authority.AuthorityRepository;
 import com.B305.ogym.domain.users.UserRepository;
-import com.B305.ogym.domain.users.common.Address;
-import com.B305.ogym.domain.users.common.Gender;
 import com.B305.ogym.domain.users.common.UserBase;
-import com.B305.ogym.domain.users.ptStudent.Monthly;
 import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
@@ -16,12 +13,13 @@ import com.B305.ogym.domain.users.ptTeacher.PTTeacher;
 import com.B305.ogym.domain.users.ptTeacher.PTTeacherRepository;
 import com.B305.ogym.exception.user.NotValidRequestParamException;
 import com.B305.ogym.exception.user.UserDuplicateEmailException;
-import com.B305.ogym.exception.user.UserDuplicateException;
 import com.B305.ogym.exception.user.UserDuplicateNicknameException;
+import com.B305.ogym.exception.user.UserNotFoundException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,12 +32,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final MonthlyRepository monthlyRepository;
-    //    private final PTStudentMonthlyRepository ptStudentMonthlyRepository;
     private final PTTeacherRepository ptTeacherRepository;
     private final PTStudentRepository ptStudentRepository;
     private final AuthorityRepository authorityRepository;
+    private final RedisUtil redisUtil;
 
-
+    // 회원가입 메서드
     @Transactional
     public void signup(UserDto.SaveUserRequest userRequest) {
         if (userRepository.existsByEmail(userRequest.getEmail())) {
@@ -76,27 +74,26 @@ public class UserService {
         }
     }
 
-//    public UserBase getMyUserWithAuthorities() {
-//        Optional<String> result = SecurityUtil.getCurrentUsername();
-//        if (result.isEmpty()) {
-//            return null;
-//        } else {
-//            return userRepository.findOneWithAuthoritiesByEmail(result.get());
-//        }
-//
-//    }
-
+    // 회원탈퇴 메서드
     @Transactional
-    public void deleteUserBase(Long userId) {
-        userRepository.deleteById(userId); // 이렇게 해도 되나?
+    public void deleteUserBase(String userEmail, String accessToken) {
+        redisUtil.setBlackList(accessToken, userEmail, 1800);
+        //accessToken 블랙리스트에 저장
+        redisUtil.delete(userEmail);
+        UserBase user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
+        userRepository.delete(user);
     }
 
+    // 유저 정보 조회 메서드
     @Transactional
-    public Map<String, Object> getUserInfo(UserBase user, List<String> req) {
-        if ("ROLE_PTTEACHER".equals(user.getRole())) {
-            return ptTeacherRepository.getInfo(user.getId(), req);
+    public Map<String, Object> getUserInfo(String userEmail, List<String> req) {
+        UserBase user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("해당하는 이메일이 존재하지 않습니다."));
+        if ("ROLE_PTTEACHER".equals(user.getAuthority().getAuthorityName())) {
+            return ptTeacherRepository.getInfo(userEmail, req);
         } else {
-            return ptStudentRepository.getInfo(user.getId(), req);
+            return ptStudentRepository.getInfo(userEmail, req);
         }
     }
 
