@@ -6,10 +6,11 @@ import { Zipcode } from "../../../recoil/atoms/Zipcode";
 import { StreetAddress } from "../../../recoil/atoms/StreetAddress";
 import styled from "styled-components";
 import Postcode from "../../molecules/postcode/Postcode";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import axios from "axios";
 import {useState, useEffect} from 'react';
 import { useHistory } from "react-router";
+import { message } from 'antd'
 
 
 const ErrorP = styled.p`
@@ -57,6 +58,7 @@ interface FormValues {
   gender: number;
   height: number;
   weight: number;
+  age: number;
   // role: string;
 }
 
@@ -96,7 +98,11 @@ const schema = yup.object().shape({
   weight: yup.number()
     .required('몸무게를 입력해주세요')
     .min(35, '체중을 다시 입력해주세요')
-    .max(200, '체중을 다시 입력해주세요')
+    .max(200, '체중을 다시 입력해주세요'),
+  age: yup.number()
+    .required('나이를 입력해주세요')
+    .min(10, '나이를 다시 입력해주세요')
+    .max(100, '나이를 다시 입력해주세요'),
   // role: yup.string()
   //   .required()
   //   .typeError("가입목적을 선택해주세요"),
@@ -105,8 +111,10 @@ const schema = yup.object().shape({
 function RegisterStudent() {
   const history = useHistory();
   const [inputPhone, setInputPhone] = useState('');
-  const zipcode = useRecoilValue(Zipcode)
-  const streetAddress = useRecoilValue(StreetAddress)
+  const [zipcode, setZipcode] = useRecoilState(Zipcode)
+  // const zipcode = useRecoilValue(Zipcode)
+  const [streetAddress, setStreetAddress ] = useRecoilState(StreetAddress)
+  // const streetAddress = useRecoilValue(StreetAddress)
   
   const { register, setValue, handleSubmit, formState: {errors} } = useForm<FormValues>({
     resolver: yupResolver(schema)
@@ -148,7 +156,7 @@ function RegisterStudent() {
     // "monthlyHeights" : heights,
     // "monthlyWeights" : weights
     // })
-    axios.post("/api/user", {
+    axios.post("https://i5b305.p.ssafy.io/api/user", {
     "email" : data.email,
     "password" : data.password,
     "username" : data.username,
@@ -160,7 +168,17 @@ function RegisterStudent() {
     "detailedAddress" : data.detailedAddress,
     "role" : "ROLE_PTSTUDENT",
     "monthlyHeights" : heights,
-    "monthlyWeights" : weights
+    "monthlyWeights" : weights,
+    "age": data.age
+    })
+    .then((response) => {
+      message.success('성공적으로 회원가입 되었습니다.');
+      setZipcode('')
+      setStreetAddress('')
+      history.push('/');
+    })
+    .catch((e) => {
+      message.success(e.response.data);
     })
     
   
@@ -234,6 +252,10 @@ function RegisterStudent() {
         <option value="1">여성</option>
       </select>
       {errors.gender?.message && <ErrorP>{errors.gender?.message}</ErrorP>}
+
+      <StyledLabel htmlFor="age">나이</StyledLabel>
+      <StyeldInput type="number" placeholder="나이"{...register("age")} min={10} max={100} />
+      {errors.age?.message && <ErrorP>{errors.age?.message}</ErrorP>}
 
       <StyledLabel htmlFor="height">키</StyledLabel>
       <StyeldInput type="number" placeholder="키"{...register("height")} min={130} max={230} />

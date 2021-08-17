@@ -9,7 +9,6 @@ import Postcode from "../../molecules/postcode/Postcode";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 import {useState, useEffect} from 'react';
-import { updateSourceFile } from "typescript";
 import AddSns from "../../molecules/register/AddSns";
 import { AddSNS } from '../../../recoil/atoms/AddSNS'
 import AddCert from "../../molecules/register/AddCert";
@@ -17,6 +16,7 @@ import { AddCERT } from '../../../recoil/atoms/AddCERT';
 import AddCareer from "../../molecules/register/AddCareer";
 import { AddCAREER } from "../../../recoil/atoms/AddCAREER"
 import { useHistory } from "react-router";
+import { message } from 'antd'
 
 const ErrorP = styled.p`
   color: red;
@@ -64,6 +64,7 @@ interface FormValues {
   major: string;
   price: number;
   description: string;
+  age: number;
 }
 
 const schema = yup.object().shape({
@@ -102,6 +103,10 @@ const schema = yup.object().shape({
     .required('금액을 입력해주세요')
     .min(10000, '올바른 금액을 입력해주세요')
     .max(200000, '올바른 금액을 입력해주세요'),
+  age: yup.number()
+    .required('나이를 입력해주세요')
+    .min(10, '나이를 다시 입력해주세요')
+    .max(100, '나이를 다시 입력해주세요'),  
   description: yup.string()
     .required('자기소개를 입력해주세요')
     .max(50, '50글자를 넘길 수 없습니다'),
@@ -140,7 +145,7 @@ function RegisterStudent() {
     // "certificates": adcert,
     // "snsAddrs": adsns,
     // "careers": adcareer})
-    axios.post("/api/user", {
+    axios.post("https://i5b305.p.ssafy.io/api/user", {
       "email" : data.email,
       "password" : data.password,
       "username" : data.username,
@@ -156,14 +161,18 @@ function RegisterStudent() {
       "description": data.description,
       "certificates": adcert,
       "snsAddrs": adsns,
-      "careers": adcareer
+      "careers": adcareer,
+      "age": data.age
+    })
+    .then((response) => {
+      message.success('성공적으로 회원가입 되었습니다.');
+      history.push('/');
+    })
+    .catch((e) => {
+      message.success(e.response.data);
     })
   }
 
-  // useEffect(() => {
-  //   axios.get('/api/hello')
-  //   .then(response => console.log(response))
-  // }, [])
 
   const phoneChange = (e) => {
     const regex = /^[0-9\b -]{0,13}$/;
@@ -228,6 +237,10 @@ function RegisterStudent() {
         <option value="1">여성</option>
       </select>
       {errors.gender?.message && <ErrorP>{errors.gender?.message}</ErrorP>}
+
+      <StyledLabel htmlFor="age">나이</StyledLabel>
+      <StyeldInput type="number" placeholder="나이"{...register("age")} min={10} max={100} />
+      {errors.age?.message && <ErrorP>{errors.age?.message}</ErrorP>}
 
       <StyledLabel htmlFor="major">전공</StyledLabel>
       <StyeldInput type="text" placeholder="전공"{...register("major")} maxLength={20}/>
