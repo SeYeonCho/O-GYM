@@ -255,10 +255,10 @@ const MainNavigation = (props): JSX.Element => {
                 
             {role === 'ROLE_PTSTUDENT' ?
               <Col span={12} style={{backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-              <Link to={'/화상채팅접속'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+              <Link to={'/dovideo'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
                 <img src={conference} alt="예약" style={{width: "80%"}}/>
               </Link>
-              <Link to={'/화상채팅접속'}>
+              <Link to={'/dovideo'}>
                 <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
               </Link>
               </Col>
@@ -271,10 +271,10 @@ const MainNavigation = (props): JSX.Element => {
             {role === 'ROLE_PTTEACHER' ? 
             
             <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-            <Link to={'/화상채팅접속'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+            <Link to={'/dovideo'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
             <img src={conference} alt="예약" style={{width: "80%"}}/>
             </Link>
-            <Link to={'화상채팅접속'}>
+            <Link to={'/dovideo'}>
             <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 개설하기</p>
             </Link>
               </Col>

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import React, { Component } from 'react';
 import OpenViduSession from 'openvidu-react';
+import jwt_decode from "jwt-decode";
+
 
 class SessionPage extends Component {
     OPENVIDU_SERVER_URL: any;
@@ -9,13 +11,34 @@ class SessionPage extends Component {
     constructor(props: any) {
         super(props);
         // this.OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
-        this.OPENVIDU_SERVER_URL = 'https://' + 'i5b305.p.ssafy.io' + ':4443';
+        this.OPENVIDU_SERVER_URL = 'https://' + 'i5b305.p.ssafy.io' + ':3443';
         this.OPENVIDU_SERVER_SECRET = 'password';
-        this.state = {
-            mySessionId: 'SessionA',
-            myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
-            token: undefined,
-        };
+        
+        const accessToken = localStorage.getItem('accessToken');
+    
+        if (accessToken != null) {
+        
+            const decoded: {
+                nickname, role
+            } = jwt_decode(accessToken);
+        
+            this.state = {
+                mySessionId: 'SessionA',
+                myUserName: decoded['nickname'],
+                token: undefined,
+            };
+
+        }
+        else {
+
+            this.state = {
+                mySessionId: 'SessionA',
+                myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
+                token: undefined,
+            };
+
+            
+        }
 
         this.handlerJoinSessionEvent = this.handlerJoinSessionEvent.bind(this);
         this.handlerLeaveSessionEvent = this.handlerLeaveSessionEvent.bind(this);
