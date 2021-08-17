@@ -43,8 +43,14 @@ const StyledModal = styled(Modal)`
 
 
 `;
-const StyledButton = styled(Button)`
-    position: fixed;
+
+export interface MainNavigationType {
+  position?: string;
+}
+
+
+const StyledButton = styled(Button)<MainNavigationType>`
+    position: ${props=>props.position || "fixed"};
     z-index: 2;
     top: 10px;
     left: 10px;
@@ -64,7 +70,7 @@ const LoggedDiv = styled.div`
 `;
 
 
-const MainNavigation = (): JSX.Element => {
+const MainNavigation = (props): JSX.Element => {
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const [logged, setLogged] = useState<string>('');
@@ -124,7 +130,7 @@ const MainNavigation = (): JSX.Element => {
     return (
         <>
             <StyledButton onClick={clickMenuButton}
-          shape="circle"
+          shape="circle" position={props.position}
           icon={<StyledCircledImage src={OGYM} preview={false} />}
         >
         
@@ -213,10 +219,10 @@ const MainNavigation = (): JSX.Element => {
             
             {role === 'ROLE_PTTEACHER' ?
             <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-            <Link to={'/예약현황확인'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+            <Link to={'/teacherreservation'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
             <img src={onlineBooking} alt="예약 현황 확인" style={{width: "80%"}}/>
             </Link>
-            <Link to={'/예약현황확인'}>
+            <Link to={'/teacherreservation'}>
             <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>예약 현황 확인</p>
             </Link>
               </Col>

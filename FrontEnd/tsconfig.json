@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "lib": [
+      "es6",
       "dom",
       "dom.iterable",
       "esnext"
@@ -19,12 +20,15 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
   },
   "include": [
-    "src"
-, "WebRtcPage"  ],
+    "src",
+    "WebRtcPage"  
+  ],
   "exclude": [
-    "node_modules/**/*"
+    "node_modules"
   ],
 }
