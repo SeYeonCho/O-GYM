@@ -501,13 +501,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_3_5_유저의_예약된_시간_조회">3-5. 유저의 예약된 시간 조회</a></li>
+<li><a href="#_3_6_현재_시간의_예약된_정보를_조회">3-6. 현재 시간의 예약된 정보를 조회</a></li>
 </ul>
 </li>
 <li><a href="#_4_healthapi">4. HealthApi</a>
 <ul class="sectlevel2">
 <li><a href="#_공통사항_2">공통사항</a></li>
-<li><a href="#_4_1_내_학생들의_건강정보_조회">4.1 내 학생들의 건강정보 조회</a></li>
-<li><a href="#_4_2_내_건강정보_조회">4.2 내 건강정보 조회</a></li>
+<li><a href="#_4_1_내_학생들의_건강정보_조회">4-1 내 학생들의 건강정보 조회</a></li>
+<li><a href="#_4_2_내_건강정보_조회">4-2 내 건강정보 조회</a></li>
 </ul>
 </li>
 </ul>
@@ -1623,18 +1624,44 @@ Host: i5b305.ssafy.io</code></pre>
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 294
+Content-Length: 105
 
 {
   "statusCode" : 200,
   "message" : "예약 시간 조회에 성공했습니다.",
-  "data" : [ {
-    "description" : "이두 운동",
-    "nickname" : "김계란",
-    "username" : "김성식",
-    "email" : "eggkim@ssafy.com",
-    "reservationTime" : "2021-07-28T04:00:00"
-  } ]
+  "data" : [ ]
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_6_현재_시간의_예약된_정보를_조회"><a class="link" href="#_3_6_현재_시간의_예약된_정보를_조회">3-6. 현재 시간의 예약된 정보를 조회</a></h3>
+<div class="paragraph">
+<p>Request Example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">GET /api/pt/nowreservation HTTP/1.1
+Authorization: JWT ACCESS TOKEN
+Host: i5b305.ssafy.io</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Response Example</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">HTTP/1.1 200 OK
+Content-Type: application/json;charset=UTF-8
+Content-Length: 190
+
+{
+  "statusCode" : 200,
+  "message" : "현재 예약 정보 조회에 성공했습니다.",
+  "data" : {
+    "teacherNickname" : "트레이너",
+    "studentNickname" : "학생"
+  }
 }</code></pre>
 </div>
 </div>
@@ -1681,7 +1708,7 @@ Health API의 모든 Request는 JWT 인증 토큰을 헤더에 포함해야 합�
 </table>
 </div>
 <div class="sect2">
-<h3 id="_4_1_내_학생들의_건강정보_조회"><a class="link" href="#_4_1_내_학생들의_건강정보_조회">4.1 내 학생들의 건강정보 조회</a></h3>
+<h3 id="_4_1_내_학생들의_건강정보_조회"><a class="link" href="#_4_1_내_학생들의_건강정보_조회">4-1 내 학생들의 건강정보 조회</a></h3>
 <div class="paragraph">
 <p>Request Example</p>
 </div>
@@ -1720,7 +1747,7 @@ Content-Length: 386
 </div>
 </div>
 <div class="sect2">
-<h3 id="_4_2_내_건강정보_조회"><a class="link" href="#_4_2_내_건강정보_조회">4.2 내 건강정보 조회</a></h3>
+<h3 id="_4_2_내_건강정보_조회"><a class="link" href="#_4_2_내_건강정보_조회">4-2 내 건강정보 조회</a></h3>
 <div class="paragraph">
 <p>Request Example</p>
 </div>
@@ -1757,7 +1784,7 @@ Content-Length: 208
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-08-16 20:24:26 +0900
+Last updated 2021-08-17 19:08:02 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">

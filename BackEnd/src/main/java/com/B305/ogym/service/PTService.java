@@ -1,5 +1,6 @@
 package com.B305.ogym.service;
 
+import com.B305.ogym.common.util.RestResponsePage;
 import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
 import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -85,11 +87,12 @@ public class PTService {
     }
 
     // 선생님 리스트 출력
+    @Cacheable(cacheNames = "teacherList", key = "#searchDto.hashCode() + #pageable.pageNumber")
     @Transactional
     public AllTeacherListResponse getTeacherList(SearchDto searchDto, Pageable pageable) {
 
         // 조건 검색
-        Page<PTTeacher> ptTeachers = ptTeacherRepository.searchAll(searchDto, pageable);
+        RestResponsePage<PTTeacher> ptTeachers = ptTeacherRepository.searchAll(searchDto, pageable);
 
         // PTTeacher 에서 원하는 정보만 담아 PTTeacherDto로 변환
         List<PTTeacherDto> ptTeacherDtos = new ArrayList<>();
@@ -102,7 +105,6 @@ public class PTService {
 
         return AllTeacherListResponse.builder()
             .teacherList(ptTeacherDtos)
-            .pageable(ptTeachers.getPageable())
             .totalPages(ptTeachers.getTotalPages())
             .totalElements(ptTeachers.getTotalElements())
             .numberOfElements(ptTeachers.getNumberOfElements())
@@ -159,9 +161,9 @@ public class PTService {
         String teacherEmail = null;
         String studentEmail = null;
         UserBase user = userRepository.findByEmail(userEmail).orElseThrow();
-        if("ROLE_PTTEACHER".equals(user.getAuthority().getAuthorityName())){
+        if ("ROLE_PTTEACHER".equals(user.getAuthority().getAuthorityName())) {
             teacherEmail = userEmail;
-        }else{
+        } else {
             studentEmail = userEmail;
         }
         List<String> nowReservation = ptStudentPTTeacherRepository

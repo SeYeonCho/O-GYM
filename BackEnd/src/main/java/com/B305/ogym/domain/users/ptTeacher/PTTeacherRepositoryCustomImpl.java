@@ -8,6 +8,7 @@ import static com.B305.ogym.domain.users.ptTeacher.QCertificate.certificate;
 import static com.B305.ogym.domain.users.ptTeacher.QPTTeacher.pTTeacher;
 import static com.B305.ogym.domain.users.ptTeacher.QSns.sns;
 
+import com.B305.ogym.common.util.RestResponsePage;
 import com.B305.ogym.controller.dto.HealthDto.MyStudentsHealthListResponse;
 import com.B305.ogym.controller.dto.HealthDto.StudentHealth;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
@@ -61,6 +62,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         check.put("description", pTTeacher.description);
 
     }
+
     // 해당 선생님 관련 학생들의 건강정보 조회 메서드
     @Override
     public MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail) {
@@ -95,6 +97,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         myStudentsHealthListResponse.setStudentHealthList(result);
         return myStudentsHealthListResponse;
     }
+
     // 선생님의 정보 조회 메서드
     @Override
     public Map<String, Object> getInfo(String teacherEmail, List<String> req) { // "username" , "id"
@@ -151,7 +154,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
 
     // 선생님 리스트 조건 검색
     @Override
-    public Page<PTTeacher> searchAll(SearchDto searchDto, Pageable pageable) {
+    public RestResponsePage<PTTeacher> searchAll(SearchDto searchDto, Pageable pageable) {
 
         QueryResults<PTTeacher> results = queryFactory
             .selectFrom(pTTeacher)
@@ -167,7 +170,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             .limit(pageable.getPageSize())  // 페이징 처리(한 페이지에 출력할 개체 수)
             .orderBy(pTTeacher.starRating.desc())   // 별점 높은 순으로 출력
             .fetchResults();    // 결과 + count
-        return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+        return new RestResponsePage<>(results.getResults(), pageable, results.getTotal());
     }
 
     // 이름 포함
@@ -219,6 +222,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         return pTTeacher.age.goe(minAge);
 
     }
+
     // 선생님의 예약 정보 조회 메서드
     @Override
     public List<LocalDateTime> reservationTime(String teacherEmail) {

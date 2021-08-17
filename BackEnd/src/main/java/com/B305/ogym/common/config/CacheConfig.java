@@ -3,7 +3,6 @@ package com.B305.ogym.common.config;
 
 import com.B305.ogym.common.properties.CacheProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
@@ -75,7 +74,8 @@ public class CacheConfig {
             .serializeKeysWith(RedisSerializationContext.SerializationPair
                 .fromSerializer(new StringRedisSerializer()))
             .serializeValuesWith(RedisSerializationContext.SerializationPair
-                .fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper())));
+                .fromSerializer(
+                    new GenericJackson2JsonRedisSerializer(objectMapper())));
     }
 
     private Map<String, RedisCacheConfiguration> redisCacheConfigurationMap() {

@@ -21,7 +21,6 @@
       "reservations" : [ ],
       "certificates" : [ ]
     } ],
-    "pageable" : null,
     "totalPages" : 0,
     "totalElements" : 0,
     "numberOfElements" : 0

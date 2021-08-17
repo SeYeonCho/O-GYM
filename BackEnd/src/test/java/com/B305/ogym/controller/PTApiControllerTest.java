@@ -22,6 +22,7 @@ import com.B305.ogym.common.config.SecurityConfig;
 import com.B305.ogym.controller.dto.PTDto.AllTeacherListResponse;
 import com.B305.ogym.controller.dto.PTDto.PTTeacherDto;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
+import com.B305.ogym.controller.dto.PTDto.nowReservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.domain.users.common.Gender;
@@ -360,17 +361,37 @@ class PTApiControllerTest {
     @DisplayName("유저의 예약된 시간 조회 - 실패")
     @Test
     public void getReservationTime_failure() throws Exception {
-        String userEmail = "userEmail@naver.com";
-        given(ptService.getReservationTime(userEmail))
+        given(ptService.getReservationTime(any()))
             .willThrow(new UserNotFoundException("해당 유저는 이미 탈퇴한 회원입니다."));
-
-        assertThrows(UserNotFoundException.class,
-            () -> ptService.getReservationTime(userEmail));
 
         mockMvc.perform(get("/api/pt/reservation")
             .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound());
+    }
+
+    @WithAuthUser(email = "userEmail@naver.com", role = "ROLE_PTSTUDENT")
+    @DisplayName("요청한 시간을 기준으로 10분 이전/이후의 예약을 조회 - 성공")
+    @Test
+    public void getNowReservation_success() throws Exception {
+        String userEmail = "userEmail@naver.com";
+
+        nowReservationDto nowReservation = nowReservationDto.builder()
+            .studentNickname("학생")
+            .teacherNickname("트레이너")
+            .build();
+
+        given(ptService.getNowReservation(any())).willReturn(nowReservation);
+
+        mockMvc.perform(get("/api/pt/nowreservation")
+            .header("Authorization", "JWT ACCESS TOKEN"))
+            .andDo(print())
+            .andExpect(status().isOk())
+            .andDo(document(
+                "PTApi/getNowReservation/successful",
+                getDocumentRequest(),
+                getDocumentResponse()
+            ));
     }
 
 }
