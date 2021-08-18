@@ -86,4 +86,112 @@ public class PTTeacher extends UserBase {
         }
     }
 
+    public Object getInfo(String req){
+        if("id".equals(req)){
+            return this.getId();
+        }else if("email".equals(req)){
+            return this.getEmail();
+        }else if("username".equals(req)){
+            return this.getUsername();
+        }else if("nickname".equals(req)){
+            return this.getNickname();
+        }else if("age".equals(req)){
+            return this.getAge();
+        }else if("gender".equals(req)){
+            return this.getGender();
+        }else if("tel".equals(req)){
+            return this.getTel();
+        }else if("address".equals(req)){
+            return this.getAddress();
+        }else if("role".equals(req)){
+            return this.getAuthority().getAuthorityName();
+        }else if("major".equals(req)){
+            return this.getMajor();
+        }else if("price".equals(req)){
+            return this.getPrice();
+        }else if("description".equals(req)){
+            return this.getDescription();
+        }else if("profilePictureURL".equals(req)){
+            if(this.getProfilePicture()!= null)
+                return this.getProfilePicture().getPictureAddr();
+            else
+                return null;
+        }else{
+            return null;
+        }
+    }
+
+    public PTTeacherDto toPTTeacherDto() {
+
+        List<Certificate> certificates = this.getCertificates();
+        List<CertificateDto> certificateDtos = new ArrayList<>();
+
+        for (int i = 0; i < certificates.size(); i++) {
+            Certificate certificate = certificates.get(i);
+            CertificateDto certificateDto = CertificateDto.builder()
+                .name(certificate.getName())
+                .date(certificate.getDate())
+                .publisher(certificate.getPublisher())
+                .build();
+            certificateDtos.add(certificateDto);
+        }
+
+        List<Career> careers = this.getCareers();
+        List<CareerDto> careerDtos = new ArrayList<>();
+
+        for (int i = 0; i < careers.size(); i++) {
+            Career career = careers.get(i);
+            CareerDto careerDto = CareerDto.builder()
+                .company(career.getCompany())
+                .startDate(career.getStartDate())
+                .endDate(career.getEndDate())
+                .role(career.getRole())
+                .build();
+            careerDtos.add(careerDto);
+        }
+
+        Set<PTStudentPTTeacher> ptStudentPTTeachers = this.getPtStudentPTTeachers();
+        List<PTStudentPTTeacher> ptStudentPTTeachersList = new ArrayList<>(ptStudentPTTeachers);
+        List<LocalDateTime> reservations = new ArrayList<>();
+
+        for (int i = 0; i < ptStudentPTTeachersList.size(); i++) {
+            PTStudentPTTeacher ptStudentPTTeacher = ptStudentPTTeachersList.get(i);
+            reservations.add(ptStudentPTTeacher.getReservationDate());
+        }
+
+        Collections.sort(reservations);
+
+        List<Sns> snsList = this.getSnss();
+        List<SnsDto> snsDtos = new ArrayList<>();
+
+        for (int i = 0; i < snsList.size(); i++) {
+            Sns sns = snsList.get(i);
+            SnsDto snsDto = SnsDto.builder()
+                .platform(sns.getPlatform())
+                .url(sns.getUrl())
+                .build();
+            snsDtos.add(snsDto);
+        }
+
+        PTTeacherDto ptTeacherDto = PTTeacherDto.builder().username(this.getUsername())
+            .gender(this.getGender())
+            .nickname(this.getNickname())
+            .age(this.getAge())
+            .tel(this.getTel())
+            .email(this.getEmail())
+            .profilePicture(this.getProfilePicture())
+            .starRating(this.getStarRating())
+            .major(this.getMajor())
+            .price(this.getPrice())
+            .description(this.getDescription())
+            .certificates(certificateDtos)
+            .careers(careerDtos)
+            .reservations(reservations)
+            .snsList(snsDtos)
+            .build();
+
+        return ptTeacherDto;
+
+    }
+
 }

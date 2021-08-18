@@ -165,6 +165,14 @@ public class UserDto {
         private LocalDate endDate;
 
         private String company;
+
+        @Builder
+        public CareerDto(String role, LocalDate startDate, LocalDate endDate, String company) {
+            this.role = role;
+            this.startDate = startDate;
+            this.endDate = endDate;
+            this.company = company;
+        }
     }
 
     @Getter
@@ -176,6 +184,13 @@ public class UserDto {
         private String publisher; // 발급 기관
 
         private LocalDate date; // 획득일
+
+        @Builder
+        public CertificateDto(String name, String publisher, LocalDate date) {
+            this.name = name;
+            this.publisher = publisher;
+            this.date = date;
+        }
     }
 
     @Getter
@@ -185,6 +200,12 @@ public class UserDto {
         private String url; // 주소
 
         private String platform; // 플랫폼
+
+        @Builder
+        public SnsDto(String url, String platform) {
+            this.url = url;
+            this.platform = platform;
+        }
     }
 
 

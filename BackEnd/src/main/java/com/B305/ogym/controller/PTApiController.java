@@ -40,8 +40,6 @@ public class PTApiController {
         SearchDto searchDto,
         @PageableDefault(size = 10, sort = "username") final Pageable pageable) {
 
-        System.out.println("check" + searchDto.getName());
-
         return ResponseEntity.ok(new SuccessResponseDto<PTDto.AllTeacherListResponse>(200,
             "PT 선생님 리스트 불러오기에 성공하였습니다.", ptService.getTeacherList(searchDto, pageable)));
     }

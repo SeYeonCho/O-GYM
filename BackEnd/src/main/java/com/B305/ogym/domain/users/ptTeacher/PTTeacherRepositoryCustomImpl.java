@@ -47,20 +47,6 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
     public PTTeacherRepositoryCustomImpl(EntityManager em) {
         this.em = em;
         queryFactory = new JPAQueryFactory(em);
-
-        check.put("id", pTTeacher.id);
-        check.put("email", pTTeacher.email);
-        check.put("username", pTTeacher.username);
-        check.put("nickname", pTTeacher.nickname);
-        check.put("age", pTTeacher.age);
-        check.put("gender", pTTeacher.gender);
-        check.put("tel", pTTeacher.tel);
-        check.put("address", pTTeacher.address);
-        check.put("role", pTTeacher.authority);
-        check.put("major", pTTeacher.major);
-        check.put("price", pTTeacher.price);
-        check.put("description", pTTeacher.description);
-
     }
 
     // 해당 선생님 관련 학생들의 건강정보 조회 메서드
@@ -97,61 +83,6 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         myStudentsHealthListResponse.setStudentHealthList(result);
         return myStudentsHealthListResponse;
     }
-
-    // 선생님의 정보 조회 메서드
-    @Override
-    public Map<String, Object> getInfo(String teacherEmail, List<String> req) { // "username" , "id"
-
-        Tuple result = queryFactory
-            .select(pTTeacher.id, pTTeacher.email, pTTeacher.username, pTTeacher.nickname,
-                pTTeacher.age,
-                pTTeacher.gender, pTTeacher.tel, pTTeacher.address, pTTeacher.authority,
-                pTTeacher.major, pTTeacher.price, pTTeacher.description)
-            .from(pTTeacher)
-            .where(pTTeacher.email.eq(teacherEmail))
-            .fetchOne();
-
-        Map<String, Object> map = new HashMap<>();
-        req.forEach(o -> {
-            if ("certificates".equals(o)) {
-                List<CertificateDto> certificates = queryFactory
-                    .select(Projections.fields(CertificateDto.class,
-                        certificate.name.as("name"),
-                        certificate.publisher.as("publisher"),
-                        certificate.date.as("date")))
-                    .from(certificate)
-                    .where(certificate.ptTeacher.email.eq(teacherEmail))
-                    .fetch();
-                map.put(o, certificates);
-            } else if ("careers".equals(o)) {
-                List<CareerDto> careers = queryFactory
-                    .select(Projections.fields(CareerDto.class,
-                        career.company.as("company"),
-                        career.startDate.as("startDate"),
-                        career.endDate.as("endDate"),
-                        career.role.as("role")))
-                    .from(career)
-                    .where(career.ptTeacher.email.eq(teacherEmail))
-                    .fetch();
-                map.put(o, careers);
-            } else if ("snss".equals(o)) {
-                List<SnsDto> snss = queryFactory
-                    .select(Projections.fields(SnsDto.class,
-                        sns.url.as("url"),
-                        sns.platform.as("platform")))
-                    .from(sns)
-                    .where(sns.ptTeacher.email.eq(teacherEmail))
-                    .fetch();
-                map.put(o, snss);
-            } else {
-                assert result != null;
-                map.put(o, result.get(check.get(o)));
-            }
-        });
-
-        return map;
-    }
-
     // 선생님 리스트 조건 검색
     @Override
     public RestResponsePage<PTTeacher> searchAll(SearchDto searchDto, Pageable pageable) {

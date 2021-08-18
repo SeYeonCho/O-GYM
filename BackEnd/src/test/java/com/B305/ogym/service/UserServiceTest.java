@@ -222,7 +222,10 @@ class UserServiceTest {
         user.setRole(new Authority("ROLE_PTTEACHER"));
         List<String> req = new ArrayList<>(Arrays.asList("email", "nickname"));
         given(userRepository.findByEmail(email)).willReturn(Optional.of(user));
-        given(ptTeacherRepository.getInfo(email, req)).willReturn(userInfo);
+//        given(ptTeacherRepository.getInfo(email, req)).willReturn(userInfo);
+        given(ptTeacherRepository.findByEmail(email)).willReturn(Optional.of(user));
+        userInfo.put("email",user.getEmail());
+        userInfo.put("nickname",user.getNickname());
 
         //when
         assertEquals(userInfo, userService.getUserInfo(email, req));
@@ -260,7 +263,10 @@ class UserServiceTest {
         user.setRole(new Authority("ROLE_PTSTUDENT"));
         List<String> req = new ArrayList<>(Arrays.asList("email", "nickname"));
         given(userRepository.findByEmail(email)).willReturn(Optional.of(user));
-        given(ptStudentRepository.getInfo(email, req)).willReturn(userInfo);
+//        given(ptStudentRepository.getInfo(email, req)).willReturn(userInfo);
+        given(ptStudentRepository.findByEmail(email)).willReturn(Optional.of(user));
+        userInfo.put("email",user.getEmail());
+        userInfo.put("nickname",user.getNickname());
 
         //when
         assertEquals(userInfo, userService.getUserInfo(email, req));

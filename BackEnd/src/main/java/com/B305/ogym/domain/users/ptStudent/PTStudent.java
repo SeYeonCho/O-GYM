@@ -49,6 +49,49 @@ public class PTStudent extends UserBase {
         this.monthly.set(month - 1, monthly);
     }
 
+    public Object getInfo(String req){
+        if("id".equals(req)){
+            return this.getId();
+        }else if("email".equals(req)){
+            return this.getEmail();
+        }else if("username".equals(req)){
+            return this.getUsername();
+        }else if("nickname".equals(req)){
+            return this.getNickname();
+        }else if("age".equals(req)){
+            return this.getAge();
+        }else if("gender".equals(req)){
+            return this.getGender();
+        }else if("tel".equals(req)){
+            return this.getTel();
+        }else if("address".equals(req)){
+            return this.getAddress();
+        }else if("role".equals(req)){
+            return this.getAuthority().getAuthorityName();
+        }else if("profilePictureURL".equals(req)){
+            if(this.getProfilePicture()!= null)
+                return this.getProfilePicture().getPictureAddr();
+            else
+                return null;
+        }else if("heights".equals(req)) {
+            List<Integer> heights = new ArrayList<>();
+            for(int i = 0 ; i < this.monthly.size(); i++){
+                heights.add(monthly.get(i).getHeight());
+            }
+            return heights;
+        }else if("weights".equals(req)) {
+            List<Integer> weights = new ArrayList<>();
+            for(int i = 0 ; i < this.monthly.size(); i++){
+                weights.add(monthly.get(i).getWeight());
+            }
+            return weights;
+        }else{
+            return null;
+        }
+    }
+
+
+
     // 내 건강정보 조회
     public MyHealthResponse getMyHealthResponse(PTStudent ptStudent) {
         List<Monthly> monthly = ptStudent.getMonthly();
