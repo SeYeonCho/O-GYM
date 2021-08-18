@@ -15,3 +15,13 @@
 [data-theme="dark"] .demo-infinite-container {
   border: 1px solid #303030;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(179, 179, 179);
+}
