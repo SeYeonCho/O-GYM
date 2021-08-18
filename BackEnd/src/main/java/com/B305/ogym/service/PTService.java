@@ -142,6 +142,7 @@ public class PTService {
                             .reservationTime(o.getReservationDate())
                             .nickname(o.getPtStudent().getNickname())
                             .username(o.getPtStudent().getUsername())
+                            .profileUrl(o.getPtStudent().getProfilePicture().getPictureAddr())
                             .email(o.getPtStudent().getEmail())
                             .build()
                     );
@@ -156,6 +157,7 @@ public class PTService {
                             .reservationTime(o.getReservationDate())
                             .nickname(o.getPtTeacher().getNickname())
                             .username(o.getPtTeacher().getUsername())
+                            .profileUrl(o.getPtTeacher().getProfilePicture().getPictureAddr())
                             .email(o.getPtTeacher().getEmail())
                             .build()
                     );

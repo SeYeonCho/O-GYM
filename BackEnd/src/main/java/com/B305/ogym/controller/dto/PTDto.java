@@ -220,15 +220,18 @@ public class PTDto {
         private String description; // 설명
         private String nickname; // 상대방 닉네임
         private String username; // 상대방 이름
+        private String profileUrl; // 상대방 프로필
         private String email; // 상대방 이메일
         private LocalDateTime reservationTime; // 예약 시간,
 
         @Builder
-        public reservationDto(String description, String nickname, String username, String email,
+        public reservationDto(String description, String nickname, String username,
+            String profileUrl, String email,
             LocalDateTime reservationTime) {
             this.description = description;
             this.nickname = nickname;
             this.username = username;
+            this.profileUrl = profileUrl;
             this.email = email;
             this.reservationTime = reservationTime;
         }
