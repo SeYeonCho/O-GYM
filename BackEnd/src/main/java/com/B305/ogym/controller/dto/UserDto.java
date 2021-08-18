@@ -208,5 +208,17 @@ public class UserDto {
         }
     }
 
+    @Getter
+    @NoArgsConstructor(access = AccessLevel.PUBLIC)
+    public static class ProfileDto {
+
+        private String url; // 프로필 이미지 주소
+
+        @Builder
+        public ProfileDto(String url) {
+            this.url = url;
+        }
+    }
+
 
 }

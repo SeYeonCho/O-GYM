@@ -1,8 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "statusCode" : 201,
-  "message" : "회원 가입에 성공했습니다.",
-  "data" : { }
-}
-----

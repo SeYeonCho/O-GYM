@@ -1,7 +1,0 @@
-[source,http,options="nowrap"]
-----
-GET /api/pt/nowreservation HTTP/1.1
-Authorization: JWT ACCESS TOKEN
-Host: i5b305.ssafy.io
-
-----

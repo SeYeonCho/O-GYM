@@ -4,10 +4,12 @@ import com.B305.ogym.common.util.RedisUtil;
 import com.B305.ogym.controller.dto.UserDto;
 import com.B305.ogym.controller.dto.UserDto.CareerDto;
 import com.B305.ogym.controller.dto.UserDto.CertificateDto;
+import com.B305.ogym.controller.dto.UserDto.ProfileDto;
 import com.B305.ogym.controller.dto.UserDto.SnsDto;
 import com.B305.ogym.domain.authority.Authority;
 import com.B305.ogym.domain.authority.AuthorityRepository;
 import com.B305.ogym.domain.users.UserRepository;
+import com.B305.ogym.domain.users.common.ProfilePicture;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
@@ -165,5 +167,15 @@ public class UserService {
             });
             return map;
         }
+    }
+
+    @Transactional
+    public void putProfile(String userEmail, ProfileDto profileDto) {
+        System.out.println("Service : putProfile");
+        PTTeacher ptTeacher = ptTeacherRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("TEACHER"));
+        ptTeacher
+            .setProfilePicture(ProfilePicture.builder().pictureAddr(profileDto.getUrl()).build());
+        ptTeacherRepository.save(ptTeacher);
     }
 }

@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public class Encrypt_sha256 {
+public class EncryptSha256 {
     // SHA-256으로 encrypt 하는 메서드
     public static String encrypt(String s){
         try {

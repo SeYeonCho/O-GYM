@@ -1,8 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "statusCode" : 200,
-  "message" : "예약 시간 조회에 성공했습니다.",
-  "data" : [ ]
-}
-----
