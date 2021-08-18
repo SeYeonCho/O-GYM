@@ -11,6 +11,7 @@ import axios from "axios";
 import {useState, useEffect} from 'react';
 import { useHistory } from "react-router";
 import { message } from 'antd'
+import arrow from '../../../assets/pages/register/arrow.jpg'
 
 
 const ErrorP = styled.p`
@@ -45,6 +46,22 @@ const StyledLabel = styled.label`
   color: black;
 `;
 
+const StyledSelect = styled.select`
+  width: 200px;
+  padding: 0.8em 0.5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  background: url(${arrow}) no-repeat 95% 50%;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  .select::-ms-expand {
+    display: none;
+  }
+`;
+
 interface FormValues {
   email: string;
   password: string;
@@ -59,26 +76,30 @@ interface FormValues {
   height: number;
   weight: number;
   age: number;
-  // role: string;
 }
 
 const schema = yup.object().shape({
   email: yup.string()
     .required("이메일을 입력해주세요")
-    .max(30, "올바른 이메일 형식이 아닙니다")
+    .min(3, "올바른 이메일 형식이 아닙니다")
+    .max(50, "올바른 이메일 형식이 아닙니다")
     .matches(/[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i, "올바른 이메일 형식이 아닙니다"),
   password: yup.string()
     .required("비밀번호를 입력해주세요")
-    .min(8, "비밀번호는 8자 이상 입력해주세요")
+    .min(3, "비밀번호는 3자 이상 입력해주세요")
     .max(20, "비밀번호는 20자 이하 입력해주세요"),
   confirmPassword: yup.string()
     .oneOf([yup.ref("password"), null], "비밀번호가 일치하지 않습니다")
     .required("비밀번호를 입력해주세요"),
   username: yup.string()
     .required("이름을 입력해주세요")
+    .min(2, "이름은 2자 이상 입력해주세요")
+    .max(10, "이름은 10자 이하로 입력해주세요")
     .matches(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g, "한글을 입력해주세요"),
   nickname: yup.string()
-    .required("닉네임을 입력해주세요"),
+    .required("닉네임을 입력해주세요")
+    .min(2, "닉네임은 2자 이상 입력해주세요")
+    .max(10, "닉네임은 10자 이하로 입력해주세요"),
   zipcode: yup.string()
     .required("주소 검색을 눌러서 입력해주세요"),
   streetAddress: yup.string()
@@ -102,19 +123,14 @@ const schema = yup.object().shape({
   age: yup.number()
     .required('나이를 입력해주세요')
     .min(10, '나이를 다시 입력해주세요')
-    .max(100, '나이를 다시 입력해주세요'),
-  // role: yup.string()
-  //   .required()
-  //   .typeError("가입목적을 선택해주세요"),
+    .max(150, '나이를 다시 입력해주세요'),
 });
 
 function RegisterStudent() {
   const history = useHistory();
   const [inputPhone, setInputPhone] = useState('');
   const [zipcode, setZipcode] = useRecoilState(Zipcode)
-  // const zipcode = useRecoilValue(Zipcode)
   const [streetAddress, setStreetAddress ] = useRecoilState(StreetAddress)
-  // const streetAddress = useRecoilValue(StreetAddress)
   
   const { register, setValue, handleSubmit, formState: {errors} } = useForm<FormValues>({
     resolver: yupResolver(schema)
@@ -141,21 +157,6 @@ function RegisterStudent() {
       }
     }
 
-    // console.log(data)
-    // console.log({
-    // "email" : data.email,
-    // "password" : data.password,
-    // "username" : data.username,
-    // "nickname" : data.nickname,
-    // "gender" : data.gender,
-    // "tel" : data.phone,
-    // "zipCode" : data.zipcode,
-    // "street" : data.streetAddress,
-    // "detailedAddress" : data.detailedAddress,
-    // "role" : "ROLE_PTSTUDENT",
-    // "monthlyHeights" : heights,
-    // "monthlyWeights" : weights
-    // })
     axios.post("https://i5b305.p.ssafy.io/api/user", {
     "email" : data.email,
     "password" : data.password,
@@ -179,15 +180,9 @@ function RegisterStudent() {
     })
     .catch((e) => {
       message.success(e.response.data);
-    })
-    
-  
-}
+    }) 
+  }
 
-  // useEffect(() => {
-  //   axios.get('/api/hello')
-  //   .then(response => console.log(response))
-  // }, [])
 
   const phoneChange = (e) => {
     const regex = /^[0-9\b -]{0,13}$/;
@@ -195,6 +190,7 @@ function RegisterStudent() {
       setInputPhone(e.target.value);
     }
   }
+
 
   useEffect(() => {
     if (inputPhone.length === 10) {
@@ -205,26 +201,27 @@ function RegisterStudent() {
     }
   }, [inputPhone]);
 
+
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)} >
       <StyledLabel htmlFor="email">이메일</StyledLabel>
-      <StyeldInput type="text" placeholder="이메일"{...register("email")} maxLength={30}/>
+      <StyeldInput type="text" placeholder="이메일"{...register("email")} minLength={3} maxLength={50}/>
       {errors.email?.message && <ErrorP>{errors.email?.message}</ErrorP>}
 
       <StyledLabel htmlFor="password">비밀번호</StyledLabel>
-      <StyeldInput type="password" placeholder="비밀번호(8~20자)" {...register("password")} maxLength={20} />
+      <StyeldInput type="password" placeholder="비밀번호(8~20자)" {...register("password")} minLength={3} maxLength={20} />
       {errors.password?.message && <ErrorP>{errors.password?.message}</ErrorP>}
 
       <StyledLabel htmlFor="confirmPassword">비밀번호 확인</StyledLabel>
-      <StyeldInput type="password" placeholder="비밀번호 확인"{...register("confirmPassword")} maxLength={20}/>
+      <StyeldInput type="password" placeholder="비밀번호 확인"{...register("confirmPassword")} minLength={3} maxLength={20}/>
       {errors.confirmPassword?.message && <ErrorP>{errors.confirmPassword?.message}</ErrorP>}
 
       <StyledLabel htmlFor="username">이름</StyledLabel>
-      <StyeldInput type="text" placeholder="이름"{...register("username")} maxLength={4}/>
+      <StyeldInput type="text" placeholder="이름"{...register("username")} minLength={2} maxLength={10}/>
       {errors.username?.message && <ErrorP>{errors.username?.message}</ErrorP>}
 
       <StyledLabel htmlFor="nickname">닉네임</StyledLabel>
-      <StyeldInput type="text" placeholder="닉네임"{...register("nickname")} />
+      <StyeldInput type="text" placeholder="닉네임"{...register("nickname")} minLength={2} maxLength={10} />
       {errors.nickname?.message && <ErrorP>{errors.nickname?.message}</ErrorP>}
 
       <StyledLabel htmlFor="zipcode">주소검색</StyledLabel>
@@ -246,15 +243,15 @@ function RegisterStudent() {
       {errors.phone?.message && <ErrorP>{errors.phone?.message}</ErrorP>}
       
       <StyledLabel htmlFor="gender">성별</StyledLabel>
-      <select {...register("gender")} id="gender">
+      <StyledSelect {...register("gender")} id="gender">
         <option value="">Select</option>
         <option value="0">남성</option>
         <option value="1">여성</option>
-      </select>
+      </StyledSelect>
       {errors.gender?.message && <ErrorP>{errors.gender?.message}</ErrorP>}
 
       <StyledLabel htmlFor="age">나이</StyledLabel>
-      <StyeldInput type="number" placeholder="나이"{...register("age")} min={10} max={100} />
+      <StyeldInput type="number" placeholder="나이"{...register("age")} min={10} max={150} />
       {errors.age?.message && <ErrorP>{errors.age?.message}</ErrorP>}
 
       <StyledLabel htmlFor="height">키</StyledLabel>
@@ -264,14 +261,6 @@ function RegisterStudent() {
       <StyledLabel htmlFor="weight">체중</StyledLabel>
       <StyeldInput type="number" placeholder="체중"{...register("weight")} min={35} max={200} />
       {errors.weight?.message && <ErrorP>{errors.weight?.message}</ErrorP>}
-
-      {/* <StyledLabel htmlFor="role">가입목적</StyledLabel>
-      <select {...register("role")} id="role">
-        <option value="">Select</option>
-        <option value="ROLE_PTTEACHER">PT트레이너</option>
-        <option value="ROLE_PTSTUDENT">PT회원</option>
-      </select>
-      {errors.role?.message && <ErrorP>{errors.role?.message}</ErrorP>} */}
       
       <StyeldInput 
         type="submit"

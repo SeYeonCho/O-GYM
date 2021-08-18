@@ -82,14 +82,6 @@ function AddCert() {
     if (prevIsValid()) {
       setForm((prev) => [...prev, inputState]);
     }
-    // const newForm = form.map((item, index) => {
-    //   return {
-    //     platform: item["SNSPlatform"],
-    //     SNSUrl: item["SNSUrl"],
-    //   };
-    // });
-    // console.log(newForm);
-    // console.log(form);
   };
 
   const onChange = (index, event) => {
@@ -116,7 +108,6 @@ function AddCert() {
         };
       });
     });
-    // setsnsInfo(form);
   };
 
   useEffect(() => {
@@ -129,7 +120,6 @@ function AddCert() {
       };
     });
     setcareerInfo(newForm);
-    // console.log(certInfo);
   }, [form]);
 
   const handleRemoveField = (e, index) => {
@@ -143,7 +133,7 @@ function AddCert() {
         <form>
           {form.map((item, index) => (
             <Row key={`item-${index}`} style={{ display: "flex" }}>
-              <Col span={4}>
+              <Col span={14}>
                 <StyledInput
                   type="text"
                   name="company"
@@ -156,7 +146,7 @@ function AddCert() {
                   <div style={{ color: "red" }}>{item.errors.company}</div>
                 )}
               </Col>
-              <Col span={3}>
+              <Col span={10}>
                 <StyledInput
                   type="text"
                   name="role"
@@ -170,7 +160,7 @@ function AddCert() {
                 )}
               </Col>
 
-              <Col span={7}>
+              <Col span={10}>
                 <StyledInput
                   type="date"
                   name="startdate"
@@ -183,7 +173,7 @@ function AddCert() {
                   <div style={{ color: "red" }}>{item.errors.startdate}</div>
                 )}
               </Col>
-              <Col span={7}>
+              <Col span={10}>
                 <StyledInput
                   type="date"
                   name="enddate"
@@ -197,7 +187,7 @@ function AddCert() {
                   <div style={{ color: "red" }}>{item.errors.enddate}</div>
                 )}
               </Col>
-              <Col span={1}>
+              <Col span={4}>
                 <Button
                   type="primary"
                   danger
