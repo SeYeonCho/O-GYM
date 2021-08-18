@@ -20,6 +20,7 @@ import styled from "styled-components";
 import BmiChart from "../../components/organisms/ChartStudent/BmiChart";
 import WeightFlowChart from "../../components/organisms/ChartStudent/WeightFlowChart";
 import PibwChart from "../../components/organisms/ChartStudent/PibwChart"
+import MainNavigation from "../../components/organisms/Main/Main-Navigation";
 
 // install Swiper modules
 SwiperCore.use([EffectFade, Mousewheel,Pagination]);
@@ -70,6 +71,7 @@ function StudentChartPage() {
   
   return (
     <>
+      <MainNavigation />
       <Swiper direction={'vertical'} slidesPerView={1} spaceBetween={30} mousewheel={true} pagination={{"clickable": true}} className="mySwiper">
         <SwiperSlide>
           <ImgDiv>

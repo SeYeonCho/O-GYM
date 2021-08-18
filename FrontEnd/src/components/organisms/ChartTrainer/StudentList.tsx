@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import { useRecoilState} from 'recoil'
 import { StudentIndex } from '../../../recoil/atoms/chart/StudentIndex';
 import { Bmi } from '../../../recoil/atoms/chart/Bmi';
@@ -31,10 +31,10 @@ function StudentList(props: any) {
     <>
       <div style={{marginTop: "8rem"}}>
       {data.myStudent.map((student: any, index: any) => (
-        <div style={{display: "flex", marginLeft: "4rem"}}>
-          <p style={{color: "white", marginTop: "1rem"}}>{student.username}</p>
-          <button 
-            style={{backgroundColor: "transparent", borderColor: "transparent", color: "white", cursor: "pointer"}} 
+        <div style={{display: "flex", marginLeft: "1rem"}}>
+          {/* <p style={{color: "white", marginTop: "0.32rem"}}>{student.username}</p> */}
+          <Button 
+            style={{marginBottom: "1.5rem"}}
             onClick={() => {
               let today = new Date()
               let month = today.getMonth()
@@ -50,8 +50,8 @@ function StudentList(props: any) {
               setSelectedUser(myStudent[index])
             }}
           >
-            차트
-          </button>
+            {student.username}님의 차트보기
+          </Button>
         </div>
       ))}
       </div>
