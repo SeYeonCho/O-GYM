@@ -1,27 +1,14 @@
 import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import 'antd/dist/antd.css';
-import { Layout, Menu } from 'antd';
-import { Row, Col, Button, message } from 'antd';
-import TrainerSearch from '../../components/organisms/TrainerSearch/TrainerSearch';
+import { Divider, Layout, Menu } from 'antd';
+import { Row, Col, Button, message, Collapse } from 'antd';
 import axios from 'axios';
 import './styles.css';
-import {
-  FieldTimeOutlined,
-  BarChartOutlined,
-  CloudOutlined,
-  ShopOutlined,
-  TeamOutlined,
-  UserOutlined,
-  UploadOutlined,
-  VideoCameraOutlined, 
-  CalendarOutlined, 
-  SettingOutlined
-} from '@ant-design/icons';
 import StudentCalendar from '../../components/molecules/StudentCalendar';
 import TimeSchedule from '../../components/molecules/TimeSchedule';
 import MainNavigation from '../../components/organisms/Main/Main-Navigation';
-import TrainerInfo2 from '../../components/organisms/TrainerInfo/TrainerInfo2';
+import TrainerInfo from '../../components/organisms/TrainerInfo/TrainerInfo';
 import { ReservationState } from '../../recoil/atoms/Reservation/ReservationState';
 import { useRecoilState } from 'recoil';
 import { Email } from '../../recoil/atoms/Reservation/Email';
@@ -30,9 +17,11 @@ import { Date } from '../../recoil/atoms/Reservation/Date';
 import { ReservationList } from '../../recoil/atoms/Reservation/ReservationList';
 import ReservationCancel from '../../components/organisms/ReservationCancel/ReservationCancel';
 import { useHistory } from 'react-router-dom';
+import arrow from '../../assets/pages/register/arrow.jpg'
 
 const { Content, Sider } = Layout;
 const { SubMenu } = Menu;
+const { Panel } = Collapse
 
 const Container = styled(Row)`
   height: 100vh;
@@ -62,6 +51,22 @@ const StyledDiv = styled.div`
   flex-direction: column;
 `;
 
+const StyledSelect = styled.select`
+  width: 200px;
+  padding: 0.8em 0.5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  background: url(${arrow}) no-repeat 95% 50%;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  .select::-ms-expand {
+    display: none;
+  }
+`;
+
 function StudentReservation() {
   const history = useHistory();
   let accessToken = localStorage.getItem('accessToken');
@@ -72,26 +77,30 @@ function StudentReservation() {
   const [time, setTime] = useRecoilState(Time)
   const [date, setDate] = useRecoilState(Date)
   const [reservationList, setReservationList] = useRecoilState(ReservationList)
+  const [exercise, setExercise] = useState('')
 
   const handleClick = (e: any) => {
     console.log('click ', e);
   };
 
-  // const onClick = (e) => {
-  //   setSelectReservation(!selectReservation)
-  //   console.log(e)
-  // }
-
   function ptReservation () {
+    if (time === "") {
+      message.error('날짜와 시간을 선택해주세요.')
+      return
+    }
+    if (exercise === "") {
+      message.error('운동 부위를 선택해주세요.')
+      return
+    }
 
-    console.log(date, time, email)
+    console.log(date, time, email, exercise)
     axios({
       method: 'post',
       url: 'https://i5b305.p.ssafy.io/api/pt/reservation',
       data: {
         ptTeacherEmail : email,
         reservationTime : date+"T"+time+":00",
-        description : "예약"
+        description : exercise
       },
       headers: {
         "Authorization": `Bearer ${accessToken}`
@@ -99,7 +108,14 @@ function StudentReservation() {
     })
     .then((response) => {
       message.success('성공적으로 예약 되었습니다.');
-      history.push('/profile')
+      setReservationTab(!reservationTab)
+      setTime('')
+      setDate('')
+      // history.push('/profile')
+      window.location.reload()
+    })
+    .catch((e) => {
+      message.error('예약에 실패했습니다')
     })
   }
 
@@ -130,87 +146,60 @@ function StudentReservation() {
 
 
   return (
-    <Layout>
+    <div style={{backgroundColor: "#F3F4FA"}}>
       <MainNavigation />
-      <Content>
-          <TrainerInfo2 teacherList={teacherList}/>
-      </Content>
-      <Sider style={{height: '100vh', background: "none"}}>
+      <Row>
+      <Col span={18} style={{marginTop: '7rem'}}>
+          <TrainerInfo />
+      </Col>
+      <Col span={6} style={{height: '85vh', marginTop: '7rem', background: "none", overflowY: "auto"}}>
         { reservationTab ?
-          <StyledSider><div className="logo" />
-          <Menu
-            onClick={handleClick}
-            style={{ width: "auto" }}
-            defaultSelectedKeys={['1']}
-            defaultOpenKeys={['sub1']}
-            mode="inline" 
-          >
-          <SubMenu key="sub1" icon={<CalendarOutlined />} title="날짜선택">
-            <StudentCalendar />
-          </SubMenu>
-          <SubMenu key="sub2" icon={<FieldTimeOutlined />} title="시간선택">
-            <TimeSchedule />
-          </SubMenu>
-            <div>
-              <p>날짜: </p>
-              <p>시간: </p>
-              <p>금액: </p>
-            </div>
-            <Button type="primary" >예약닫기</Button>
-            <Button type="primary" onClick={ptReservation}>예약하기</Button>
-          </Menu></StyledSider>
+          <div style={{overflowY: "auto"}}>
+            <Collapse defaultActiveKey={['1', '4']} style={{overflowY: "auto"}}>
+              <Panel header="날짜 선택" key="1">
+              <StudentCalendar />
+              </Panel>
+              <Panel header="시간 선택" key="2">
+              <TimeSchedule />
+              </Panel>
+              <Panel header="운동 부위" key="3">
+              <StyledSelect onChange={(e) => setExercise(e.target.value)}>
+                <option value="">Select</option>
+                <option value="상체">상체</option>
+                <option value="하체">하체</option>
+                <option value="등">등</option>
+                <option value="가슴">가슴</option>
+                <option value="어깨">어깨</option>
+              </StyledSelect>
+              </Panel>
+              <Panel header="예약 확인" key="4">
+                <p>날짜</p>  
+                <p>{date}</p>
+                <p>시간</p>
+                <p>{time}</p>
+              </Panel>
+              
+              
+            </Collapse>
+            <Row>
+              <Col span={12}>
+              <Button block onClick={(e) => {setReservationTab(!reservationTab)}}>예약닫기</Button>
+              </Col>
+              <Col span={12}>
+              <Button type="primary" onClick={ptReservation} block>예약하기</Button>
+              </Col>
+              
+              
+              </Row>
+          </div>
           :
-          <>
-            <StyledDiv>
-              <TrainerSearch />
-            </StyledDiv>
-            <StyledDiv>
+            <div>
               <ReservationCancel reservationList={reservationList} />
-            </StyledDiv>
-          </>
+            </div>
           }
-      </Sider>
-    </Layout>
-    // <Container align='middle' justify='center' >
-    //   <MainNavigation />
-    //   <Col span={18}>
-    //     <div style={{margin: 'auto'}}>
-    //       <TrainerInfo onClick={onClick}/>
-    //     </div>
-    //   </Col>
-    //   <Col span={6}>
-    //     { selectReservation ?
-    //     <StyledSider><div className="logo" />
-    //     <Menu
-    //     onClick={handleClick}
-    //     style={{ width: "auto" }}
-    //     defaultSelectedKeys={['1']}
-    //     defaultOpenKeys={['sub1']}
-    //     mode="inline"
-        
-    //   >
-    //     <SubMenu key="sub1" icon={<CalendarOutlined />} title="날짜선택">
-    //       <StudentCalendar />
-    //     </SubMenu>
-    //     <SubMenu key="sub2" icon={<FieldTimeOutlined />} title="시간선택">
-    //       <TimeSchedule />
-    //     </SubMenu>
-    //     <Button type="primary" onClick={onClick}>예약하기</Button>
-    //   </Menu></StyledSider>
-    //   :
-    //   <>
-    //   <StyledDiv>
-    //   <TrainerSearch />
-    //   </StyledDiv>
-    //   <StyledDiv>
-    //     <Payment />
-    //   </StyledDiv>
-    //   </>
-    //   }
-
-
-    //   </Col>
-    // </Container>
+      </Col>
+      </Row>
+    </div>
   )
 }
 
