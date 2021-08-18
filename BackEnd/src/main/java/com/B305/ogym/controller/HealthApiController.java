@@ -25,19 +25,19 @@ public class HealthApiController {
     @GetMapping("/mystudents")
     @PreAuthorize("hasAnyRole('PTTEACHER')")
     public ResponseEntity<SuccessResponseDto> getMyStudentsHealth(
-        @AuthenticationPrincipal UserBase user
+        @AuthenticationPrincipal String userEmail
     ) {
         return ResponseEntity.ok(new SuccessResponseDto<HealthDto.MyStudentsHealthListResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(user.getEmail())
+            200, "건강정보 조회에 성공했습니다.", healthService.findMyStudentsHealth(userEmail)
         ));
     }
 
     // 학생 : 자신의 건강정보 조회
     @GetMapping("/myhealth")
     @PreAuthorize("hasAnyRole('PTSTUDENT')")
-    public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal UserBase user) {
+    public ResponseEntity<SuccessResponseDto> getMyHealth(@AuthenticationPrincipal String userEmail) {
         return ResponseEntity.ok(new SuccessResponseDto<MyHealthResponse>(
-            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealth(user.getEmail())
+            200, "건강정보 조회에 성공했습니다.", healthService.getMyHealth(userEmail)
         ));
     }
 }

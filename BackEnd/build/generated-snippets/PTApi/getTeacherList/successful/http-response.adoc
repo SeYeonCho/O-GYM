@@ -2,7 +2,7 @@
 ----
 HTTP/1.1 200 OK
 Content-Type: application/json;charset=UTF-8
-Content-Length: 782
+Content-Length: 758
 
 {
   "statusCode" : 200,
@@ -25,7 +25,6 @@ Content-Length: 782
       "reservations" : [ ],
       "certificates" : [ ]
     } ],
-    "pageable" : null,
     "totalPages" : 0,
     "totalElements" : 0,
     "numberOfElements" : 0

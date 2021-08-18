@@ -8,8 +8,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PTStudentRepositoryCustom {
 
-    Map<String, Object> getInfo(String studentEmail, List<String> req);
-
     List<PTStudentPTTeacher> getReservationTime(String stduentEamil);
 
 }

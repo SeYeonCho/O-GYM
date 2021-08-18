@@ -42,6 +42,9 @@ public class ResponseConstants {
     public static final ResponseEntity<String> RESERVATION_NOT_FOUND =
         new ResponseEntity<>("권한이 없거나, 유효한 예약정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
 
+    public static final ResponseEntity<String> AUTHORITY_NOT_FOUND =
+        new ResponseEntity<>("권한을 찾을 수 없습니다.", HttpStatus.NOT_FOUND);
+
     public static final ResponseEntity<String> TEACHER_NOT_FOUND =
         new ResponseEntity<>(
             "선생님 정보를 찾을 수 없습니다.", HttpStatus.NOT_FOUND

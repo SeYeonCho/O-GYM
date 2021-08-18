@@ -354,14 +354,9 @@ class UserApiControllerTest {
     @DisplayName("학생 회원탈퇴 - 존재하지 않는 이메일로 인한 회원탈퇴 실패(이미 탈퇴한 회원)")
     @Test
     public void deleteTeacher_failure() throws Exception {
-        //given
-        String email = "teacher@naver.com";
-
-        //when
         doThrow(new UserNotFoundException("해당하는 이메일이 존재하지 않습니다")).when(userService)
-            .deleteUserBase(eq(email), any());
+            .deleteUserBase(any(), any());
 
-        //then
         mockMvc.perform(delete("/api/user")
             .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
@@ -407,14 +402,9 @@ class UserApiControllerTest {
     @DisplayName("학생 회원탈퇴 - 존재하지 않는 이메일로 인한 회원탈퇴 실패(이미 탈퇴한 회원)")
     @Test
     public void deleteStudent_failure() throws Exception {
-        //given
-        String email = "student@naver.com";
-
-        //when
         doThrow(new UserNotFoundException("해당하는 이메일이 존재하지 않습니다")).when(userService)
-            .deleteUserBase(eq(email), any());
+            .deleteUserBase(any(), any());
 
-        //then
         mockMvc.perform(delete("/api/user")
             .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
@@ -430,7 +420,6 @@ class UserApiControllerTest {
     @DisplayName("회원 정보조회 - 정보조회 성공")
     @Test
     public void getUserInfo_success() throws Exception {
-        String email = "teacher@naver.com";
         Map<String, Object> data = new HashMap<>();
         data.put("id", 1);
         data.put("email", "teacher@naver.com");
@@ -462,14 +451,12 @@ class UserApiControllerTest {
     @DisplayName("회원 정보조회 - 이메일이 존재하지 않아 정보조회 실패")
     @Test
     public void getUserInfo_failure() throws Exception {
-        String email = "teacher@naver.com";
+        List<String> req = Arrays.asList("id", "email");
 
-        ArrayList<String> req = new ArrayList<>(Arrays.asList("id", "email"));
-
-        given(userService.getUserInfo(email, req))
+        given(userService.getUserInfo(any(), any()))
             .willThrow(new UserNotFoundException("해당하는 유저가 존재하지 않습니다"));
 
-        mockMvc.perform(get("/api/user/id,email")
+        mockMvc.perform(get("/api/user/{req}", req)
             .header("Authorization", "JWT ACCESS TOKEN"))
             .andDo(print())
             .andExpect(status().isNotFound())

@@ -177,6 +177,16 @@ Response Example
 
 include::{snippets}/PTApi/getReservationTime/successful/http-response.adoc[]
 
+=== 3-6. 현재 시간의 예약된 정보를 조회
+
+Request Example
+
+include::{snippets}/PTApi/getNowReservation/successful/http-request.adoc[]
+
+Response Example
+
+include::{snippets}/PTApi/getNowReservation/successful/http-response.adoc[]
+
 == 4. HealthApi
 
 === 공통사항

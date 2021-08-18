@@ -86,6 +86,41 @@ public class PTTeacher extends UserBase {
         }
     }
 
+    public Object getInfo(String req){
+        if("id".equals(req)){
+            return this.getId();
+        }else if("email".equals(req)){
+            return this.getEmail();
+        }else if("username".equals(req)){
+            return this.getUsername();
+        }else if("nickname".equals(req)){
+            return this.getNickname();
+        }else if("age".equals(req)){
+            return this.getAge();
+        }else if("gender".equals(req)){
+            return this.getGender();
+        }else if("tel".equals(req)){
+            return this.getTel();
+        }else if("address".equals(req)){
+            return this.getAddress();
+        }else if("role".equals(req)){
+            return this.getAuthority().getAuthorityName();
+        }else if("major".equals(req)){
+            return this.getMajor();
+        }else if("price".equals(req)){
+            return this.getPrice();
+        }else if("description".equals(req)){
+            return this.getDescription();
+        }else if("profilePictureURL".equals(req)){
+            if(this.getProfilePicture()!= null)
+                return this.getProfilePicture().getPictureAddr();
+            else
+                return null;
+        }else{
+            return null;
+        }
+    }
+
     public PTTeacherDto toPTTeacherDto() {
 
         List<Certificate> certificates = this.getCertificates();

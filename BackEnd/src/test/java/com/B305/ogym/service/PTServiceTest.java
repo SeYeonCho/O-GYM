@@ -3,6 +3,7 @@ package com.B305.ogym.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
 
+import com.B305.ogym.common.util.RestResponsePage;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
 import com.B305.ogym.controller.dto.PTDto.reservationRequest;
 import com.B305.ogym.controller.dto.UserDto.SaveUserRequest;
@@ -272,7 +273,7 @@ class PTServiceTest {
     public void getTeacherList_success() throws Exception {
         //given
         SearchDto searchDto = SearchDto.builder().build();
-        Page<PTTeacher> ptTeachers = Page.empty();
+        RestResponsePage<PTTeacher> ptTeachers = new RestResponsePage<>();
         given(ptTeacherRepository.searchAll(searchDto, Pageable.ofSize(10))).willReturn(ptTeachers);
         //when
         ptService.getTeacherList(searchDto, Pageable.ofSize(10));

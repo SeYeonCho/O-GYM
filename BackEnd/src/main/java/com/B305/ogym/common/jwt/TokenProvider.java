@@ -105,7 +105,7 @@ public class TokenProvider implements InitializingBean {
             Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-        return new UsernamePasswordAuthenticationToken(new UserBase(claims), null, authorities);
+        return new UsernamePasswordAuthenticationToken(claims.get("email"), null, authorities);
     }
 
     /*
@@ -114,7 +114,7 @@ public class TokenProvider implements InitializingBean {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            System.out.println("validate 들어옴");
+            logger.info("validate 들어옴");
             if (redisUtil.hasKeyBlackList(token)) {
                 throw new UnauthorizedException("이미 탈퇴한 회원입니다");
             }

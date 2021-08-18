@@ -23,52 +23,6 @@ public class PTStudentRepositoryCustomImpl implements PTStudentRepositoryCustom 
         this.em = em;
         queryFactory = new JPAQueryFactory(em);
 
-        check.put("id", pTStudent.id);
-        check.put("email", pTStudent.email);
-        check.put("username", pTStudent.username);
-        check.put("nickname", pTStudent.nickname);
-        check.put("age", pTStudent.age);
-        check.put("gender", pTStudent.gender);
-        check.put("tel", pTStudent.tel);
-        check.put("address", pTStudent.address);
-        check.put("role", pTStudent.authority);
-    }
-
-    // 학생 정보를 조회하는 메서드
-    @Override
-    public Map<String, Object> getInfo(String studentEmail, List<String> req) { // "username" , "id"
-
-        Tuple result = queryFactory
-            .select(pTStudent.id, pTStudent.email, pTStudent.username, pTStudent.nickname,
-                pTStudent.age,
-                pTStudent.gender, pTStudent.tel, pTStudent.address, pTStudent.authority)
-            .from(pTStudent)
-            .where(pTStudent.email.eq(studentEmail))
-            .fetchOne();
-        Map<String, Object> map = new HashMap<>();
-
-        List<Tuple> monthlyList = queryFactory.select(monthly.height, monthly.weight)
-            .from(monthly)
-            .where(monthly.ptStudent.email.eq(studentEmail))
-            .orderBy(monthly.month.asc())
-            .fetch();
-
-        req.forEach(o -> {
-            if ("heights".equals(o)) {
-
-                map.put(o, monthlyList.stream().map(t -> t.get(monthly.height))
-                    .collect(Collectors.toList()));
-            } else if ("weights".equals(o)) {
-
-                map.put(o, monthlyList.stream().map(t -> t.get(monthly.weight))
-                    .collect(Collectors.toList()));
-            } else {
-                assert result != null;
-                map.put(o, result.get(check.get(o)));
-            }
-        });
-
-        return map;
     }
 
     // 자신의 예약 정보를 확인하는 메서드
