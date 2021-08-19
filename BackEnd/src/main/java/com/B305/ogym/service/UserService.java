@@ -11,7 +11,6 @@ import com.B305.ogym.domain.authority.AuthorityRepository;
 import com.B305.ogym.domain.users.UserRepository;
 import com.B305.ogym.domain.users.common.ProfilePicture;
 import com.B305.ogym.domain.users.common.UserBase;
-import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.Career;
@@ -169,10 +168,9 @@ public class UserService {
     // 프로필 사진 변경
     @Transactional
     public void putProfile(String userEmail, ProfileDto profileDto) {
-        PTTeacher ptTeacher = ptTeacherRepository.findByEmail(userEmail)
-            .orElseThrow(() -> new UserNotFoundException("TEACHER"));
-        ptTeacher
-            .setProfilePicture(ProfilePicture.builder().pictureAddr(profileDto.getUrl()).build());
-        ptTeacherRepository.save(ptTeacher);
+        UserBase user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("존재하지 않는 유저입니다."));
+        user.setProfilePicture(ProfilePicture.builder().pictureAddr(profileDto.getUrl()).build());
+        userRepository.save(user);
     }
 }
