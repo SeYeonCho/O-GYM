@@ -4,6 +4,7 @@ import OpenViduSession from 'openvidu-react';
 import jwt_decode from "jwt-decode";
 import styled from 'styled-components';
 // @ts-ignore
+import './Session.css';
 import Inko from 'inko';
 import MainNavigation from '../../components/organisms/Main/Main-Navigation';
 import { message, Button, Input, Space } from 'antd';
@@ -26,6 +27,12 @@ animation: gradient 15s ease infinite;
 
 const StyledInputDiv = styled.div`
     padding: 30vh 20vh;
+`;
+
+const StyledSession = styled(OpenViduSession)`
+    #navSessionInfo {
+        display: none;
+    }
 `;
 
 class SessionPage extends Component {
@@ -52,7 +59,13 @@ class SessionPage extends Component {
 
     componentDidMount() {
         const accessToken = localStorage.getItem('accessToken');
-    
+        message.info({
+            content: '반드시 사용 전에 카메라와 마이크가 다른 어플리케이션에 사용중인지 확인해주세요!',
+            className: 'custom-class',
+            style: {
+              marginTop: '20vh',
+            },
+          });
         if (accessToken != null) {
         
             const decoded: {
@@ -185,7 +198,7 @@ class SessionPage extends Component {
                     </StyledInputDiv>
                 ) : (
                     <div id="session">
-                        <OpenViduSession
+                        <StyledSession
                             id="opv-session"
                             sessionName={mySessionId}
                             user={myUserName}
