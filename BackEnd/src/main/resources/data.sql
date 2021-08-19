@@ -272,32 +272,200 @@ INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
 (164,9,49,2),
 (163,10,48,2),
 (164,11,47,2);
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (173,1,65,46),
--- (173,2,64,46),
--- (173,3,62,46),
--- (173,4,63,46),
--- (173,5,61,46),
--- (173,6,62,46),
--- (173,7,63,46);
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (158,2,45,47),
--- (158,3,44,47),
--- (158,4,45,47),
--- (158,5,45,47),
--- (158,6,46,47),
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (164,4,54,48),
--- (164,5,54,48),
--- (164,6,54,48);
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (161,1,54,49),
--- (161,2,53,49),
--- (161,3,53,49),
--- (161,4,53,49),
--- (161,5,53,49),
--- (161,6,52,49),
--- (161,7,51,49);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,65,46),
+(173,2,64,46),
+(173,3,62,46),
+(173,4,63,46),
+(173,5,61,46),
+(173,6,62,46),
+(173,7,63,46);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(158,2,45,47),
+(158,3,44,47),
+(158,4,45,47),
+(158,5,45,47),
+(158,6,46,47);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(164,4,54,48),
+(164,5,54,48),
+(164,6,54,48);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(161,1,54,49),
+(161,2,53,49),
+(161,3,53,49),
+(161,4,53,49),
+(161,5,53,49),
+(161,6,52,49),
+(161,7,51,49);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(164,1,54,50),
+(164,2,53,50),
+(164,3,53,50),
+(165,4,53,50),
+(165,5,53,50),
+(165,6,52,50),
+(165,7,51,50);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,64,51),
+(173,2,63,51),
+(173,3,63,51),
+(173,4,63,51),
+(173,5,63,51),
+(173,6,62,51),
+(173,7,61,51);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(181,1,74,52),
+(181,2,73,52),
+(181,3,73,52),
+(181,4,73,52),
+(181,5,73,52),
+(181,6,72,52),
+(181,7,71,52);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,58,53),
+(173,2,58,53),
+(173,3,57,53),
+(173,4,56,53),
+(173,5,55,53),
+(173,6,55,53),
+(173,7,55,53);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(167,1,57,54),
+(167,2,57,54),
+(167,3,58,54),
+(168,4,58,54),
+(168,5,58,54),
+(168,6,59,54),
+(168,7,59,54);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(151,1,48,55),
+(151,2,48,55),
+(151,3,49,55),
+(151,4,49,55),
+(151,5,49,55),
+(151,6,49,55),
+(151,7,49,55);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(165,1,57,56),
+(165,2,57,56),
+(165,3,58,56),
+(166,4,58,56),
+(166,5,57,56),
+(166,6,57,56),
+(166,7,57,56);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(164,1,54,57),
+(164,2,53,57),
+(164,3,53,57),
+(164,4,53,57),
+(164,5,53,57),
+(164,6,52,57),
+(164,7,51,57);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(171,1,56,58),
+(171,2,56,58),
+(171,3,57,58),
+(172,4,57,58),
+(172,5,56,58),
+(173,6,56,58),
+(174,7,56,58);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(160,1,51,59),
+(160,2,51,59),
+(160,3,52,59),
+(160,4,52,59),
+(160,5,53,59),
+(160,6,52,59),
+(161,7,51,59);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(174,1,55,60),
+(174,2,55,60),
+(174,3,56,60),
+(175,4,56,60),
+(175,5,55,60),
+(175,6,55,60),
+(175,7,56,60);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(178,1,65,61),
+(178,2,65,61),
+(178,3,66,61),
+(178,4,66,61),
+(178,5,65,61),
+(178,6,65,61),
+(178,7,66,61);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(184,1,82,62),
+(184,2,82,62),
+(184,3,82,62),
+(184,4,83,62),
+(184,5,83,62),
+(184,6,82,62),
+(184,7,82,62);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,55,63),
+(173,2,55,63),
+(173,3,56,63),
+(174,4,56,63),
+(175,5,55,63),
+(175,6,55,63),
+(175,7,56,63);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(177,1,57,64),
+(177,2,59,64),
+(177,3,59,64),
+(177,4,59,64),
+(177,5,60,64),
+(178,6,58,64),
+(178,7,58,64);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(171,1,54,65),
+(171,2,54,65),
+(172,3,56,65),
+(172,4,56,65),
+(172,5,54,65),
+(172,6,54,65),
+(172,7,54,65);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(163,1,55,66),
+(163,2,55,66),
+(164,3,56,66),
+(165,4,56,66),
+(165,5,55,66),
+(165,6,55,66),
+(165,7,56,66);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(178,1,65,67),
+(178,2,65,67),
+(178,3,66,67),
+(178,4,66,67),
+(178,5,65,67),
+(178,6,65,67),
+(178,7,66,67);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(181,1,75,68),
+(181,2,75,68),
+(181,3,76,68),
+(182,4,76,68),
+(182,5,75,68),
+(182,6,75,68),
+(182,7,76,68);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(180,1,55,69),
+(180,2,55,69),
+(180,3,56,69),
+(180,4,56,69),
+(180,5,55,69),
+(181,6,55,69),
+(181,7,56,69);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(167,1,53,70),
+(167,2,53,70),
+(167,3,53,70),
+(167,4,54,70),
+(167,5,53,70),
+(167,6,52,70),
+(167,7,51,70);
 
 INSERT INTO pt_student_pt_teacher (reservation_date,pt_student_id,pt_teacher_id,description) VALUES
 ('2021-07-28 13:00:00',1,3,'가슴+삼두'),
@@ -351,4 +519,7 @@ INSERT INTO pt_student_pt_teacher (reservation_date,pt_student_id,pt_teacher_id,
 ('2021-08-18 14:00:00',2,9,'가슴+삼두'),
 ('2021-08-22 13:00:00',2,9,'하체'),
 ('2021-08-24 13:00:00',2,9,'등'),
-('2021-08-28 17:00:00',2,9,'가슴+삼두');
+('2021-08-28 17:00:00',2,9,'가슴+삼두'),
+('2021-08-20 10:00:00',48,4,'하체'),
+('2021-08-20 12:00:00',49,4,'가슴'),
+('2021-08-20 13:00:00',50,4,'어깨');
