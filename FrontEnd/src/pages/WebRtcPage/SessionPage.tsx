@@ -37,7 +37,20 @@ class SessionPage extends Component {
         // this.OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
         this.OPENVIDU_SERVER_URL = 'https://' + 'i5b305.p.ssafy.io' + ':3443';
         this.OPENVIDU_SERVER_SECRET = 'password';
-        
+        this.state = {
+            mySessionId: 'SessionA',
+            myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
+            token: undefined,
+        };
+        this.handlerJoinSessionEvent = this.handlerJoinSessionEvent.bind(this);
+        this.handlerLeaveSessionEvent = this.handlerLeaveSessionEvent.bind(this);
+        this.handlerErrorEvent = this.handlerErrorEvent.bind(this);
+        this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
+        this.handleChangeUserName = this.handleChangeUserName.bind(this);
+        this.joinSession = this.joinSession.bind(this);
+    }
+
+    componentDidMount() {
         const accessToken = localStorage.getItem('accessToken');
     
         if (accessToken != null) {
@@ -53,44 +66,44 @@ class SessionPage extends Component {
                     }
                 }).then(({ data }) => {
 
+                    console.log(data);
+                    
+                    if (data.data === null) {
+                        message.error('현재 해당 수업 시간이 아닙니다!');
+                        throw new Error();
+                    }
+                        
                     let receivedData: { studentNickname, teacherNickname } = data.data;
                     let inko = new Inko();
-                    console.log(receivedData);
-                    this.state = {
+                    this.setState({
                         mySessionId: inko.ko2en(receivedData['studentNickname']) + inko.ko2en(receivedData['teacherNickname']),
                         myUserName: decoded['nickname'],
                         token: undefined,
-                    }
+                    });
+                    
                 }).catch(() => {
-                    message.error('다시 로그인 해주세요!');
-                })
-                    ;
+                    if (!decoded['nickname']) {
+                        message.error('다시 로그인 해주세요!');
+                    }
+                });
 
-                this.state = {
+                this.setState({
                     mySessionId: 'SessionA',
                     myUserName: decoded['nickname'],
                     token: undefined,
-                };
+                });
             }
-            
-
+        
         }
         else {
 
-            this.state = {
+            this.setState({
                 mySessionId: 'SessionA',
                 myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
                 token: undefined,
-            };
+            });
             
         }
-
-        this.handlerJoinSessionEvent = this.handlerJoinSessionEvent.bind(this);
-        this.handlerLeaveSessionEvent = this.handlerLeaveSessionEvent.bind(this);
-        this.handlerErrorEvent = this.handlerErrorEvent.bind(this);
-        this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
-        this.handleChangeUserName = this.handleChangeUserName.bind(this);
-        this.joinSession = this.joinSession.bind(this);
     }
 
     handlerJoinSessionEvent() {

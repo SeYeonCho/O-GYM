@@ -32,6 +32,7 @@ const StyeldInput = styled.input`
   padding: 10px 10px;
   margin-bottom: 10px;
   font-size: 14px;
+  font-weight: bold;
   color: black;
 `;
 
@@ -42,7 +43,7 @@ const StyledLabel = styled.label`
   margin-bottom: 3px;
   margin-top: 10px;
   font-size: 14px;
-  font-weight: 200;
+  font-weight: bold;
   color: black;
 `;
 

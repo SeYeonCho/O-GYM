@@ -12,6 +12,7 @@ import { InputState } from "../../../recoil/atoms/InputState";
 // @ts-ignore
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router";
+import Title from "antd/lib/typography/Title";
 
 const LabelDiv = styled.div`
     text-align: center;
@@ -98,7 +99,7 @@ const LoginContent = (): JSX.Element => {
     return (
         <>
             <LabelDiv>
-                <Label label="Enter your email and password to sign in"
+                <Label label="이메일과 비밀번호를 입력해주세요"
                     color="gray"
                     backgroundcolor=""
                 />
@@ -107,9 +108,11 @@ const LoginContent = (): JSX.Element => {
             <Divider />
             
             <ListItem flexdirection="column">
-                <Label label="Email" fontweight="bold"/>
+                <Label label="이메일" fontweight="bold"/>
                 <Input type="text" inputType="loginEmail" placeholder="email"
-                    
+                    style={{
+                        "border-radius": "4px",
+                    }}
                 />
             </ListItem>
             
@@ -117,8 +120,13 @@ const LoginContent = (): JSX.Element => {
             
             <ListItem >
                 <ListItem flexdirection="column">
-                    <Label label="Password" fontweight="bold"/>
-                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="password" />
+                    <Label label="비밀번호" fontweight="bold"/>
+                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="password"
+                    
+                    style={{
+                        "border-radius": "4px",
+                        
+                    }}/>
                 </ListItem>
                 
                 <StyledDivider type="vertical" />
@@ -131,25 +139,18 @@ const LoginContent = (): JSX.Element => {
             </ListItem>
 
             <Divider />
-            <ButtonList>
-                <Button width="100%"
-                    backgroundColor="light-gray"
-                    color="red"
-                    borderRadius="10px"
-                >Forgot your password?</Button>
-                <Button width="100%"
-                    backgroundColor="green"
-                    color="black"
-                    borderRadius="10px"
-                    onClick={requestLogin}
-                >Log In</Button>
-            </ButtonList>
+            
+            <Button width="100%"
+                backgroundColor="green"
+                color="black"
+                borderRadius="10px"
+                onClick={requestLogin}
+            >
+                
+                로그인
+                
+            </Button>
             <Divider />
-            <ButtonList>
-                <Button width="100%" signInType="facebook">Sign in with Facebook</Button>
-                <Button width="100%" signInType="google">Sign in with Google</Button>
-                <Button width="100%" signInType="naver">Sign in with Naver</Button>
-            </ButtonList>
         </>
     );
 }
