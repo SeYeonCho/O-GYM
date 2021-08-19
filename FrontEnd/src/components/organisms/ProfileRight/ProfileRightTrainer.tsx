@@ -21,7 +21,6 @@ function ProfileRightTrainer() {
       }
     })
     .then((response) => {
-      console.log("내 학생 정보", response.data.data)
       setMyStudents(response.data.data.studentHealthList)
       if (response.data.data.studentHealthList.gender === "MAN") {
         setGender("남성")

@@ -46,7 +46,6 @@ function ReservationCancel(props) {
             title="예약 취소"
             visible={isModalVisible}
             onOk={() => {
-              console.log(item.email, item.reservationTime)
                 axios({
                   method: 'delete',
                   url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`,

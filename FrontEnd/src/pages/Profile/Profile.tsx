@@ -38,7 +38,6 @@ function Profile() {
       }
     })
     .then((response) => {
-      console.log(response.data.data);
       setUserInfo(response.data.data);
     })
 

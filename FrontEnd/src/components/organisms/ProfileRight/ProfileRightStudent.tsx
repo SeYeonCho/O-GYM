@@ -17,7 +17,6 @@ function ProfileRightStudent() {
       }
     })
     .then((response) => {
-      console.log(response.data.data)
       setMyReservation(response.data.data)
     })
   }, [])

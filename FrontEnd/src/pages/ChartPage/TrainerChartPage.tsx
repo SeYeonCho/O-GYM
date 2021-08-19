@@ -78,9 +78,7 @@ function TrainerChartPage() {
       }
     )
     .then((response) => {
-      console.log(response.data.data.studentHealthList)
       setMyStudent(response.data.data.studentHealthList)
-      console.log(studentIndex.index)
       setSelectedStudent(studentIndex.index)
 
   })
@@ -99,8 +97,6 @@ function TrainerChartPage() {
               <ImgDiv>
               <ImgContent>
                 {selectedUser.username && <h1 style={{color:'white'}}>{selectedUser.username}님의 건강 차트</h1>}
-                {/* <h1 style={{color:'white'}}>{selectedUser.username}님의 건강 차트</h1> */}
-                {/* <h1 style={{color:'white'}}>건강 차트</h1> */}
               </ImgContent>
               <ImgCover></ImgCover>
               </ImgDiv>

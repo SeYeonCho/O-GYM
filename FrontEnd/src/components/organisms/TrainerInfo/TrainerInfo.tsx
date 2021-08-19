@@ -68,7 +68,6 @@ function TrainerInfo () {
   useEffect(() => {
     fetchData((res) => {
       setData(res.data.data.teacherList)
-      console.log(res.data.data.teacherList[0])
     })
   }, [])
 

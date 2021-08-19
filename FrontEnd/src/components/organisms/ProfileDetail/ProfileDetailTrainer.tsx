@@ -103,7 +103,6 @@ function ProfileDetail(props) {
       }
     })
     .then((response) => {
-      console.log(response.data.data);
       setImageName(response.data.data.email);
       setImageURL(response.data.data.profilePictureURL)
     })
@@ -143,11 +142,11 @@ function ProfileDetail(props) {
             "Authorization": `Bearer ${accessToken}`
           }
         })
-        alert("이미지 업로드에 성공했습니다.")
+        message.success("이미지 업로드에 성공했습니다.")
         window.location.reload()
       },
       function (err) {
-        return alert("오류가 발생했습니다: ")
+        return message.error("오류가 발생했습니다: ")
       }
     )
   }
@@ -183,6 +182,9 @@ function ProfileDetail(props) {
       setRole('');
       setIsModalVisible(false);
       history.push('/')
+    })
+    .catch((err) => {
+      message.error('회원탈퇴를 실패했습니다.')
     })
   }
 

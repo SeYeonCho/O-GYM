@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { useHistory } from 'react-router'
 import axios from 'axios'
 import AWS from 'aws-sdk'
+import profileimagedefault from '../../../assets/pages/profile/profileimagedefault.png'
 
 const ImageButton = styled.label`
   text-align: center;
@@ -48,7 +49,6 @@ function ProfileDetailStudent(props) {
       }
     })
     .then((response) => {
-      console.log(response.data.data);
       setImageName(response.data.data.email);
       setImageURL(response.data.data.profilePictureURL)
     })
@@ -65,6 +65,7 @@ function ProfileDetailStudent(props) {
       }
     })
     .then((response) => {
+      console.log(response)
       message.success('성공적으로 탈퇴 되었습니다.');
       localStorage.removeItem('accessToken');
       localStorage.removeItem('refreshToken');
@@ -72,6 +73,9 @@ function ProfileDetailStudent(props) {
       setRole('');
       setIsModalVisible(false);
       history.push('/')
+    })
+    .catch((err) => {
+      message.error("회원탈퇴를 실패했습니다.")
     })
   }
 
@@ -109,11 +113,11 @@ function ProfileDetailStudent(props) {
             "Authorization": `Bearer ${accessToken}`
           }
         })
-        alert("이미지 업로드에 성공했습니다.")
+        message.success("이미지 업로드에 성공했습니다.")
         window.location.reload()
       },
       function (err) {
-        return alert("오류가 발생했습니다: ")
+        return message.error("오류가 발생했습니다: ")
       }
     )
   }
@@ -123,7 +127,11 @@ function ProfileDetailStudent(props) {
       <div className="containerProfile">
           <Row>
             <Col span={6} style={{display: "flex", flexDirection: "column"}}>
-            <Image src={imageURL} alt=""  style={{width: "90%", marginLeft: "auto", marginRight: "auto"}}/>
+            {imageURL !== null ?
+              <Image src={imageURL} alt="프로필"  style={{width: "90%", marginLeft: "auto", marginRight: "auto"}}/> 
+              :
+              <Image src={profileimagedefault} alt="프로필"  style={{width: "90%", marginLeft: "auto", marginRight: "auto"}}/> 
+              }
               <ImageButton htmlFor="input-image">프로필 업로드</ImageButton>
               <input type="file" id="input-image" onChange={upLoad} style={{display: "none"}} />
             </Col>

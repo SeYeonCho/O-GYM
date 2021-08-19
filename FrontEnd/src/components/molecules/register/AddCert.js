@@ -71,14 +71,6 @@ function AddCert() {
     if (prevIsValid()) {
       setForm((prev) => [...prev, inputState]);
     }
-    // const newForm = form.map((item, index) => {
-    //   return {
-    //     platform: item["SNSPlatform"],
-    //     SNSUrl: item["SNSUrl"],
-    //   };
-    // });
-    // console.log(newForm);
-    // console.log(form);
   };
 
   const onChange = (index, event) => {
@@ -105,7 +97,6 @@ function AddCert() {
         };
       });
     });
-    // setsnsInfo(form);
   };
 
   useEffect(() => {
@@ -117,7 +108,6 @@ function AddCert() {
       };
     });
     setcertInfo(newForm);
-    // console.log(certInfo);
   }, [form]);
 
   const handleRemoveField = (e, index) => {

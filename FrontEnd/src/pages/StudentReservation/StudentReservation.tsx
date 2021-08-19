@@ -79,9 +79,7 @@ function StudentReservation() {
   const [reservationList, setReservationList] = useRecoilState(ReservationList)
   const [exercise, setExercise] = useState('')
 
-  const handleClick = (e: any) => {
-    console.log('click ', e);
-  };
+
 
   function ptReservation () {
     if (time === "") {
@@ -93,7 +91,6 @@ function StudentReservation() {
       return
     }
 
-    console.log(date, time, email, exercise)
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`,
@@ -129,7 +126,6 @@ function StudentReservation() {
       }
     )
     .then((response) => {
-      console.log(response.data.data.teacherList)
       setTeacherList(response.data.data.teacherList)
     })
 
@@ -140,7 +136,6 @@ function StudentReservation() {
     })
     .then((response) => {
       setReservationList(response.data.data)
-      console.log(response.data.data)
     })
   }, [])
 

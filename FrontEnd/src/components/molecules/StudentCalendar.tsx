@@ -7,6 +7,7 @@ import { Date } from '../../recoil/atoms/Reservation/Date';
 import axios from 'axios';
 import { Email } from '../../recoil/atoms/Reservation/Email';
 import { PossibleTime } from '../../recoil/atoms/Reservation/PossibleTime';
+import moment from 'moment'
 
 function StudentCalendar() {
   let accessToken = localStorage.getItem('accessToken');
@@ -25,11 +26,9 @@ function StudentCalendar() {
       }
     })
     .then((response) => {
-      console.log(response.data.data)
       let possibleArray = response.data.data
       let temp:any = []
       for (let i = 0; i < possibleArray.length; i++) {
-        console.log(possibleArray[i])
         let key:string = possibleArray[i].substring(0, 10)
         let value:string = possibleArray[i].substring(11, 16)
         if (date === key) {
@@ -41,11 +40,14 @@ function StudentCalendar() {
     })
   }, [date])
 
+  function disabledDate(current) {
+    return current && current < moment().endOf("day").subtract(1, "days");
+  }
 
 
   return (
     <Space direction="vertical" size={12}>
-      <DatePicker onChange={onChange}/>
+      <DatePicker onChange={onChange} disabledDate={disabledDate}/>
 
     </Space>
 

@@ -63,7 +63,6 @@ function PibwChart() {
       const cm = response.data.data.heightList[month]
       setPercentage(Math.round(kg/(cm*cm*22/10000)*100))
     })
-    console.log(percentage)
   }, [])
 
   return (
