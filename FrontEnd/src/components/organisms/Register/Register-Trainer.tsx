@@ -16,7 +16,7 @@ import { AddCERT } from '../../../recoil/atoms/AddCERT';
 import AddCareer from "../../molecules/register/AddCareer";
 import { AddCAREER } from "../../../recoil/atoms/AddCAREER"
 import { useHistory } from "react-router";
-import { message } from 'antd'
+import { message, Space } from 'antd'
 import arrow from "../../../assets/pages/register/arrow.jpg";
 
 const ErrorP = styled.p`
@@ -218,11 +218,13 @@ function RegisterStudent() {
       {errors.nickname?.message && <ErrorP>{errors.nickname?.message}</ErrorP>}
 
       <StyledLabel htmlFor="zipcode">주소검색</StyledLabel>
-      <div style={{display: "flex"}}>
+      <Space>
       <Postcode />
 
       <StyeldInput type="text" placeholder="우편 번호"{...register("zipcode")} value={zipcode} readOnly />
-      </div>
+
+      </Space>
+      
       {errors.zipcode?.message && <ErrorP>{errors.zipcode?.message}</ErrorP>}
 
       <StyeldInput type="text" placeholder="도로명 주소"{...register("streetAddress")} value={streetAddress} readOnly />

@@ -281,19 +281,61 @@ class AppointmentFormContainerBasic extends React.PureComponent {
 const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
 
 const Appointment = ({
-  children, style, ...restProps
-}) => (
-  <Appointments.Appointment
-    {...restProps}
-    style={{
-      ...style,
-      backgroundColor: '#8395fc',
-      borderRadius: '8px',
-    }}
-  >
-    {children}
-  </Appointments.Appointment>
-);
+  children, data, style, ...restProps
+}) => {
+  console.log(data.id)
+
+  if (data.id === 1) {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#ff85c0',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+  else if (data.id === 2) {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#b37feb',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+  else {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#5cdbd3',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+
+  
+}
 
 
 const styles = theme => ({
@@ -381,7 +423,7 @@ class Demo extends React.PureComponent {
     });
       let data21: { data } = await data2.data;
       let inko = new Inko();
-    //console.log(data21.data);
+
     let changeData = data21.data.map(({
       description,
       nickname,
@@ -399,7 +441,7 @@ class Demo extends React.PureComponent {
         }`,
         startDate: startDate,
         endDate: endDate,
-        id: 0,
+        id: (nickname.length%3)+1,
         location: inko.ko2en(nickname) + inko.ko2en(
           checkDate['nickname']
         ),
@@ -483,8 +525,6 @@ class Demo extends React.PureComponent {
     const {
       currentDate,
       data,
-      confirmationVisible,
-      editingFormVisible,
       startDayHour,
       endDayHour,
     } = this.state;

@@ -77,7 +77,7 @@ const MainContent = (): JSX.Element => {
             border="16px solid rgba(255,255,255,0.5)"
             flexDirection="column"
             height="80%"
-            padding="10%"
+            padding="15%"
           >
               <Title>
               <Span

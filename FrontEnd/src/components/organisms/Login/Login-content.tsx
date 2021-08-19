@@ -22,6 +22,54 @@ const StyledDivider = styled(Divider)`
     height: inherit;
 `;
 
+const StyeldInput = styled.input`
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid black;
+  padding: 10px 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+`;
+
+const StyledInput = {
+    'display': 'block',
+    'box-sizing': 'border-box',
+    'width': '100%',
+    'border-radius': '4px',
+    'border': '1px solid black',
+    'padding': '10px 10px',
+    'margin-bottom': '10px',
+    'font-size': '14px',
+    'font-weight': 'bold',
+    'color': 'black'
+}
+
+const StyledLabel = styled.label`
+  line-height: 2;
+  text-align: left;
+  display: block;
+  margin-bottom: 3px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+`;
+
+const StyledDiv = styled.div`
+    display: flex;
+    height: 50px;
+`;
+
+const StyledDivColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 55px;
+`;
+
 const LoginContent = (): JSX.Element => {
 
     const [isShow, setIsShow] = useState(true);
@@ -98,59 +146,44 @@ const LoginContent = (): JSX.Element => {
 
     return (
         <>
-            <LabelDiv>
-                <Label label="이메일과 비밀번호를 입력해주세요"
-                    color="gray"
-                    backgroundcolor=""
+            <StyledDivColumn >
+            <StyledLabel htmlFor="email">이메일</StyledLabel>
+                <Input type="text" inputType="loginEmail" placeholder="이메일"
+                    style={StyledInput}
                 />
-            
-            </LabelDiv>
-            <Divider />
-            
-            <ListItem flexdirection="column">
-                <Label label="이메일" fontweight="bold"/>
-                <Input type="text" inputType="loginEmail" placeholder="email"
-                    style={{
-                        "border-radius": "4px",
-                    }}
-                />
-            </ListItem>
+            </StyledDivColumn>
             
             <Divider />
             
-            <ListItem >
+            <StyledDiv
+                >
                 <ListItem flexdirection="column">
-                    <Label label="비밀번호" fontweight="bold"/>
-                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="password"
+                <StyledLabel htmlFor="password">비밀번호</StyledLabel>
+                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="비밀번호"
                     
-                    style={{
-                        "border-radius": "4px",
-                        
-                    }}/>
+                    style={StyledInput}/>
                 </ListItem>
                 
-                <StyledDivider type="vertical" />
                 <Button onClick={handleShowButton}
                  backgroundColor="light-gray"
-                 color="black"
+                    color="black"
+                    margin="10px "
+                    width="100px"
+                    height="5vh"
                     borderRadius="10px"
                 >{isShow === true ? "show" : "hide"}</Button>
             
-            </ListItem>
+            </StyledDiv>
 
             <Divider />
             
-            <Button width="100%"
-                backgroundColor="green"
-                color="black"
-                borderRadius="10px"
+           
+                    <StyeldInput 
+                type="submit"
+                value="로그인"
                 onClick={requestLogin}
-            >
-                
-                로그인
-                
-            </Button>
-            <Divider />
+            />
+                    <Divider />
         </>
     );
 }
