@@ -58,7 +58,7 @@ function StudentChartPage() {
 
   useEffect(() => {
     axios.get(
-      `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user/username`, {
+      'https://i5b305.p.ssafy.io/api/user/username', {
         headers: {
           "Authorization": `Bearer ${accessToken}`
         }

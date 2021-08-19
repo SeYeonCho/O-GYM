@@ -71,7 +71,7 @@ function TrainerChartPage() {
     let today = new Date()
     let month = today.getMonth()
     axios.get(
-      `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/health/mystudents`, {
+      'https://i5b305.p.ssafy.io/api/health/mystudents', {
         headers: {
           "Authorization": `Bearer ${accessToken}`
         }

@@ -63,7 +63,7 @@ function StudentReservation() {
 
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`,
+      url: 'https://i5b305.p.ssafy.io/api/pt/reservation',
       data: {
         ptTeacherEmail : email,
         reservationTime : date+"T"+time+":00",
@@ -89,7 +89,7 @@ function StudentReservation() {
   useEffect(() => {
     
     axios.get(
-      `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/teacherlist`, {
+      'https://i5b305.p.ssafy.io/api/pt/teacherlist', {
         headers: {
           "Authorization": `Bearer ${accessToken}`
         }
@@ -99,7 +99,7 @@ function StudentReservation() {
       setTeacherList(response.data.data.teacherList)
     })
 
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`, {
+    axios.get('https://i5b305.p.ssafy.io/api/pt/reservation', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }

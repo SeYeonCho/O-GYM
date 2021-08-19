@@ -48,7 +48,7 @@ function ReservationCancel(props) {
             onOk={() => {
                 axios({
                   method: 'delete',
-                  url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`,
+                  url: 'https://i5b305.p.ssafy.io/api/pt/reservation',
                   data: {
                     "ptTeacherEmail" : item.email,
                     "reservationTime" : item.reservationTime,

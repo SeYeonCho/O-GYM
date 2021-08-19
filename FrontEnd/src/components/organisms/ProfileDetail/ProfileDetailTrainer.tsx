@@ -105,7 +105,7 @@ function ProfileDetail(props) {
       }
     }
 
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user/email, profilePictureURL`, {
+    axios.get('https://i5b305.p.ssafy.io/api/user/email, profilePictureURL', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -142,7 +142,7 @@ function ProfileDetail(props) {
       function (data) {
         axios({
           method: 'patch',
-          url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`,
+          url: 'https://i5b305.p.ssafy.io/api/user',
           data: {
             "url" : data.Location
           },
@@ -177,7 +177,7 @@ function ProfileDetail(props) {
 
     axios({
       method: 'delete',
-      url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`,
+      url: 'https://i5b305.p.ssafy.io/api/user',
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -239,7 +239,7 @@ function ProfileDetail(props) {
               {isEmpty(youtube) ?
                 <p><YoutubeOutlined style={{ fontSize: '1.5rem'}}/></p> :
                 <a
-                  href={`https://www.youtube.com/user/${youtube["url"]}`}
+                  href={`https://www.youtube.com/${youtube["url"]}`}
                   target="_blank"
                   rel="noreferrer">
                   <YoutubeOutlined style={{ fontSize: '1.5rem'}}/>

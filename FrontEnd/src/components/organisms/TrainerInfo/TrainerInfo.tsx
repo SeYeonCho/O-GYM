@@ -86,7 +86,7 @@ function TrainerInfo () {
 
 
   const fetchData = (callback) => {
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/teacherlist?page=${num}&size=5`, {
+    axios.get(`https://i5b305.p.ssafy.io/api/pt/teacherlist?page=${num}&size=5`, {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }

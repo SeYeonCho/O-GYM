@@ -32,7 +32,7 @@ function Profile() {
   let accessToken = localStorage.getItem('accessToken');
   
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user/username,nickname,email,tel,major,description,certificates,careers,gender,age,snss,role,weights,heights,profilePictureURL`, {
+    axios.get('https://i5b305.p.ssafy.io/api/user/username,nickname,email,tel,major,description,certificates,careers,gender,age,snss,role,weights,heights,profilePictureURL', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }

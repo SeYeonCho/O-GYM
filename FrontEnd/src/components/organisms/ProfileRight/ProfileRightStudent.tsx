@@ -11,7 +11,7 @@ function ProfileRightStudent() {
   let accessToken = localStorage.getItem('accessToken');
   
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`, {
+    axios.get('https://i5b305.p.ssafy.io/api/pt/reservation', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }

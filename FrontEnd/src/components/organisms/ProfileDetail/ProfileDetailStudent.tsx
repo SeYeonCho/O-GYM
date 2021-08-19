@@ -53,7 +53,7 @@ function ProfileDetailStudent(props) {
   };
 
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user/email, profilePictureURL`, {
+    axios.get('https://i5b305.p.ssafy.io/api/user/email, profilePictureURL', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -69,7 +69,7 @@ function ProfileDetailStudent(props) {
 
     axios({
       method: 'delete',
-      url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`,
+      url: 'https://i5b305.p.ssafy.io/api/user',
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -115,7 +115,7 @@ function ProfileDetailStudent(props) {
       function (data) {
         axios({
           method: 'patch',
-          url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`,
+          url: 'https://i5b305.p.ssafy.io/api/user',
           data: {
             "url" : data.Location
           },

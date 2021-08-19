@@ -13,7 +13,7 @@ function ProfileRightTrainer() {
 
   
   useEffect(() => {
-    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/health/mystudents`, {
+    axios.get('https://i5b305.p.ssafy.io/api/health/mystudents', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
