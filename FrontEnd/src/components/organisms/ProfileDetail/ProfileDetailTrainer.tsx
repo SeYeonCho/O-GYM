@@ -213,9 +213,9 @@ function ProfileDetail(props) {
               <input type="file" id="input-image" onChange={upLoad} style={{display: "none", marginTop: "2rem"}} />
               <div style={{display: 'flex', justifyContent: "space-between", marginTop: "1rem", marginLeft: "0.7rem", marginRight: "0.7rem"}}>
               {isEmpty(facebook) ?
-                <p style={{fontSize: '2rem'}}><FacebookOutlined style={{ fontSize: '1.5rem'}}/></p> :
+                <p><FacebookOutlined style={{ fontSize: '1.5rem'}}/></p> :
                 <a
-                  href={facebook["url"]}
+                  href={`https://www.facebook.com/${facebook["url"]}`}
                   target="_blank"
                   rel="noreferrer">
                   <FacebookOutlined style={{ fontSize: '1.5rem'}}/>
@@ -223,7 +223,7 @@ function ProfileDetail(props) {
               {isEmpty(twitter) ?
                 <p><TwitterOutlined style={{ fontSize: '1.5rem'}}/></p> :
                 <a
-                  href={twitter["url"]}
+                  href={`https://www.twitter.com/${twitter["url"]}`}
                   target="_blank"
                   rel="noreferrer">
                   <TwitterOutlined style={{ fontSize: '1.5rem'}}/>
@@ -231,7 +231,7 @@ function ProfileDetail(props) {
               {isEmpty(instagram) ?
                 <p><InstagramOutlined style={{ fontSize: '1.5rem'}}/></p> :
                 <a
-                  href={instagram["url"]}
+                  href={`https://www.instagram.com/${instagram["url"]}`}
                   target="_blank"
                   rel="noreferrer">
                   <InstagramOutlined style={{ fontSize: '1.5rem'}}/>
@@ -239,7 +239,7 @@ function ProfileDetail(props) {
               {isEmpty(youtube) ?
                 <p><YoutubeOutlined style={{ fontSize: '1.5rem'}}/></p> :
                 <a
-                  href={youtube["url"]}
+                  href={`https://www.youtube.com/user/${youtube["url"]}`}
                   target="_blank"
                   rel="noreferrer">
                   <YoutubeOutlined style={{ fontSize: '1.5rem'}}/>
