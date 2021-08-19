@@ -61,6 +61,17 @@ const StyledButton = styled(Button)<MainNavigationType>`
     // background-image: url(${OGYM});
 `;
 
+const StyledLogo = styled(Button)<MainNavigationType>`
+    position: ${props=>props.position || "fixed"};
+    top: 5px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    // background-image: url(${OGYM});
+`;
+
+
 const StyledCircledImage = styled(Image)`
   clip-path : circle(50%);
 `;
@@ -176,11 +187,18 @@ const MainNavigation = (props): JSX.Element => {
             <StyledModal
           title={
             <Row gutter={2}>
-              <Col span={18}>O-GYM</Col>
+              <Col span={18}>
+              <StyledLogo  onClick={clickMenuButton}
+          shape="circle" position={props.position}
+          icon={<StyledCircledImage src={OGYM} preview={false} />} />
+              </Col>
                 {
                 logged !== '' ? (
                   <>
-                    <Col span={3} style={{marginTop: "0.3rem"}}>
+                    <Col span={3} style={{
+                      marginTop: "0.3rem",
+                      marginRight: "-4em"
+                    }}>
                     <Text>
                       {logged}님
                       
@@ -303,13 +321,15 @@ const MainNavigation = (props): JSX.Element => {
             }
                 
             {role === 'ROLE_PTSTUDENT' ?
-              <Col span={12} style={{backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-              <Link to={'/dovideo'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                <img src={conference} alt="예약" style={{width: "80%"}}/>
-              </Link>
-              <Link to={'/dovideo'}>
-                <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
-              </Link>
+              <Col span={12} style={{ backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}
+              onClick={clickConferenceRoom}
+              >
+                <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+                  <img src={conference} alt="예약" style={{width: "80%"}}/>
+                </div>
+                <div>
+                  <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
+                </div>
               </Col>
 
               :

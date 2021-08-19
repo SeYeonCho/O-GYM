@@ -9,7 +9,7 @@
 .demo-loading-container {
   position: absolute;
   bottom: 40px;
-  width: 100%;
+  width: 100vh;
   text-align: center;
 }
 [data-theme="dark"] .demo-infinite-container {

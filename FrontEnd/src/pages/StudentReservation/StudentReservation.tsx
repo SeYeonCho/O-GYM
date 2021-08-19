@@ -141,13 +141,19 @@ function StudentReservation() {
 
 
   return (
-    <div style={{backgroundColor: "#F3F4FA"}}>
-      <MainNavigation />
+    <div style={{ backgroundColor: "#F3F4FA" }}>
+      <div style={{
+        height: "14vh",
+        backgroundImage: "url('https://ogymbucket.s3.ap-northeast-2.amazonaws.com/teacher_navbar.jpg')"
+      }}>
+        <MainNavigation />
+
+      </div>
       <Row>
-      <Col span={18} style={{marginTop: '7rem'}}>
+      <Col span={18} style={{}}>
           <TrainerInfo />
       </Col>
-      <Col span={6} style={{height: '85vh', marginTop: '7rem', background: "none", overflowY: "auto"}}>
+      <Col span={6} style={{height: '85vh', background: "none", overflowY: "auto"}}>
         { reservationTab ?
           <div style={{overflowY: "auto"}}>
             <Collapse defaultActiveKey={['1', '4']} style={{overflowY: "auto"}}>
