@@ -1,11 +1,28 @@
 import Title from "antd/lib/typography/Title";
+import { ReloadOutlined } from '@ant-design/icons';
+import { Button } from "antd";
+import styled from "styled-components";
 
+const StyledFooter = styled.div`
+    background-image:url(https://ogymbucket.s3.ap-northeast-2.amazonaws.com/running.jpg);
+    height: 10vh;
+    text-align: center;
+    
+`;
+
+const StyledTitle = styled(Title)`
+&.ant-typography {
+    color: white;
+  }
+`;
 
 const TeacherTodoList = () => {
     return (
-        <Title>
-            This part is Footer
-        </Title>
+        <StyledFooter>
+            <StyledTitle >
+                JUST DO IT!
+            </StyledTitle>
+        </StyledFooter>
     );
 }
 

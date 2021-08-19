@@ -64,12 +64,6 @@ const StyledCircledImage = styled(Image)`
   clip-path : circle(50%);
 `;
 
-const LoggedDiv = styled.div`
-  display: flex;
-
-`;
-
-
 const MainNavigation = (props): JSX.Element => {
 
     const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -138,30 +132,38 @@ const MainNavigation = (props): JSX.Element => {
 
             <StyledModal
           title={
-            <Row>
-              <Col span={8}>O-GYM</Col>
-
+            <Row gutter={2}>
+              <Col span={19}>O-GYM</Col>
                 {
-                  logged !== '' ? (
-                    <Col span={7} offset={5}>
-                    <LoggedDiv>
-
+                logged !== '' ? (
+                  <>
+                    <Col span={3}>
                     <Text>
                       {logged}님
                       
                       환영합니다
                       </Text>
+                        </Col>
 
+                      <Col>
                       <Button type="primary" onClick={
                         clickLogoutButton
                       }>
+
                         Logout
                       </Button>
-                    </LoggedDiv>
+                    
                     </Col>
+                    </>
                   )
-                    :
-                    <Col span={2} offset={10}>
+                  :
+                  <>
+                    <Col span={3}>
+                    <Text>
+                      로그인이 필요합니다
+                      </Text>
+                    </Col>
+                    <Col >
 
                     <Button type="primary"
                       onClick={ clickLoginButton}
@@ -169,6 +171,7 @@ const MainNavigation = (props): JSX.Element => {
                       Login
                         </Button>  
                     </Col>
+                  </>
                 }
               
             </Row>
