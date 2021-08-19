@@ -1,4 +1,0 @@
-[source,options="nowrap"]
-----
-{"data":"데이터","message":"메시지","statusCode":"HTTP STATUS"}
-----

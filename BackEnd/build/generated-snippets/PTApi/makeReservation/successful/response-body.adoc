@@ -1,8 +1,0 @@
-[source,options="nowrap"]
-----
-{
-  "statusCode" : 201,
-  "message" : "PT예약에 성공하였습니다.",
-  "data" : { }
-}
-----
