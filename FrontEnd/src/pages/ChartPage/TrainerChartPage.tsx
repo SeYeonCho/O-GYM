@@ -71,16 +71,14 @@ function TrainerChartPage() {
     let today = new Date()
     let month = today.getMonth()
     axios.get(
-      'https://i5b305.p.ssafy.io/api/health/mystudents', {
+      `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/health/mystudents`, {
         headers: {
           "Authorization": `Bearer ${accessToken}`
         }
       }
     )
     .then((response) => {
-      console.log(response.data.data.studentHealthList)
       setMyStudent(response.data.data.studentHealthList)
-      console.log(studentIndex.index)
       setSelectedStudent(studentIndex.index)
 
   })
@@ -99,8 +97,6 @@ function TrainerChartPage() {
               <ImgDiv>
               <ImgContent>
                 {selectedUser.username && <h1 style={{color:'white'}}>{selectedUser.username}님의 건강 차트</h1>}
-                {/* <h1 style={{color:'white'}}>{selectedUser.username}님의 건강 차트</h1> */}
-                {/* <h1 style={{color:'white'}}>건강 차트</h1> */}
               </ImgContent>
               <ImgCover></ImgCover>
               </ImgDiv>

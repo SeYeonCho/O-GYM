@@ -3,22 +3,61 @@ import { useState } from "react";
 import styled from "styled-components";
 import Button from "../../atoms/Button";
 import Input from "../../atoms/Input"
-import Label from "../../atoms/Label";
-import ButtonList from "../../molecules/ButtonList";
 import ListItem from "../../molecules/ListItem"
-import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
+import { useRecoilState,  useResetRecoilState } from "recoil";
 import axios from "axios";
 import { InputState } from "../../../recoil/atoms/InputState";
 // @ts-ignore
 import jwt_decode from "jwt-decode";
 import { useHistory } from "react-router";
 
-const LabelDiv = styled.div`
-    text-align: center;
+
+const StyeldInput = styled.input`
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid black;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
 `;
 
-const StyledDivider = styled(Divider)`
-    height: inherit;
+const StyledInput = {
+    'display': 'block',
+    'box-sizing': 'border-box',
+    'width': '100%',
+    'border-radius': '4px',
+    'border': '1px solid black',
+    'padding': '10px 10px',
+    'margin-bottom': '10px',
+    'font-size': '14px',
+    'font-weight': 'bold',
+    'color': 'black'
+}
+
+const StyledLabel = styled.label`
+  line-height: 2;
+  text-align: left;
+  display: block;
+  margin-bottom: 3px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+`;
+
+const StyledDiv = styled.div`
+    display: flex;
+    height: 50px;
+`;
+
+const StyledDivColumn = styled.div`
+    display: flex;
+    flex-direction: column;
+    height: 55px;
 `;
 
 const LoginContent = (): JSX.Element => {
@@ -94,61 +133,47 @@ const LoginContent = (): JSX.Element => {
         
     }
 
+
     return (
         <>
-            <LabelDiv>
-                <Label label="Enter your email and password to sign in"
-                    color="gray"
-                    backgroundcolor=""
+            <StyledDivColumn >
+            <StyledLabel htmlFor="email">이메일</StyledLabel>
+                <Input type="text" inputType="loginEmail" placeholder="이메일"
+                    style={StyledInput}
                 />
-            
-            </LabelDiv>
-            <Divider />
-            
-            <ListItem flexdirection="column">
-                <Label label="Email" fontweight="bold"/>
-                <Input type="text" inputType="loginEmail" placeholder="email"
-                    
-                />
-            </ListItem>
+            </StyledDivColumn>
             
             <Divider />
             
-            <ListItem >
+            <StyledDiv
+                >
                 <ListItem flexdirection="column">
-                    <Label label="Password" fontweight="bold"/>
-                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="password"/>
+                <StyledLabel htmlFor="password">비밀번호</StyledLabel>
+                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="비밀번호"
+                    
+                    style={StyledInput}/>
                 </ListItem>
                 
-                <StyledDivider type="vertical" />
                 <Button onClick={handleShowButton}
                  backgroundColor="light-gray"
-                 color="black"
+                    color="black"
+                    margin="10px "
+                    width="100px"
+                    height="5vh"
                     borderRadius="10px"
                 >{isShow === true ? "show" : "hide"}</Button>
             
-            </ListItem>
+            </StyledDiv>
 
             <Divider />
-            <ButtonList>
-                <Button width="100%"
-                    backgroundColor="light-gray"
-                    color="red"
-                    borderRadius="10px"
-                >Forgot your password?</Button>
-                <Button width="100%"
-                    backgroundColor="green"
-                    color="black"
-                    borderRadius="10px"
-                    onClick={requestLogin}
-                >Log In</Button>
-            </ButtonList>
-            <Divider />
-            <ButtonList>
-                <Button width="100%" signInType="facebook">Sign in with Facebook</Button>
-                <Button width="100%" signInType="google">Sign in with Google</Button>
-                <Button width="100%" signInType="naver">Sign in with Naver</Button>
-            </ButtonList>
+            
+           
+                    <StyeldInput 
+                type="submit"
+                value="로그인"
+                onClick={requestLogin}
+            />
+                    <Divider />
         </>
     );
 }

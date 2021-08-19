@@ -2,8 +2,8 @@ import * as React from 'react';
 // @ts-ignore
 import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
-  Scheduler, DayView, Appointments, MonthView, Toolbar,
-  DateNavigator, ViewSwitcher, TodayButton, Resources, AppointmentTooltip,
+  Scheduler,  Appointments, MonthView, Toolbar,
+  DateNavigator,  TodayButton, Resources, AppointmentTooltip,
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { withStyles, Theme, createStyles } from '@material-ui/core';
 import { indigo, blue, teal } from '@material-ui/core/colors';
@@ -18,19 +18,19 @@ import Inko from 'inko';
 import { useEffect, useState } from 'react';
 
 const resources = [{
-  fieldName: 'location',
-  title: 'Location',
+  fieldName: 'type',
+  title: 'type',
   instances: [
-    { id: 'Room 1', text: 'Room 1', color: indigo },
-    { id: 'Room 2', text: 'Room 2', color: blue },
-    { id: 'Room 3', text: 'Room 3', color: teal },
+    { id: 1, text: 'Room 1', color: '#ff85c0' },
+    { id: 2, text: 'Room 2', color: '#b37feb' },
+    { id: 3, text: 'Room 3', color: '#5cdbd3' },
   ],
 }, {
   fieldName: 'priority',
   title: 'Priority',
   instances: [
     { id: 1, text: 'High Priority', color: teal },
-    { id: 2, text: 'Medium Priority', color: blue },
+    { id: 2, text: 'Medium Priority', color: '#ffd666' },
     { id: 3, text: 'Low Priority', color: indigo },
   ],
 }];
@@ -136,6 +136,7 @@ const AppointmentContent = withStyles(styles, { name: 'AppointmentContent' })(({
   // let priority = 'high';
   // if (data.priority === 2) priority = 'medium';
   // if (data.priority === 3) priority = 'low';
+  // console.log(data);
   return (
     <Appointments.AppointmentContent {...restProps} data={data}>
       <div className={classes.container}>
@@ -144,6 +145,9 @@ const AppointmentContent = withStyles(styles, { name: 'AppointmentContent' })(({
         </div>
         <div className={classNames(classes.text, classes.content)}>
           {`Location: ${data.location}`}
+        </div>
+        <div className={classNames(classes.text, classes.content)}>
+          {`Part: ${data.part}`}
         </div>
       </div>
     </Appointments.AppointmentContent>
@@ -183,7 +187,9 @@ const TeacherCalender = () => {
             startDate: Date,
             endDate: Date,
             priority: number,
-            location: string
+            location: string,
+            part: string,
+            type: number,
           }[] = [];
   
             data21.data.forEach(({
@@ -199,15 +205,15 @@ const TeacherCalender = () => {
               endDate.setHours(startDate.getHours()+1);
               addArr.push(
                 {
-                  title: `${nickname}님 PT - ${
-                    description
-                  }`,
+                  title: `${nickname}님 PT`,
                   startDate: startDate,
-                    endDate: endDate,
-                  priority: 3,
+                  endDate: endDate,
+                  priority: (nickname.length%3)+1,
                   location: inko.ko2en(nickname) + inko.ko2en(
                     checkDate['nickname']
-                  ), 
+                  ),
+                  part: description,
+                  type: (nickname.length%3)+1
                 }
               );
             

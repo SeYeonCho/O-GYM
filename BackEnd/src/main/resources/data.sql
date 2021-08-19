@@ -10,50 +10,50 @@ INSERT INTO authority (authority_name) VALUES
 
 INSERT INTO user_base (`role`,age,created_date,modified_date,address_detailed_address,address_street,address_zipcode,email,gender,nickname,password,profile_picture_addr,tel,username,authority) VALUES
 ('Student',21,'2021-08-05 20:36:21.655474000','2021-08-05 20:36:21.655474000','래미안','대전광역시 유성구 동서대로 98-39','34153','chuu@ssafy.com',1,'츄','$2a$10$LD3wHUZ28afzrOxJe/kixeV2ZpgTfYOFqK9c7PV7Cxw5ihVr13Qte','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/chuu.jpg','010-2021-0721','김지우','ROLE_PTSTUDENT'),
-('Student',19,'2021-08-05 20:33:24.766994000','2021-08-05 20:33:24.766994000','대청아파트','광주광역시 광산구 하남산단 6번로 107','62218','olivia@ssafy.com',1,'올리비아 혜','$2a$10$I4FslU2TBpser/oY559sIe5oURyIzJL2W5UhBpTdFqqPyTPR7gqoO',NULL,'010-2001-1113','손혜주','ROLE_PTSTUDENT'),
-('Teacher',41,'2021-08-01 13:34:28.858993000','2021-08-01 13:34:28.858993000','래미안','서울특별시 강동구 가래여울길 16-1','05200','eggkim@ssafy.com',0,'김계란','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2542-2321','김성식','ROLE_PTTEACHER'),
-('Teacher',40,'2021-08-02 15:36:25.858993000','2021-08-02 15:36:25.858993000','래미안','경기도 고양시 일산서구 산남로154번길 104-16','10204','agent@ssafy.com',0,'에이전트H','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-6453-4536','이경영','ROLE_PTTEACHER'),
-('Teacher',37,'2021-08-03 14:24:28.858993000','2021-08-03 14:24:28.858993000','상성아파트','경기도 고양시 일산서구 산율길42번길 12','10207','kamel@ssafy.com',0,'카멜','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-7584-3466','송강호','ROLE_PTTEACHER'),
-('Teacher',34,'2021-08-05 13:36:25.858993000','2021-08-05 13:36:25.858993000','디에이치','서울특별시 광진구 능동로 285','04997','mercy@ssafy.com',0,'메르시','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4565-3457','엄기준','ROLE_PTTEACHER'),
-('Teacher',21,'2021-08-03 11:14:28.858993000','2021-08-03 11:14:28.858993000','힐스테이트','서울특별시 광진구 능동로27가길 8','04998','jed@ssafy.com',1,'제드','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3643-4543','서현진','ROLE_PTTEACHER'),
-('Teacher',37,'2021-08-06 16:36:46.858993000','2021-08-06 16:36:46.858993000','자이','서울특별시 강남구 남부순환로 2807','06277','karen@ssafy.com',1,'가렌','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3459-6443','문채원','ROLE_PTTEACHER'),
-('Teacher',29,'2021-07-12 22:25:28.858993000','2021-07-12 22:25:28.858993000','푸르지오','서울특별시 강남구 남부순환로381길 54','06274','gallio@ssafy.com',1,'갈리오','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2366-4657','박보영','ROLE_PTTEACHER'),
-('Teacher',53,'2021-08-11 15:36:35.858993000','2021-08-11 15:36:35.858993000','롯데캐슬','강원도 삼척시 뒷나루길 182-174','25909','gragas@ssafy.com',0,'그라가스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2375-4576','조정석','ROLE_PTTEACHER'),
-('Teacher',24,'2021-08-05 20:36:28.858993000','2021-08-05 20:36:28.858993000','e편한세상','강원도 삼척시 하실길 38','25911','gangplank@ssafy.com',0,'갱플랭크','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2348-3457','서장훈','ROLE_PTTEACHER'),
-('Teacher',39,'2021-07-24 14:57:47.858993000','2021-07-24 14:57:47.858993000','아이파크','서울특별시 금천구 독산로50가길 43','08564','graves@ssafy.com',1,'그레이브즈','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2239-3476','전미도','ROLE_PTTEACHER'),
-('Teacher',25,'2021-08-07 20:36:28.858993000','2021-08-07 20:36:28.858993000','상성아파트','서울특별시 금천구 독산로50가길 6','08564','nocturne@ssafy.com',1,'녹턴','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2387-3467','이지아','ROLE_PTTEACHER'),
-('Teacher',34,'2021-07-13 15:25:35.858993000','2021-07-13 15:25:35.858993000','한신아파트','경상북도 군위군 삼국유사면 낙전2길 150-23','39053','nautilus@ssafy.com',0,'노틸러스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-7869-3476','이재빈','ROLE_PTTEACHER'),
-('Teacher',25,'2021-08-04 14:36:28.858993000','2021-08-04 14:36:28.858993000','삼성아파트','경상북도 군위군 삼국유사면 화수길 27-7','39057','nami@ssafy.com',0,'나미','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4536-3476','이우태','ROLE_PTTEACHER'),
-('Teacher',46,'2021-07-12 20:14:58.858993000','2021-07-12 20:14:58.858993000','자이','광주광역시 남구 천변좌로574번길 12-12','61679','nar@ssafy.com',0,'나르','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3478-2367','김호재','ROLE_PTTEACHER'),
-('Teacher',43,'2021-07-15 15:34:28.858993000','2021-07-15 15:34:28.858993000','래미안','서울특별시 강동구 가래여울길 16-1','05200','nasus@ssafy.com',0,'나서스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-6856-3456','정청호','ROLE_PTTEACHER'),
-('Teacher',42,'2021-08-03 20:15:23.858993000','2021-08-03 20:15:23.858993000','한신아파트','경기도 고양시 일산서구 산남로154번길','10204','rise@ssafy.com',0,'라이즈','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2376-5677','권우혁','ROLE_PTTEACHER'),
-('Teacher',29,'2021-07-16 16:33:28.858993000','2021-07-16 16:33:28.858993000','대청아파트','경기도 고양시 일산서구 산율길42번길 12','10207','lucian@ssafy.com',0,'루시안','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2387-8566','정화령','ROLE_PTTEACHER'),
-('Teacher',48,'2021-08-02 13:36:21.858993000','2021-08-02 13:36:21.858993000','대청아파트','서울특별시 광진구 능동로 285','04997','lux@ssafy.com',0,'럭스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2365-5868','유호재','ROLE_PTTEACHER'),
-('Teacher',51,'2021-08-02 14:35:28.858993000','2021-08-02 14:35:28.858993000','대치아파트','서울특별시 광진구 능동로27가길 8','04998','rammus@ssafy.com',0,'람머스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2367-5678','강진호','ROLE_PTTEACHER'),
-('Teacher',38,'2021-07-12 13:13:25.858993000','2021-07-12 13:13:25.858993000','교대아파트','서울특별시 강남구 남부순환로 2807','06277','rakan@ssafy.com',0,'라칸','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-9865-2342','전문석','ROLE_PTTEACHER'),
-('Teacher',41,'2021-08-01 16:46:28.858993000','2021-08-01 16:46:28.858993000','대전아파트','서울특별시 강남구 남부순환로381길 54','06274','reksai@ssafy.com',0,'렉사이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4566-3456','김민철','ROLE_PTTEACHER'),
-('Teacher',33,'2021-08-05 20:24:28.858993000','2021-08-05 20:24:28.858993000','한신아파트','강원도 삼척시 뒷나루길 182-174','25909','leona@ssafy.com',0,'레오나','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3478-4564','이호승','ROLE_PTTEACHER'),
-('Teacher',44,'2021-08-05 20:24:28.858993000','2021-08-05 20:24:28.858993000','한신아파트','강원도 삼척시 하실길 38','25911','lulu@ssafy.com',0,'룰루','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-5487-5647','김혜일','ROLE_PTTEACHER'),
-('Teacher',31,'2021-08-03 20:33:28.858993000','2021-08-03 20:33:28.858993000','래미안','전라남도 광양시 제철로 1655-835','57812','diana@ssafy.com',0,'다이애나','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-1234-5647','정안순','ROLE_PTTEACHER'),
-('Teacher',26,'2021-08-01 13:14:28.858993000','2021-08-01 13:14:28.858993000','상성아파트','경기도 고양시 덕양구 도내로156번길 39','10554','draven@ssafy.com',1,'드레이븐','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2342-3463','김아영','ROLE_PTTEACHER'),
-('Teacher',25,'2021-08-04 14:15:28.858993000','2021-08-04 14:15:28.858993000','한신아파트','경기도 고양시 덕양구 흥도로 79','10488','nico@ssafy.com',0,'니코','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2563-2234','안세정','ROLE_PTTEACHER'),
-('Teacher',23,'2021-07-12 13:14:28.858993000','2021-07-12 13:14:28.858993000','푸르지오','서울특별시 도봉구 도봉로139길 63','01392','rengar@ssafy.com',0,'렝가','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3454-6464','이부경','ROLE_PTTEACHER'),
-('Teacher',32,'2021-07-13 20:51:28.858993000','2021-07-13 20:51:28.858993000','자이','전라북도 김제시 광활면 광활13길 239','54302','leblanc@ssafy.com',1,'르블랑','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3447-7585','전승옥','ROLE_PTTEACHER'),
-('Teacher',41,'2021-08-05 15:14:28.858993000','2021-08-05 15:14:28.858993000','힐스테이트','경기도 고양시 일산동구 고봉로867번길 69-1','10245','my@ssafy.com',0,'마이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-6786-3487','조예빈','ROLE_PTTEACHER'),
-('Teacher',40,'2021-07-25 20:13:28.858993000','2021-07-25 20:13:28.858993000','대청아파트','전라남도 구례군 문척면 수달생태로 706','57631','maokai@ssafy.com',1,'마오카이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-5485-3498','임가인','ROLE_PTTEACHER'),
-('Teacher',31,'2021-08-05 16:56:28.858993000','2021-08-05 16:56:28.858993000','푸르지오','충청남도 금산군 남이면 상초현길 100','32752','leesin@ssafy.com',0,'리신','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3448-4373','정유빈','ROLE_PTTEACHER'),
-('Teacher',39,'2021-07-24 20:51:28.858993000','2021-07-24 20:51:28.858993000','한신아파트','충청남도 금산군 남이면 용동길 14','32751','ribbon@ssafy.com',1,'리븐','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4568-3489','채성빈','ROLE_PTTEACHER'),
-('Teacher',35,'2021-08-05 20:13:28.858993000','2021-08-05 20:13:28.858993000','상성아파트','전라남도 광양시 제철로 1655-835','57812','lissandra@ssafy.com',0,'리산드라','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4564-3497','허주성','ROLE_PTTEACHER'),
-('Teacher',37,'2021-07-25 16:24:28.858993000','2021-07-25 16:24:28.858993000','대전아파트','경기도 고양시 덕양구 도내로156번길 39','10554','lilia@ssafy.com',0,'릴리아','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3456-2358','전해숙','ROLE_PTTEACHER'),
-('Teacher',36,'2021-08-05 20:35:28.858993000','2021-08-05 20:35:28.858993000','e편한세상','경기도 고양시 덕양구 흥도로 79','10488','velkoz@ssafy.com',0,'벨코즈','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3457-3497','정예림','ROLE_PTTEACHER'),
-('Teacher',41,'2021-07-26 14:53:28.858993000','2021-07-26 14:53:28.858993000','푸르지오','서울특별시 도봉구 도봉로139길 63','01392','veleta@ssafy.com',1,'베인','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-7890-3409','정경임','ROLE_PTTEACHER'),
-('Teacher',42,'2021-08-05 20:43:28.858993000','2021-08-05 20:43:28.858993000','자이','전라북도 김제시 광활면 광활13길 239','10245','bisexual@ssafy.com',0,'바이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-5675-7877','임다숙','ROLE_PTTEACHER'),
-('Teacher',40,'2021-08-05 15:42:28.858993000','2021-08-05 15:42:28.858993000','자이','경기도 고양시 일산동구 고봉로867번길 69-1','57631','varus@ssafy.com',0,'바루스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-5668-6676','임다운','ROLE_PTTEACHER'),
-('Teacher',39,'2021-07-14 20:52:28.858993000','2021-07-14 20:52:28.858993000','한신아파트','전라남도 구례군 문척면 수달생태로 706','32752','bard@ssafy.com',1,'바드','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4456-5654','이유리','ROLE_PTTEACHER'),
-('Teacher',37,'2021-08-05 16:41:28.858993000','2021-08-05 16:41:28.858993000','디에이치','충청남도 금산군 남이면 상초현길 100','32751','malzaha@ssafy.com',0,'말자하','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3347-4568','김유리','ROLE_PTTEACHER'),
-('Teacher',35,'2021-08-05 23:52:28.858993000','2021-08-05 23:52:28.858993000','힐스테이트','강충청남도 금산군 남이면 용동길 14','57812','shako@ssafy.com',1,'샤코','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4545-6656','최예진','ROLE_PTTEACHER'),
-('Teacher',25,'2021-07-24 15:41:28.858993000','2021-07-24 15:41:28.858993000','디에이치','전라남도 광양시 제철로 1655-835','10554','set@ssafy.com',0,'세트','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2234-5599','정차연','ROLE_PTTEACHER'),
-('Teacher',38,'2021-07-25 21:41:28.858993000','2021-07-25 21:41:28.858993000','힐스테이트','경기도 고양시 덕양구 도내로156번길 39','10488','seraphine@ssafy.com',1,'세라핀','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-5544-4547','임호진','ROLE_PTTEACHER'),
+('Student',19,'2021-08-05 20:33:24.766994000','2021-08-05 20:33:24.766994000','대청아파트','광주광역시 광산구 하남산단 6번로 107','62218','olivia@ssafy.com',1,'올리비아 혜','$2a$10$I4FslU2TBpser/oY559sIe5oURyIzJL2W5UhBpTdFqqPyTPR7gqoO','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%86%90%ED%98%9C%EC%A3%BC.jpg','010-2001-1113','손혜주','ROLE_PTSTUDENT'),
+('Teacher',41,'2021-08-01 13:34:28.858993000','2021-08-01 13:34:28.858993000','래미안','서울특별시 강동구 가래여울길 16-1','05200','eggkim@ssafy.com',0,'김계란','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/eggkim.png','010-2542-2321','김성식','ROLE_PTTEACHER'),
+('Teacher',40,'2021-08-02 15:36:25.858993000','2021-08-02 15:36:25.858993000','래미안','경기도 고양시 일산서구 산남로154번길 104-16','10204','agent@ssafy.com',0,'이회장','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/leegy.jpg','010-6453-4536','이경영','ROLE_PTTEACHER'),
+('Teacher',37,'2021-08-03 14:24:28.858993000','2021-08-03 14:24:28.858993000','상성아파트','경기도 고양시 일산서구 산율길42번길 12','10207','kamel@ssafy.com',0,'송강호','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%86%A1%EA%B0%95%ED%98%B8.jpg','010-7584-3466','송강호','ROLE_PTTEACHER'),
+('Teacher',34,'2021-08-05 13:36:25.858993000','2021-08-05 13:36:25.858993000','디에이치','서울특별시 광진구 능동로 285','04997','mercy@ssafy.com',0,'주단태','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/umgj.jpg','010-4565-3457','엄기준','ROLE_PTTEACHER'),
+('Teacher',21,'2021-08-03 11:14:28.858993000','2021-08-03 11:14:28.858993000','힐스테이트','서울특별시 광진구 능동로27가길 8','04998','jed@ssafy.com',1,'오해영','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%84%9C%ED%98%84%EC%A7%84.jpg','010-3643-4543','서현진','ROLE_PTTEACHER'),
+('Teacher',37,'2021-08-06 16:36:46.858993000','2021-08-06 16:36:46.858993000','자이','서울특별시 강남구 남부순환로 2807','06277','karen@ssafy.com',1,'문채원','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/mooncw.png','010-3459-6443','문채원','ROLE_PTTEACHER'),
+('Teacher',29,'2021-07-12 22:25:28.858993000','2021-07-12 22:25:28.858993000','푸르지오','서울특별시 강남구 남부순환로381길 54','06274','gallio@ssafy.com',1,'뽀블리','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/parkby.jpg','010-2366-4657','박보영','ROLE_PTTEACHER'),
+('Teacher',53,'2021-08-11 15:36:35.858993000','2021-08-11 15:36:35.858993000','롯데캐슬','강원도 삼척시 뒷나루길 182-174','25909','gragas@ssafy.com',0,'이익준','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/chojs.jpg','010-2375-4576','조정석','ROLE_PTTEACHER'),
+('Teacher',24,'2021-08-05 20:36:28.858993000','2021-08-05 20:36:28.858993000','e편한세상','강원도 삼척시 하실길 38','25911','gangplank@ssafy.com',0,'갱플랭크','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%84%9C%EC%9E%A5%ED%91%BC.jpg','010-2348-3457','서장훈','ROLE_PTTEACHER'),
+('Teacher',39,'2021-07-24 14:57:47.858993000','2021-07-24 14:57:47.858993000','아이파크','서울특별시 금천구 독산로50가길 43','08564','graves@ssafy.com',1,'채송화','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%A0%84%EB%AF%B8%EB%8F%84.jpg','010-2239-3476','전미도','ROLE_PTTEACHER'),
+('Teacher',25,'2021-08-07 20:36:28.858993000','2021-08-07 20:36:28.858993000','상성아파트','서울특별시 금천구 독산로50가길 6','08564','nocturne@ssafy.com',1,'심수련','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%9D%B4%EC%A7%80%EC%95%84.jpg','010-2387-3467','이지아','ROLE_PTTEACHER'),
+('Teacher',34,'2021-07-13 15:25:35.858993000','2021-07-13 15:25:35.858993000','한신아파트','경상북도 군위군 삼국유사면 낙전2길 150-23','39053','nautilus@ssafy.com',0,'노틸러스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%9D%B4%EC%9E%AC%EB%B9%88.jpg','010-7869-3476','이재빈','ROLE_PTTEACHER'),
+('Teacher',25,'2021-08-04 14:36:28.858993000','2021-08-04 14:36:28.858993000','삼성아파트','경상북도 군위군 삼국유사면 화수길 27-7','39057','nami@ssafy.com',0,'나미','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EA%B9%80%EC%9A%B0%EB%B9%88.jpg','010-4536-3476','이우태','ROLE_PTTEACHER'),
+('Teacher',46,'2021-07-12 20:14:58.858993000','2021-07-12 20:14:58.858993000','자이','광주광역시 남구 천변좌로574번길 12-12','61679','nar@ssafy.com',0,'나르','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EB%A1%9C%EA%BC%AC.jpg','010-3478-2367','김호재','ROLE_PTTEACHER'),
+('Teacher',43,'2021-07-15 15:34:28.858993000','2021-07-15 15:34:28.858993000','래미안','서울특별시 강동구 가래여울길 16-1','05200','nasus@ssafy.com',0,'송민호','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%86%A1%EB%AF%BC%ED%98%B8.jpg','010-6856-3456','송민호','ROLE_PTTEACHER'),
+('Teacher',42,'2021-08-03 20:15:23.858993000','2021-08-03 20:15:23.858993000','한신아파트','경기도 고양시 일산서구 산남로154번길','10204','rise@ssafy.com',1,'이지금','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%95%84%EC%9D%B4%EC%9C%A0.jpg','010-2376-5677','이지은','ROLE_PTTEACHER'),
+('Teacher',29,'2021-07-16 16:33:28.858993000','2021-07-16 16:33:28.858993000','대청아파트','경기도 고양시 일산서구 산율길42번길 12','10207','lucian@ssafy.com',0,'그레이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EA%B7%B8%EB%A0%88%EC%9D%B4.jpg','010-2387-8566','정화령','ROLE_PTTEACHER'),
+('Teacher',48,'2021-08-02 13:36:21.858993000','2021-08-02 13:36:21.858993000','대청아파트','서울특별시 광진구 능동로 285','04997','lux@ssafy.com',0,'자이언티','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%9E%90%EC%9D%B4%EC%96%B8%ED%8B%B0.jpg','010-2365-5868','유호재','ROLE_PTTEACHER'),
+('Teacher',51,'2021-08-02 14:35:28.858993000','2021-08-02 14:35:28.858993000','대치아파트','서울특별시 광진구 능동로27가길 8','04998','rammus@ssafy.com',1,'천서진','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EA%B9%80%EC%86%8C%EC%97%B0.jpg','010-2367-5678','김소연','ROLE_PTTEACHER'),
+('Teacher',38,'2021-07-12 13:13:25.858993000','2021-07-12 13:13:25.858993000','교대아파트','서울특별시 강남구 남부순환로 2807','06277','rakan@ssafy.com',1,'탱구','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%ED%83%9C%EC%97%B0.png','010-9865-2342','김태연','ROLE_PTTEACHER'),
+('Teacher',41,'2021-08-01 16:46:28.858993000','2021-08-01 16:46:28.858993000','대전아파트','서울특별시 강남구 남부순환로381길 54','06274','reksai@ssafy.com',1,'티파니','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%ED%8B%B0%ED%8C%8C%EB%8B%88.jpg','010-4566-3456','김민철','ROLE_PTTEACHER'),
+('Teacher',33,'2021-08-05 20:24:28.858993000','2021-08-05 20:24:28.858993000','한신아파트','강원도 삼척시 뒷나루길 182-174','25909','leona@ssafy.com',0,'침착맨','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/chim.jpg','010-3478-4564','이병건','ROLE_PTTEACHER'),
+('Teacher',44,'2021-08-05 20:24:28.858993000','2021-08-05 20:24:28.858993000','한신아파트','강원도 삼척시 하실길 38','25911','lulu@ssafy.com',0,'주펄','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/pearl.jpg','010-5487-5647','주호민','ROLE_PTTEACHER'),
+('Teacher',31,'2021-08-03 20:33:28.858993000','2021-08-03 20:33:28.858993000','래미안','전라남도 광양시 제철로 1655-835','57812','diana@ssafy.com',0,'풍','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/windkim.jpg','010-1234-5647','김풍','ROLE_PTTEACHER'),
+('Teacher',26,'2021-08-01 13:14:28.858993000','2021-08-01 13:14:28.858993000','상성아파트','경기도 고양시 덕양구 도내로156번길 39','10554','draven@ssafy.com',1,'지수','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/blackpinkjs.jpg','010-2342-3463','지수','ROLE_PTTEACHER'),
+('Teacher',25,'2021-08-04 14:15:28.858993000','2021-08-04 14:15:28.858993000','한신아파트','경기도 고양시 덕양구 흥도로 79','10488','nico@ssafy.com',1,'제니','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EC%A0%9C%EB%8B%88.jpg','010-2563-2234','제니','ROLE_PTTEACHER'),
+('Teacher',23,'2021-07-12 13:14:28.858993000','2021-07-12 13:14:28.858993000','푸르지오','서울특별시 도봉구 도봉로139길 63','01392','rengar@ssafy.com',1,'천우희','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/cheonwh.webp','010-3454-6464','천우희','ROLE_PTTEACHER'),
+('Teacher',32,'2021-07-13 20:51:28.858993000','2021-07-13 20:51:28.858993000','자이','전라북도 김제시 광활면 광활13길 239','54302','leblanc@ssafy.com',1,'르블랑','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/%EB%B0%95%EB%B3%B4%EC%98%81.png','010-3447-7585','김아름','ROLE_PTTEACHER'),
+('Teacher',41,'2021-08-05 15:14:28.858993000','2021-08-05 15:14:28.858993000','힐스테이트','경기도 고양시 일산동구 고봉로867번길 69-1','10245','my@ssafy.com',1,'마이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_1.jpg','010-6786-3487','조예빈','ROLE_PTTEACHER'),
+('Teacher',40,'2021-07-25 20:13:28.858993000','2021-07-25 20:13:28.858993000','대청아파트','전라남도 구례군 문척면 수달생태로 706','57631','maokai@ssafy.com',1,'마오카이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_2.jpg','010-5485-3498','임가인','ROLE_PTTEACHER'),
+('Teacher',31,'2021-08-05 16:56:28.858993000','2021-08-05 16:56:28.858993000','푸르지오','충청남도 금산군 남이면 상초현길 100','32752','leesin@ssafy.com',1,'리신','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_3.jpg','010-3448-4373','정유빈','ROLE_PTTEACHER'),
+('Teacher',39,'2021-07-24 20:51:28.858993000','2021-07-24 20:51:28.858993000','한신아파트','충청남도 금산군 남이면 용동길 14','32751','ribbon@ssafy.com',1,'리븐','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/Profile_image_4.jpg','010-4568-3489','채성빈','ROLE_PTTEACHER'),
+('Teacher',35,'2021-08-05 20:13:28.858993000','2021-08-05 20:13:28.858993000','상성아파트','전라남도 광양시 제철로 1655-835','57812','lissandra@ssafy.com',1,'리산드라','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/Profile_image_6.jpeg','010-4564-3497','허주성','ROLE_PTTEACHER'),
+('Teacher',37,'2021-07-25 16:24:28.858993000','2021-07-25 16:24:28.858993000','대전아파트','경기도 고양시 덕양구 도내로156번길 39','10554','lilia@ssafy.com',1,'릴리아','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_7.jpg','010-3456-2358','전해숙','ROLE_PTTEACHER'),
+('Teacher',36,'2021-08-05 20:35:28.858993000','2021-08-05 20:35:28.858993000','e편한세상','경기도 고양시 덕양구 흥도로 79','10488','velkoz@ssafy.com',0,'벨코즈','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_8.png','010-3457-3497','정예림','ROLE_PTTEACHER'),
+('Teacher',41,'2021-07-26 14:53:28.858993000','2021-07-26 14:53:28.858993000','푸르지오','서울특별시 도봉구 도봉로139길 63','01392','veleta@ssafy.com',1,'베인','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_5.jpg','010-7890-3409','정경임','ROLE_PTTEACHER'),
+('Teacher',42,'2021-08-05 20:43:28.858993000','2021-08-05 20:43:28.858993000','자이','전라북도 김제시 광활면 광활13길 239','10245','bisexual@ssafy.com',0,'바이','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_9.jpg','010-5675-7877','임다숙','ROLE_PTTEACHER'),
+('Teacher',40,'2021-08-05 15:42:28.858993000','2021-08-05 15:42:28.858993000','자이','경기도 고양시 일산동구 고봉로867번길 69-1','57631','varus@ssafy.com',0,'바루스','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image_10.png','010-5668-6676','임다운','ROLE_PTTEACHER'),
+('Teacher',39,'2021-07-14 20:52:28.858993000','2021-07-14 20:52:28.858993000','한신아파트','전라남도 구례군 문척면 수달생태로 706','32752','bard@ssafy.com',1,'바드','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image11.jpg','010-4456-5654','이유리','ROLE_PTTEACHER'),
+('Teacher',37,'2021-08-05 16:41:28.858993000','2021-08-05 16:41:28.858993000','디에이치','충청남도 금산군 남이면 상초현길 100','32751','malzaha@ssafy.com',1,'말자하','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image12.jpg','010-3347-4568','김유리','ROLE_PTTEACHER'),
+('Teacher',35,'2021-08-05 23:52:28.858993000','2021-08-05 23:52:28.858993000','힐스테이트','강충청남도 금산군 남이면 용동길 14','57812','shako@ssafy.com',1,'샤코','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image13.jpg','010-4545-6656','최예진','ROLE_PTTEACHER'),
+('Teacher',25,'2021-07-24 15:41:28.858993000','2021-07-24 15:41:28.858993000','디에이치','전라남도 광양시 제철로 1655-835','10554','set@ssafy.com',0,'세트','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image14.jpg','010-2234-5599','정차연','ROLE_PTTEACHER'),
+('Teacher',38,'2021-07-25 21:41:28.858993000','2021-07-25 21:41:28.858993000','힐스테이트','경기도 고양시 덕양구 도내로156번길 39','10488','seraphine@ssafy.com',1,'세라핀','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu','https://ogymbucket.s3.ap-northeast-2.amazonaws.com/profiles/profile_image15.jpg','010-5544-4547','임호진','ROLE_PTTEACHER'),
 ('Student',14,'2021-08-01 13:41:28.858993000','2021-08-01 13:41:28.858993000','래미안','서울특별시 강동구 가래여울길 16-1','05200','vladimir@ssafy.com',0,'블라디미르','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-2523-2390','임운오','ROLE_PTSTUDENT'),
 ('Student',16,'2021-08-02 15:41:28.858993000','2021-08-02 15:41:28.858993000','대청아파트','경기도 고양시 일산서구 산남로154번길 104-16','10204','brand@ssafy.com',0,'브랜드','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-4554-0293','박상열','ROLE_PTSTUDENT'),
 ('Student',31,'2021-08-05 13:41:28.858993000','2021-08-05 13:41:28.858993000','롯데캐슬','경기도 고양시 일산서구 산율길42번길 12','10207','samira@ssafy.com',1,'사미라','$2a$10$j1Y.sjK3vYQ7QDC2jODnhe6uZqRjMVInaUEU5tyoDH295badx8iWu',NULL,'010-3364-4982','최이서','ROLE_PTSTUDENT'),
@@ -272,32 +272,200 @@ INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
 (164,9,49,2),
 (163,10,48,2),
 (164,11,47,2);
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (173,1,65,46),
--- (173,2,64,46),
--- (173,3,62,46),
--- (173,4,63,46),
--- (173,5,61,46),
--- (173,6,62,46),
--- (173,7,63,46);
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (158,2,45,47),
--- (158,3,44,47),
--- (158,4,45,47),
--- (158,5,45,47),
--- (158,6,46,47),
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (164,4,54,48),
--- (164,5,54,48),
--- (164,6,54,48);
--- INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
--- (161,1,54,49),
--- (161,2,53,49),
--- (161,3,53,49),
--- (161,4,53,49),
--- (161,5,53,49),
--- (161,6,52,49),
--- (161,7,51,49);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,65,46),
+(173,2,64,46),
+(173,3,62,46),
+(173,4,63,46),
+(173,5,61,46),
+(173,6,62,46),
+(173,7,63,46);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(158,2,45,47),
+(158,3,44,47),
+(158,4,45,47),
+(158,5,45,47),
+(158,6,46,47);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(164,4,54,48),
+(164,5,54,48),
+(164,6,54,48);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(161,1,54,49),
+(161,2,53,49),
+(161,3,53,49),
+(161,4,53,49),
+(161,5,53,49),
+(161,6,52,49),
+(161,7,51,49);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(164,1,54,50),
+(164,2,53,50),
+(164,3,53,50),
+(165,4,53,50),
+(165,5,53,50),
+(165,6,52,50),
+(165,7,51,50);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,64,51),
+(173,2,63,51),
+(173,3,63,51),
+(173,4,63,51),
+(173,5,63,51),
+(173,6,62,51),
+(173,7,61,51);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(181,1,74,52),
+(181,2,73,52),
+(181,3,73,52),
+(181,4,73,52),
+(181,5,73,52),
+(181,6,72,52),
+(181,7,71,52);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,58,53),
+(173,2,58,53),
+(173,3,57,53),
+(173,4,56,53),
+(173,5,55,53),
+(173,6,55,53),
+(173,7,55,53);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(167,1,57,54),
+(167,2,57,54),
+(167,3,58,54),
+(168,4,58,54),
+(168,5,58,54),
+(168,6,59,54),
+(168,7,59,54);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(151,1,48,55),
+(151,2,48,55),
+(151,3,49,55),
+(151,4,49,55),
+(151,5,49,55),
+(151,6,49,55),
+(151,7,49,55);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(165,1,57,56),
+(165,2,57,56),
+(165,3,58,56),
+(166,4,58,56),
+(166,5,57,56),
+(166,6,57,56),
+(166,7,57,56);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(164,1,54,57),
+(164,2,53,57),
+(164,3,53,57),
+(164,4,53,57),
+(164,5,53,57),
+(164,6,52,57),
+(164,7,51,57);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(171,1,56,58),
+(171,2,56,58),
+(171,3,57,58),
+(172,4,57,58),
+(172,5,56,58),
+(173,6,56,58),
+(174,7,56,58);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(160,1,51,59),
+(160,2,51,59),
+(160,3,52,59),
+(160,4,52,59),
+(160,5,53,59),
+(160,6,52,59),
+(161,7,51,59);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(174,1,55,60),
+(174,2,55,60),
+(174,3,56,60),
+(175,4,56,60),
+(175,5,55,60),
+(175,6,55,60),
+(175,7,56,60);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(178,1,65,61),
+(178,2,65,61),
+(178,3,66,61),
+(178,4,66,61),
+(178,5,65,61),
+(178,6,65,61),
+(178,7,66,61);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(184,1,82,62),
+(184,2,82,62),
+(184,3,82,62),
+(184,4,83,62),
+(184,5,83,62),
+(184,6,82,62),
+(184,7,82,62);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(173,1,55,63),
+(173,2,55,63),
+(173,3,56,63),
+(174,4,56,63),
+(175,5,55,63),
+(175,6,55,63),
+(175,7,56,63);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(177,1,57,64),
+(177,2,59,64),
+(177,3,59,64),
+(177,4,59,64),
+(177,5,60,64),
+(178,6,58,64),
+(178,7,58,64);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(171,1,54,65),
+(171,2,54,65),
+(172,3,56,65),
+(172,4,56,65),
+(172,5,54,65),
+(172,6,54,65),
+(172,7,54,65);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(163,1,55,66),
+(163,2,55,66),
+(164,3,56,66),
+(165,4,56,66),
+(165,5,55,66),
+(165,6,55,66),
+(165,7,56,66);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(178,1,65,67),
+(178,2,65,67),
+(178,3,66,67),
+(178,4,66,67),
+(178,5,65,67),
+(178,6,65,67),
+(178,7,66,67);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(181,1,75,68),
+(181,2,75,68),
+(181,3,76,68),
+(182,4,76,68),
+(182,5,75,68),
+(182,6,75,68),
+(182,7,76,68);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(180,1,55,69),
+(180,2,55,69),
+(180,3,56,69),
+(180,4,56,69),
+(180,5,55,69),
+(181,6,55,69),
+(181,7,56,69);
+INSERT INTO monthly (height,`month`,weight,pt_student_id) VALUES
+(167,1,53,70),
+(167,2,53,70),
+(167,3,53,70),
+(167,4,54,70),
+(167,5,53,70),
+(167,6,52,70),
+(167,7,51,70);
 
 INSERT INTO pt_student_pt_teacher (reservation_date,pt_student_id,pt_teacher_id,description) VALUES
 ('2021-07-28 13:00:00',1,3,'가슴+삼두'),
@@ -351,4 +519,7 @@ INSERT INTO pt_student_pt_teacher (reservation_date,pt_student_id,pt_teacher_id,
 ('2021-08-18 14:00:00',2,9,'가슴+삼두'),
 ('2021-08-22 13:00:00',2,9,'하체'),
 ('2021-08-24 13:00:00',2,9,'등'),
-('2021-08-28 17:00:00',2,9,'가슴+삼두');
+('2021-08-28 17:00:00',2,9,'가슴+삼두'),
+('2021-08-20 10:00:00',48,4,'하체'),
+('2021-08-20 12:00:00',49,4,'가슴'),
+('2021-08-20 13:00:00',50,4,'어깨');

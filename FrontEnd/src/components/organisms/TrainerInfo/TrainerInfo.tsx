@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./styles.css";
 import styled from "styled-components";
-import { List, message, Avatar, Spin, Image, Row, Col, Space, Button, Divider } from "antd";
-import reqwest from "reqwest";
+import { List, message, Spin, Image, Row, Col, Space, Button, Divider } from "antd";
 import {
   FacebookOutlined as facebook,
   InstagramOutlined as instagram,
@@ -14,10 +12,10 @@ import {
 
 import InfiniteScroll from "react-infinite-scroller";
 import axios from "axios";
-import Item from "antd/lib/list/Item";
 import { Email } from '../../../recoil/atoms/Reservation/Email'
 import { useRecoilState } from 'recoil'
 import { ReservationState } from '../../../recoil/atoms/Reservation/ReservationState'
+import profileimagedefault from '../../../assets/pages/profile/profileimagedefault.png'
 
 const StyledList = styled(List)`
   .ant-list-item-meta {
@@ -35,12 +33,47 @@ const StyledList = styled(List)`
   }
 `;
 
+const StyledSpin = styled(Spin)`
+  .demo-loading-container {
+    width: 300px;
+    height: 300px;
+  }
+  .demo-loading-container ant-spin{
+    width: 100%;
+    height: 100%;
+  }
+  .ant-spin-dot{
+    width: 10px;
+    height: 10px;
+  }
+  .ant-spin-dot-item{
+    width: 50px;
+    height: 50px;
+  }
+  
+`;
+
+const StyledDivider = styled(Divider)`
+  margin-top: 10px;
+  border-top-width: 10px;
+`;
+
 const IconText = ({ icon, text }) => (
-  <Space>
+  <Space style={{
+    fontSize: "30px"
+  }}>
     {React.createElement(icon)}
     {text}
   </Space>
 );
+
+const labelStyle = {
+  'fontSize': '20px',
+  'marginBottom': '5px',
+  "font-weight" : "bold",
+};
+
+
 
 function TrainerInfo () {
   let accessToken = localStorage.getItem('accessToken');
@@ -53,7 +86,7 @@ function TrainerInfo () {
 
 
   const fetchData = (callback) => {
-    axios.get(`https://i5b305.p.ssafy.io/api/pt/teacherlist?page=${num}&size=5`, {
+    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/teacherlist?page=${num}&size=5`, {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -67,7 +100,6 @@ function TrainerInfo () {
   useEffect(() => {
     fetchData((res) => {
       setData(res.data.data.teacherList)
-      console.log(res.data.data.teacherList[0])
     })
   }, [])
 
@@ -89,7 +121,10 @@ function TrainerInfo () {
   };
 
   return (
-    <div className="demo-infinite-container" style={{height: "70vh"}}>
+    <div className="demo-infinite-container" style={{
+      height: "86vh",
+      padding: "8px 16px"
+    }}>
       <InfiniteScroll
         initialLoad={false}
         pageStart={0}
@@ -100,27 +135,61 @@ function TrainerInfo () {
         <StyledList
           itemLayout="vertical"
           dataSource={data}
-          renderItem={(item:any) => (
+          renderItem={(item: any) => (
             <List.Item
               key={item.id}
               
-              extra={<Button type="primary" size="large" onClick={() => {
+              extra={<Button type="primary" size="large"
+                style={{
+                  borderRadius: "10px"
+                }}
+                onClick={() => {
                 setEmail(item.email)
                 setReservationTab(!reservationTab)
               }}>예약하기</Button>}
+
+              style={{
+                background: "white",
+                border: "5px solid gray",
+                borderRadius: "20px",
+                marginTop: "8px",
+                padding : "10px"
+              }}
             >
               <List.Item.Meta
                 avatar={
-                  <Image
+                  item.profilePicture !== null ?
+                    <Image
+                      width={150}
+                      src={item.profilePicture.pictureAddr}
+                      style={{
+                        borderRadius: "20px"
+                      }}
+                    />
+                    :
+                    <Image
                     width={150}
-                    src="https://imgtag.co.kr/images/210729/210729_125520/3EYZwp.jpg"
+                      src={profileimagedefault}
+                      style={{
+                        borderRadius: "20px"
+                      }}
                   />
+                  
+                  // <Image
+                  //   width={150}
+                  //   src="https://imgtag.co.kr/images/210729/210729_125520/3EYZwp.jpg"
+                  // />
                 }
                 title={
                   <Row>
-                    <Col span={8}>
-                      <label>소개</label>
-                      <Divider />
+                    <Col span={6} >
+                      <label
+                      style={
+                        labelStyle
+                      }
+                      >소개</label>
+                      
+                      <StyledDivider />
                       <p>닉네임: {item.nickname}</p>
                       <p>성별: {item.gender} </p>
                       <p>나이: {item.age}</p>
@@ -131,7 +200,7 @@ function TrainerInfo () {
                   rel="noreferrer"
                 >
                   {item.snsList[0]['platform'] === 'facebook' && <IconText
-                    icon={facebook}
+                          icon={facebook}
                     text=""
                     key="list-vertical-star-o"
                   />}
@@ -233,30 +302,37 @@ function TrainerInfo () {
                 />}
               </a>}
                     </Col>
-                    <Col span={8}>
-                      <label>경력</label>
-                      <Divider />
+                    <Col span={6}>
+                      <label style={
+                        labelStyle}>연락처</label>
+                      <StyledDivider />
+                      <p>{item.tel}</p>
+                      <p>{item.email}</p>
+                    </Col>
+                    <Col span={6}>
+                      <label style={labelStyle}>경력</label>
+                      <StyledDivider />
                       {item.careers.map((career:any, index:any) => (
                         <p>{career.company} / {career.role}</p>
                       ))}
                     </Col>
-                    <Col span={8}>
-                      <label>자격증</label>
-                      <Divider />
+                    <Col span={6}>
+                      <label style={labelStyle}>자격증</label>
+                      <StyledDivider />
                       {item.certificates.map((certificate:any, index:any) => (
                         <p>{certificate.name} / {certificate.publisher}</p>
                       ))}
                     </Col>
                   </Row>
                 }
-                description={item.description + ' / ' + item.tel + ' / ' + item.email} 
+                description={item.description} 
               />
             </List.Item>
           )}
         >
           {loading && hasMore && (
             <div className="demo-loading-container">
-              <Spin />
+              <StyledSpin />
             </div>
           )}
         </StyledList>

@@ -2,7 +2,7 @@ import { Modal, Typography, Button, Image, Row, Col, message } from "antd";
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import OGYM from '../../../assets/pages/mainPage/navButton/ogym.png';
+import OGYM from '../../../assets/pages/mainPage/navButton/ogym.jpg';
 import barChart from "../../../assets/pages/mainPage/navButton/bar-chart.png"
 import conference from "../../../assets/pages/mainPage/navButton/conference.png"
 import onlineBooking from "../../../assets/pages/mainPage/navButton/online-booking.png"
@@ -12,6 +12,7 @@ import work from "../../../assets/pages/mainPage/navButton/work.png"
 import jwt_decode from "jwt-decode";
 import { useEffect } from "react";
 import { useHistory } from "react-router";
+import axios from 'axios';
 const { Text } = Typography;
 const StyledModal = styled(Modal)`
   position: fixed;
@@ -60,6 +61,17 @@ const StyledButton = styled(Button)<MainNavigationType>`
     // background-image: url(${OGYM});
 `;
 
+const StyledLogo = styled(Button)<MainNavigationType>`
+    position: ${props=>props.position || "fixed"};
+    top: 5px;
+    left: 10px;
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    // background-image: url(${OGYM});
+`;
+
+
 const StyledCircledImage = styled(Image)`
   clip-path : circle(50%);
 `;
@@ -100,6 +112,9 @@ const MainNavigation = (props): JSX.Element => {
   
   
     const clickMenuButton = () => {
+      if (role === "") {
+        history.push('/login')
+      }
         setIsVisible(!isVisible)
     }
 
@@ -121,6 +136,45 @@ const MainNavigation = (props): JSX.Element => {
     setIsVisible(!isVisible);
   }
 
+  const clickConferenceRoom = () => {
+    
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken != null) {
+        
+      const decoded: {
+        nickname, role
+      } = jwt_decode(accessToken);
+    
+      if (decoded['nickname']) {
+        axios.get(`https://i5b305.p.ssafy.io/api/pt/nowreservation`, {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`
+          }
+        }).then(({ data }) => {
+                
+          if (data.data === null) {
+            message.error('현재 시간에 확인된 예약이 없습니다');
+            setIsVisible(!isVisible)
+            history.push('/');
+            throw new Error();
+          }
+          else {
+            history.push('/dovideo');
+          }
+        }).catch(() => {
+
+        });
+      }
+    }
+    else {
+      setIsVisible(!isVisible);
+      history.push('/');
+      message.error('로그인 해주세요!');
+    }
+
+  }
+
     return (
         <>
             <StyledButton onClick={clickMenuButton}
@@ -133,11 +187,18 @@ const MainNavigation = (props): JSX.Element => {
             <StyledModal
           title={
             <Row gutter={2}>
-              <Col span={19}>O-GYM</Col>
+              <Col span={18}>
+              <StyledLogo  onClick={clickMenuButton}
+          shape="circle" position={props.position}
+          icon={<StyledCircledImage src={OGYM} preview={false} />} />
+              </Col>
                 {
                 logged !== '' ? (
                   <>
-                    <Col span={3}>
+                    <Col span={3} style={{
+                      marginTop: "0.3rem",
+                      marginRight: "-4em"
+                    }}>
                     <Text>
                       {logged}님
                       
@@ -146,7 +207,10 @@ const MainNavigation = (props): JSX.Element => {
                         </Col>
 
                       <Col>
-                      <Button type="primary" onClick={
+                      <Button onClick={() =>
+                        history.push('/profile')
+                      }>내 정보</Button>
+                      <Button onClick={
                         clickLogoutButton
                       }>
 
@@ -257,13 +321,15 @@ const MainNavigation = (props): JSX.Element => {
             }
                 
             {role === 'ROLE_PTSTUDENT' ?
-              <Col span={12} style={{backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-              <Link to={'/dovideo'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
-                <img src={conference} alt="예약" style={{width: "80%"}}/>
-              </Link>
-              <Link to={'/dovideo'}>
-                <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
-              </Link>
+              <Col span={12} style={{ backgroundColor: "#91F8D0", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}
+              onClick={clickConferenceRoom}
+              >
+                <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+                  <img src={conference} alt="예약" style={{width: "80%"}}/>
+                </div>
+                <div>
+                  <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 접속하기</p>
+                </div>
               </Col>
 
               :
@@ -273,13 +339,15 @@ const MainNavigation = (props): JSX.Element => {
                 
             {role === 'ROLE_PTTEACHER' ? 
             
-            <Col span={12} style={{backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-            <Link to={'/dovideo'} style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
+              <Col span={12} style={{ backgroundColor: "#dcdcdc", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}
+                onClick={clickConferenceRoom}
+              >
+            <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "50%", width: "15%" }}>
             <img src={conference} alt="예약" style={{width: "80%"}}/>
-            </Link>
-            <Link to={'/dovideo'}>
+            </div>
+            <div>
             <p style={{color: "white", fontSize: "1.5rem", marginTop: "1rem"}}>PT 화상 채팅방 개설하기</p>
-            </Link>
+            </div>
               </Col>
               
               :

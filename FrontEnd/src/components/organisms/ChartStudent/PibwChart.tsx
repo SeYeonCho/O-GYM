@@ -50,7 +50,7 @@ function PibwChart() {
     let today = new Date()
     let month = today.getMonth()
     axios.get(
-      'https://i5b305.p.ssafy.io/api/health/myhealth', {
+      `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/health/myhealth`, {
         headers: {
           "Authorization": `Bearer ${accessToken}`
         }
@@ -63,7 +63,6 @@ function PibwChart() {
       const cm = response.data.data.heightList[month]
       setPercentage(Math.round(kg/(cm*cm*22/10000)*100))
     })
-    console.log(percentage)
   }, [])
 
   return (

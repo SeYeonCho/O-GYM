@@ -6,11 +6,11 @@ import { Zipcode } from "../../../recoil/atoms/Zipcode";
 import { StreetAddress } from "../../../recoil/atoms/StreetAddress";
 import styled from "styled-components";
 import Postcode from "../../molecules/postcode/Postcode";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import axios from "axios";
 import {useState, useEffect} from 'react';
 import { useHistory } from "react-router";
-import { message } from 'antd'
+import { message, Space } from 'antd'
 import arrow from '../../../assets/pages/register/arrow.jpg'
 
 
@@ -32,6 +32,7 @@ const StyeldInput = styled.input`
   padding: 10px 10px;
   margin-bottom: 10px;
   font-size: 14px;
+  font-weight: bold;
   color: black;
 `;
 
@@ -42,7 +43,7 @@ const StyledLabel = styled.label`
   margin-bottom: 3px;
   margin-top: 10px;
   font-size: 14px;
-  font-weight: 200;
+  font-weight: bold;
   color: black;
 `;
 
@@ -114,14 +115,17 @@ const schema = yup.object().shape({
     .typeError("성별을 선택해주세요"),
   height: yup.number()
     .required('키를 입력해주세요')
+    .typeError("키를 입력해주세요")
     .min(130, '키를 다시 입력해주세요')
     .max(230, '키를 다시 입력해주세요'),
   weight: yup.number()
-    .required('몸무게를 입력해주세요')
+    .required('체중을 입력해주세요')
+    .typeError("체중을 입력해주세요")
     .min(35, '체중을 다시 입력해주세요')
     .max(200, '체중을 다시 입력해주세요'),
   age: yup.number()
     .required('나이를 입력해주세요')
+    .typeError("나이를 입력해주세요")
     .min(10, '나이를 다시 입력해주세요')
     .max(150, '나이를 다시 입력해주세요'),
 });
@@ -157,7 +161,7 @@ function RegisterStudent() {
       }
     }
 
-    axios.post("https://i5b305.p.ssafy.io/api/user", {
+    axios.post(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`, {
     "email" : data.email,
     "password" : data.password,
     "username" : data.username,
@@ -225,11 +229,14 @@ function RegisterStudent() {
       {errors.nickname?.message && <ErrorP>{errors.nickname?.message}</ErrorP>}
 
       <StyledLabel htmlFor="zipcode">주소검색</StyledLabel>
-      <div style={{display: "flex"}}>
+    
+        <Space>
       <Postcode />
 
       <StyeldInput type="text" placeholder="우편 번호"{...register("zipcode")} value={zipcode} readOnly />
-      </div>
+
+        </Space>
+    
       {errors.zipcode?.message && <ErrorP>{errors.zipcode?.message}</ErrorP>}
 
       <StyeldInput type="text" placeholder="도로명 주소"{...register("streetAddress")} value={streetAddress} readOnly />

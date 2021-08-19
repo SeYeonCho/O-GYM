@@ -16,7 +16,7 @@ import { AddCERT } from '../../../recoil/atoms/AddCERT';
 import AddCareer from "../../molecules/register/AddCareer";
 import { AddCAREER } from "../../../recoil/atoms/AddCAREER"
 import { useHistory } from "react-router";
-import { message } from 'antd'
+import { message, Space } from 'antd'
 import arrow from "../../../assets/pages/register/arrow.jpg";
 
 const ErrorP = styled.p`
@@ -37,6 +37,7 @@ const StyeldInput = styled.input`
   padding: 10px 10px;
   margin-bottom: 10px;
   font-size: 14px;
+  font-weight: bold;
   color: black;
 `;
 
@@ -47,7 +48,7 @@ const StyledLabel = styled.label`
   margin-bottom: 3px;
   margin-top: 10px;
   font-size: 14px;
-  font-weight: 200;
+  font-weight: bold;
   color: black;
 `;
 
@@ -123,10 +124,12 @@ const schema = yup.object().shape({
     .max(20, '올바른 전공을 입력해주세요'),
   price: yup.number()
     .required('금액을 입력해주세요')
+    .typeError("금액을 입력해주세요")
     .min(10000, '올바른 금액을 입력해주세요')
     .max(200000, '올바른 금액을 입력해주세요'),
   age: yup.number()
     .required('나이를 입력해주세요')
+    .typeError("나이를 입력해주세요")
     .min(10, '나이를 다시 입력해주세요')
     .max(150, '나이를 다시 입력해주세요'),  
   description: yup.string()
@@ -149,7 +152,7 @@ function RegisterStudent() {
   });
 
   const onSubmit = (data: FormValues) => {
-    axios.post("https://i5b305.p.ssafy.io/api/user", {
+    axios.post(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`, {
       "email" : data.email,
       "password" : data.password,
       "username" : data.username,
@@ -217,11 +220,13 @@ function RegisterStudent() {
       {errors.nickname?.message && <ErrorP>{errors.nickname?.message}</ErrorP>}
 
       <StyledLabel htmlFor="zipcode">주소검색</StyledLabel>
-      <div style={{display: "flex"}}>
+      <Space>
       <Postcode />
 
       <StyeldInput type="text" placeholder="우편 번호"{...register("zipcode")} value={zipcode} readOnly />
-      </div>
+
+      </Space>
+      
       {errors.zipcode?.message && <ErrorP>{errors.zipcode?.message}</ErrorP>}
 
       <StyeldInput type="text" placeholder="도로명 주소"{...register("streetAddress")} value={streetAddress} readOnly />

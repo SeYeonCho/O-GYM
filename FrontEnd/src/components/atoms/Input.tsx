@@ -21,8 +21,6 @@ function Input({ type, inputType = 'loginEmail',  ...props }: InputPropsType): J
   const [text, setText] = useRecoilState(InputState);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log(event.target.value)
-    // setText(text[inputType] = event.target.value);
     setText({...text, [inputType]: event.target.value});
   }
 

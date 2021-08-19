@@ -1,11 +1,9 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { AddCAREER } from "../../../recoil/atoms/AddCAREER";
 import styled from "styled-components";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import { Button, DatePicker, Row, Col } from "antd";
+import { Button, Row, Col, Space } from "antd";
 
 const StyledInput = styled.input`
   display: block;
@@ -127,75 +125,116 @@ function AddCert() {
 
     setForm((prev) => prev.filter((item) => item !== prev[index]));
   };
+
+  const onInputFocus = (e) => {
+    let target = e.target;
+    target.type = 'date';
+  }
+  const onInputFocusOut = (e) => {
+    let target = e.target;
+    target.type = 'text';
+  }
+
   return (
     <>
       <div>
         <form>
           {form.map((item, index) => (
             <Row key={`item-${index}`} style={{ display: "flex" }}>
-              <Col span={14}>
-                <StyledInput
-                  type="text"
-                  name="company"
-                  placeholder="회사명"
-                  value={item.company}
-                  onChange={(e) => onChange(index, e)}
-                />
+              
 
-                {item.errors.company && (
-                  <div style={{ color: "red" }}>{item.errors.company}</div>
-                )}
-              </Col>
-              <Col span={10}>
-                <StyledInput
-                  type="text"
-                  name="role"
-                  placeholder="직책"
-                  value={item.role}
-                  onChange={(e) => onChange(index, e)}
-                />
-
-                {item.errors.role && (
-                  <div style={{ color: "red" }}>{item.errors.role}</div>
-                )}
-              </Col>
-
-              <Col span={10}>
-                <StyledInput
-                  type="date"
-                  name="startdate"
-                  date-placeholder="시작일자"
-                  value={item.startdate}
-                  onChange={(e) => onChange(index, e)}
-                />
-
-                {item.errors.startdate && (
-                  <div style={{ color: "red" }}>{item.errors.startdate}</div>
-                )}
-              </Col>
-              <Col span={10}>
-                <StyledInput
-                  type="date"
-                  name="enddate"
-                  date-placeholder="종료일자"
-                  value={item.enddate}
-                  onChange={(e) => onChange(index, e)}
-                  style={{}}
-                />
-
-                {item.errors.enddate && (
-                  <div style={{ color: "red" }}>{item.errors.enddate}</div>
-                )}
-              </Col>
-              <Col span={4}>
-                <Button
-                  type="primary"
-                  danger
-                  onClick={(e) => handleRemoveField(e, index)}
+              <Col span={14}
+                style={{
+                  width: "159px",
+                  flex: "none"
+                }}
                 >
-                  X
-                </Button>
-              </Col>
+                  <StyledInput
+                    type="text"
+                    name="company"
+                    placeholder="회사명"
+                  value={item.company}
+                  style={{
+                    width: "150px"
+                  }}
+                    onChange={(e) => onChange(index, e)}
+                  />
+
+                  {item.errors.company && (
+                    <div style={{ color: "red" }}>{item.errors.company}</div>
+                  )}
+                </Col>
+              <Col span={10}
+              >
+                  <StyledInput
+                    type="text"
+                    name="role"
+                    placeholder="직책"
+                  value={item.role}
+                  style={{
+                    width: "150px"
+                  }}
+                    onChange={(e) => onChange(index, e)}
+                  />
+
+                  {item.errors.role && (
+                    <div style={{ color: "red" }}>{item.errors.role}</div>
+                  )}
+                </Col>
+              
+              <Space>
+
+                <Col span={10}>
+                  <StyledInput
+                    type="text"
+                    name="startdate"
+                    date-placeholder="시작일자"
+                    placeholder="시작일자"
+                    value={item.startdate}
+                    style={{
+                      width: "150px"
+                    }}
+                    onFocus={onInputFocus}
+                    onBlur={onInputFocusOut}
+                    onChange={(e) => onChange(index, e)}
+                  />
+
+                  {item.errors.startdate && (
+                    <div style={{ color: "red" }}>{item.errors.startdate}</div>
+                  )}
+                </Col>
+                <Col span={10}>
+                  <StyledInput
+                    type="text"
+                    name="enddate"
+                    date-placeholder="종료일자"
+                    placeholder="종료일자"
+                    value={item.enddate}
+                    style={{
+                      width: "150px"
+                    }}
+                    onFocus={onInputFocus}
+                    onBlur={onInputFocusOut}
+                    onChange={(e) => onChange(index, e)}
+                  />
+
+                  {item.errors.enddate && (
+                    <div style={{ color: "red" }}>{item.errors.enddate}</div>
+                  )}
+                </Col>
+                <Col span={4}>
+                  <Button
+                    type="primary"
+                    danger
+                    style={{
+                      height: "45px"
+                    }}
+                    onClick={(e) => handleRemoveField(e, index)}
+                  >
+                    X
+                  </Button>
+                </Col>
+              </Space>
             </Row>
           ))}
 

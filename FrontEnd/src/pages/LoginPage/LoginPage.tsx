@@ -39,7 +39,7 @@ const LoginPage = (): JSX.Element => {
             history.push('/studentreservation');
         }
         else if (role === 'ROLE_PTTEACHER') {
-            history.push('/');
+            history.push('/teacherreservation');
         }
     }
     // const handleCancel = () => {

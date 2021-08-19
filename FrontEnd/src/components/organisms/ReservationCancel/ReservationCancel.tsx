@@ -46,10 +46,9 @@ function ReservationCancel(props) {
             title="예약 취소"
             visible={isModalVisible}
             onOk={() => {
-              console.log(item.email, item.reservationTime)
                 axios({
                   method: 'delete',
-                  url: 'https://i5b305.p.ssafy.io/api/pt/reservation',
+                  url: `${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`,
                   data: {
                     "ptTeacherEmail" : item.email,
                     "reservationTime" : item.reservationTime,

@@ -1,11 +1,9 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { AddSNS } from "../../../recoil/atoms/AddSNS";
 import styled from "styled-components";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import { Button } from "antd";
+import { Button, Space } from "antd";
 import arrow from "../../../assets/pages/register/arrow.jpg";
 
 const StyledInput = styled.input`
@@ -131,12 +129,14 @@ function AddSns() {
         <form>
           {form.map((item, index) => (
             <div key={`item-${index}`} style={{ display: "flex" }}>
+              <Space>
+
               <div>
                 <StyledSelect
                   name="SNSPlatform"
                   value={item.SNSPlatform}
                   onChange={(e) => onChange(index, e)}
-                >
+                  >
                   <option value="">Select</option>
                   <option value="facebook">페이스북</option>
                   <option value="instagram">인스타그램</option>
@@ -145,7 +145,7 @@ function AddSns() {
                 </StyledSelect>
                 {item.errors.SNSPlatform && (
                   <div style={{ color: "red" }}>{item.errors.SNSPlatform}</div>
-                )}
+                  )}
               </div>
 
               <div>
@@ -155,24 +155,31 @@ function AddSns() {
                   placeholder="SNS주소"
                   value={item.SNSUrl}
                   onChange={(e) => onChange(index, e)}
-                />
+                    style={{
+                      marginTop: "10px"
+                  }}
+                  />
 
                 {item.errors.SNSUrl && (
                   <div style={{ color: "red" }}>{item.errors.SNSUrl}</div>
-                )}
+                  )}
               </div>
 
               <Button
                 type="primary"
                 danger
                 onClick={(e) => handleRemoveField(e, index)}
-              >
+                >
                 X
               </Button>
+                </Space>
             </div>
           ))}
 
-          <Button type="primary" onClick={handleAddLink}>
+          <Button type="primary" onClick={handleAddLink}
+            style={{
+              marginBottom: "10px"
+          }}>
             SNS 추가
           </Button>
         </form>

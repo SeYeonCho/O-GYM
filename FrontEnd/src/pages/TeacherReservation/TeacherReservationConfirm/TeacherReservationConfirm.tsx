@@ -3,19 +3,15 @@
 // @ts-nocheck
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
+import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   Toolbar,
-  MonthView,
   WeekView,
   ViewSwitcher,
   Appointments,
   AppointmentTooltip,
   AppointmentForm,
-  DragDropProvider,
-  EditRecurrenceMenu,
-  AllDayPanel,
   DateNavigator,
   TodayButton,
   DayView
@@ -24,15 +20,8 @@ import { connectProps } from '@devexpress/dx-react-core';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import LocationOn from '@material-ui/icons/LocationOn';
 import Notes from '@material-ui/icons/Notes';
@@ -281,19 +270,61 @@ class AppointmentFormContainerBasic extends React.PureComponent {
 const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
 
 const Appointment = ({
-  children, style, ...restProps
-}) => (
-  <Appointments.Appointment
-    {...restProps}
-    style={{
-      ...style,
-      backgroundColor: '#8395fc',
-      borderRadius: '8px',
-    }}
-  >
-    {children}
-  </Appointments.Appointment>
-);
+  children, data, style, ...restProps
+}) => {
+  console.log(data.id)
+
+  if (data.id === 1) {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#ff85c0',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+  else if (data.id === 2) {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#b37feb',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+  else {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#5cdbd3',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+
+  
+}
 
 
 const styles = theme => ({
@@ -381,7 +412,7 @@ class Demo extends React.PureComponent {
     });
       let data21: { data } = await data2.data;
       let inko = new Inko();
-    //console.log(data21.data);
+
     let changeData = data21.data.map(({
       description,
       nickname,
@@ -399,7 +430,7 @@ class Demo extends React.PureComponent {
         }`,
         startDate: startDate,
         endDate: endDate,
-        id: 0,
+        id: (nickname.length%3)+1,
         location: inko.ko2en(nickname) + inko.ko2en(
           checkDate['nickname']
         ),
@@ -483,8 +514,6 @@ class Demo extends React.PureComponent {
     const {
       currentDate,
       data,
-      confirmationVisible,
-      editingFormVisible,
       startDayHour,
       endDayHour,
     } = this.state;

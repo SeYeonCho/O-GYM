@@ -154,9 +154,3 @@ CREATE TABLE `pt_student_pt_teacher` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
-
-create table refresh_token (
-                               user_email varchar(255) not null,
-                               value varchar(255),
-                               primary key (user_email)
-) engine=InnoDB

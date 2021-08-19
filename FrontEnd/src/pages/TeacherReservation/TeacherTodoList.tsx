@@ -1,6 +1,4 @@
 import Title from "antd/lib/typography/Title";
-import { ReloadOutlined } from '@ant-design/icons';
-import { Button } from "antd";
 import styled from "styled-components";
 
 const StyledFooter = styled.div`
