@@ -100,6 +100,9 @@ const MainNavigation = (props): JSX.Element => {
   
   
     const clickMenuButton = () => {
+      if (role === "") {
+        history.push('/login')
+      }
         setIsVisible(!isVisible)
     }
 
@@ -133,11 +136,11 @@ const MainNavigation = (props): JSX.Element => {
             <StyledModal
           title={
             <Row gutter={2}>
-              <Col span={19}>O-GYM</Col>
+              <Col span={18}>O-GYM</Col>
                 {
                 logged !== '' ? (
                   <>
-                    <Col span={3}>
+                    <Col span={3} style={{marginTop: "0.3rem"}}>
                     <Text>
                       {logged}님
                       
@@ -146,7 +149,10 @@ const MainNavigation = (props): JSX.Element => {
                         </Col>
 
                       <Col>
-                      <Button type="primary" onClick={
+                      <Button onClick={() =>
+                        history.push('/profile')
+                      }>내 정보</Button>
+                      <Button onClick={
                         clickLogoutButton
                       }>
 

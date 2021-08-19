@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'
 import ProfileDetailStudent from '../../components/organisms/ProfileDetail/ProfileDetailStudent';
 import ProfileRightStudent from '../../components/organisms/ProfileRight/ProfileRightStudent';
+import MainNavigation from '../../components/organisms/Main/Main-Navigation';
+import profileimagedefault from '../../assets/pages/profile/profileimagedefault.png'
 
 function Profile() {
   const [userInfo, setUserInfo] = useState({
@@ -23,13 +25,14 @@ function Profile() {
     snss: [],
     role: {},
     weights: {},
-    heights: {}
+    heights: {},
+    profilePictureURL: ''
   });
 
   let accessToken = localStorage.getItem('accessToken');
   
   useEffect(() => {
-    axios.get("https://i5b305.p.ssafy.io/api/user/username,nickname,email,tel,major,description,certificates,careers,gender,age,snss,role,weights,heights", {
+    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user/username,nickname,email,tel,major,description,certificates,careers,gender,age,snss,role,weights,heights,profilePictureURL`, {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -42,12 +45,18 @@ function Profile() {
   }, [])
   return (
     <>
+      <MainNavigation/>
       <div className="profile">
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
             <img className="profileCoverImg" src={crossFit} alt="" />
-            <img className="profileUserImg" src="https://imgtag.co.kr/images/210729/210729_125520/3EYZwp.jpg" alt="" />
+            {userInfo.profilePictureURL !== null ?
+            <img className="profileUserImg" src={userInfo.profilePictureURL} alt="프로필" />
+            :
+            <img className="profileUserImg" src={profileimagedefault} alt="프로필" />
+          }
+            
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">{userInfo.nickname}</h4>
@@ -56,13 +65,13 @@ function Profile() {
           </div>
           <div className="profileRightBottom">
             <div style={{ flex: 5.5 }}>
-              { userInfo.role["authorityName"] === "ROLE_PTTEACHER" ?
+              { userInfo.role === "ROLE_PTTEACHER" ?
               <ProfileDetailTrainer userInfo={userInfo} /> :
               <ProfileDetailStudent userInfo={userInfo}/>
             }              
             </div>
             <div style={{ flex: 3.5 }}>
-              { userInfo.role["authorityName"] === "ROLE_PTTEACHER" ?
+              { userInfo.role === "ROLE_PTTEACHER" ?
                 <ProfileRightTrainer /> :
                 <ProfileRightStudent />
               }       

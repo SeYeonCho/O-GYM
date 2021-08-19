@@ -94,6 +94,7 @@ const LoginContent = (): JSX.Element => {
         
     }
 
+
     return (
         <>
             <LabelDiv>
@@ -117,7 +118,7 @@ const LoginContent = (): JSX.Element => {
             <ListItem >
                 <ListItem flexdirection="column">
                     <Label label="Password" fontweight="bold"/>
-                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="password"/>
+                    <Input type={isShow === true ? "password" : "text"} inputType="loginPassword" placeholder="password" />
                 </ListItem>
                 
                 <StyledDivider type="vertical" />

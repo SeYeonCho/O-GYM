@@ -11,7 +11,7 @@ function ProfileRightStudent() {
   let accessToken = localStorage.getItem('accessToken');
   
   useEffect(() => {
-    axios.get("https://i5b305.p.ssafy.io/api/pt/reservation", {
+    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`, {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -25,7 +25,7 @@ function ProfileRightStudent() {
   return (
       <>
       <List
-        header={<div>예약현황</div>}
+        header={<div style={{fontWeight:700}}>예약현황</div>}
         style={{overflowY: "scroll", height: "500px"}}
         itemLayout="horizontal"
         dataSource={myReservation}
@@ -33,11 +33,11 @@ function ProfileRightStudent() {
           <List.Item
           >
             <List.Item.Meta
-              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-              title={<a href="https://ant.design">{myReservation.nickname}</a>}
-              description={myReservation.description}
+              avatar={<Avatar src="" />}
+              title={<p>트레이너 {myReservation.nickname}</p>}
+              description={<p>운동부위 {myReservation.description}</p>}
             />
-            <div>{
+            <div style={{marginRight: "1rem"}}>{
                 myReservation.reservationTime.substring(0, 4) + "년 " +
                 myReservation.reservationTime.substring(5, 7) + "월 " +
                 myReservation.reservationTime.substring(8, 10) + "일 " +
