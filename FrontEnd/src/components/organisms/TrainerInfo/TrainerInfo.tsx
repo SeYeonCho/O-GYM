@@ -18,6 +18,7 @@ import Item from "antd/lib/list/Item";
 import { Email } from '../../../recoil/atoms/Reservation/Email'
 import { useRecoilState } from 'recoil'
 import { ReservationState } from '../../../recoil/atoms/Reservation/ReservationState'
+import profileimagedefault from '../../../assets/pages/profile/profileimagedefault.png'
 
 const StyledList = styled(List)`
   .ant-list-item-meta {
@@ -53,7 +54,7 @@ function TrainerInfo () {
 
 
   const fetchData = (callback) => {
-    axios.get(`https://i5b305.p.ssafy.io/api/pt/teacherlist?page=${num}&size=5`, {
+    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/teacherlist?page=${num}&size=5`, {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
@@ -111,10 +112,21 @@ function TrainerInfo () {
             >
               <List.Item.Meta
                 avatar={
-                  <Image
+                  item.profilePicture !== null ?
+                    <Image
+                      width={150}
+                      src={item.profilePicture.pictureAddr}
+                    />
+                    :
+                    <Image
                     width={150}
-                    src="https://imgtag.co.kr/images/210729/210729_125520/3EYZwp.jpg"
+                    src={profileimagedefault}
                   />
+                  
+                  // <Image
+                  //   width={150}
+                  //   src="https://imgtag.co.kr/images/210729/210729_125520/3EYZwp.jpg"
+                  // />
                 }
                 title={
                   <Row>

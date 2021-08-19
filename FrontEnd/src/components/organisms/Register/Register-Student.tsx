@@ -157,7 +157,7 @@ function RegisterStudent() {
       }
     }
 
-    axios.post("https://i5b305.p.ssafy.io/api/user", {
+    axios.post(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/user`, {
     "email" : data.email,
     "password" : data.password,
     "username" : data.username,

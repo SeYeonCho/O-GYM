@@ -19,7 +19,7 @@ function StudentCalendar() {
   }
 
   useEffect(() => {
-    axios.get(`https://i5b305.p.ssafy.io/api/pt/reservation/${email}`, {
+    axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation/${email}`, {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
