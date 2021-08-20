@@ -10,6 +10,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.restdocs.snippet.Attributes.key;
@@ -340,11 +341,12 @@ class PTApiControllerTest {
             .nickname("김계란")
             .username("김성식")
             .email("eggkim@ssafy.com")
+            .profileUrl("profileURL/profileIMG.jpg")
             .reservationTime(LocalDateTime.parse("2021-07-28T04:00:00"))
             .build());
-        given(ptService.getReservationTime(userEmail)).willReturn(reservationList);
+        given(ptService.getReservationTime(any())).willReturn(reservationList);
 
-        assertEquals(ptService.getReservationTime(userEmail), reservationList);
+        assertEquals(ptService.getReservationTime(any()), reservationList);
 
         mockMvc.perform(get("/api/pt/reservation")
             .header("Authorization", "JWT ACCESS TOKEN"))

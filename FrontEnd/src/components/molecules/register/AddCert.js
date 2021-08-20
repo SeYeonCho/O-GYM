@@ -1,11 +1,9 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { AddCERT } from "../../../recoil/atoms/AddCERT";
 import styled from "styled-components";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import { Button, DatePicker } from "antd";
+import { Button, Space } from "antd";
 
 const StyledInput = styled.input`
   display: block;
@@ -71,14 +69,6 @@ function AddCert() {
     if (prevIsValid()) {
       setForm((prev) => [...prev, inputState]);
     }
-    // const newForm = form.map((item, index) => {
-    //   return {
-    //     platform: item["SNSPlatform"],
-    //     SNSUrl: item["SNSUrl"],
-    //   };
-    // });
-    // console.log(newForm);
-    // console.log(form);
   };
 
   const onChange = (index, event) => {
@@ -105,7 +95,6 @@ function AddCert() {
         };
       });
     });
-    // setsnsInfo(form);
   };
 
   useEffect(() => {
@@ -117,7 +106,6 @@ function AddCert() {
       };
     });
     setcertInfo(newForm);
-    // console.log(certInfo);
   }, [form]);
 
   const handleRemoveField = (e, index) => {
@@ -125,59 +113,94 @@ function AddCert() {
 
     setForm((prev) => prev.filter((item) => item !== prev[index]));
   };
+
+  const onInputFocus = (e) => {
+    let target = e.target;
+    target.type = 'date';
+  }
+  const onInputFocusOut = (e) => {
+    let target = e.target;
+    target.type = 'text';
+  }
+
   return (
     <>
       <div>
         <form>
           {form.map((item, index) => (
             <div key={`item-${index}`} style={{ display: "flex" }}>
-              <div>
+              <Space>
+
+              <div style={{
+                  height: "50px"
+              }}>
                 <StyledInput
                   type="text"
                   name="name"
                   placeholder="자격증 이름"
                   value={item.name}
                   onChange={(e) => onChange(index, e)}
-                />
+                    style={{
+                    height: "85%"
+                  }}
+                  />
 
                 {item.errors.name && (
                   <div style={{ color: "red" }}>{item.errors.name}</div>
                 )}
               </div>
-              <div>
+                <div style={{
+                  height: "50px"
+              }}>
                 <StyledInput
-                  type="date"
+                  type="text"
                   name="date"
                   placeholder="취득일자"
-                  value={item.date}
+                    value={item.date}
+                    onFocus={onInputFocus}
+                    onBlur={onInputFocusOut}
                   onChange={(e) => onChange(index, e)}
-                />
+
+                  />
 
                 {item.errors.date && (
                   <div style={{ color: "red" }}>{item.errors.date}</div>
                 )}
               </div>
-              <div>
+              <div style={{
+                  height: "50px"
+              }}>
                 <StyledInput
                   type="text"
                   name="publisher"
                   placeholder="발행기관"
                   value={item.publisher}
                   onChange={(e) => onChange(index, e)}
-                />
+                  style={{
+                    height: "85%"
+                  }}
+                  />
 
                 {item.errors.publisher && (
                   <div style={{ color: "red" }}>{item.errors.publisher}</div>
                 )}
               </div>
-
+                <div style={{
+                    height: "50px"
+                }}>
               <Button
                 type="primary"
-                danger
+                  danger
+                  style={{
+                    height: "85%"
+                  }}
                 onClick={(e) => handleRemoveField(e, index)}
               >
                 X
               </Button>
+                  
+              </div>
+              </Space>
             </div>
           ))}
 

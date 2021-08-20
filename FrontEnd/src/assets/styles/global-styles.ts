@@ -3,6 +3,8 @@ import { normalize } from "styled-normalize";
 
 const GlobalStyle = createGlobalStyle`
   ${normalize}
+
+
   html,
   body {
     overflow: hidden;

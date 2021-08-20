@@ -4,12 +4,13 @@ import com.B305.ogym.common.util.RedisUtil;
 import com.B305.ogym.controller.dto.UserDto;
 import com.B305.ogym.controller.dto.UserDto.CareerDto;
 import com.B305.ogym.controller.dto.UserDto.CertificateDto;
+import com.B305.ogym.controller.dto.UserDto.ProfileDto;
 import com.B305.ogym.controller.dto.UserDto.SnsDto;
 import com.B305.ogym.domain.authority.Authority;
 import com.B305.ogym.domain.authority.AuthorityRepository;
 import com.B305.ogym.domain.users.UserRepository;
+import com.B305.ogym.domain.users.common.ProfilePicture;
 import com.B305.ogym.domain.users.common.UserBase;
-import com.B305.ogym.domain.users.ptStudent.MonthlyRepository;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.B305.ogym.domain.users.ptStudent.PTStudentRepository;
 import com.B305.ogym.domain.users.ptTeacher.Career;
@@ -26,10 +27,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +40,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final MonthlyRepository monthlyRepository;
     private final PTTeacherRepository ptTeacherRepository;
     private final PTStudentRepository ptStudentRepository;
     private final AuthorityRepository authorityRepository;
@@ -165,5 +163,14 @@ public class UserService {
             });
             return map;
         }
+    }
+
+    // 프로필 사진 변경
+    @Transactional
+    public void putProfile(String userEmail, ProfileDto profileDto) {
+        UserBase user = userRepository.findByEmail(userEmail)
+            .orElseThrow(() -> new UserNotFoundException("존재하지 않는 유저입니다."));
+        user.setProfilePicture(ProfilePicture.builder().pictureAddr(profileDto.getUrl()).build());
+        userRepository.save(user);
     }
 }

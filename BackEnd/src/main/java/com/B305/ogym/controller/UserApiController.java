@@ -2,6 +2,7 @@ package com.B305.ogym.controller;
 
 import com.B305.ogym.controller.dto.SuccessResponseDto;
 import com.B305.ogym.controller.dto.UserDto;
+import com.B305.ogym.controller.dto.UserDto.ProfileDto;
 import com.B305.ogym.domain.users.common.UserBase;
 import com.B305.ogym.service.UserService;
 import java.util.HashMap;
@@ -16,8 +17,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,6 +71,21 @@ public class UserApiController {
         @PathVariable @NotEmpty List<String> req) {
         return ResponseEntity.ok(new SuccessResponseDto<Map>(
             200, "회원 정보를 불러오는데 성공했습니다", userService.getUserInfo(userEmail, req)
+        ));
+    }
+
+    /*
+     * 프로필 사진 변경을 위한 메서드
+     */
+    @PatchMapping("/user")
+    @PreAuthorize("hasAnyRole('PTTEACHER', 'PTSTUDENT')")
+    public ResponseEntity<SuccessResponseDto> putProfile(
+        @AuthenticationPrincipal String userEmail,
+        @RequestBody ProfileDto profileDto
+    ) {
+        userService.putProfile(userEmail, profileDto);
+        return ResponseEntity.ok(new SuccessResponseDto<Map>(
+            200, "프로필 저장에 성공했습니다.", new HashMap()
         ));
     }
 }

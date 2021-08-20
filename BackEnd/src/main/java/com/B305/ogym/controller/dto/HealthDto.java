@@ -93,7 +93,9 @@ public class HealthDto {
             }
             weightList.add(weight);
         }
-
+        public void setProfileUrl(String url){
+            profileUrl = url;
+        }
         @Builder
         public StudentHealth(String username, String nickname, int age,
             Gender gender, String profileUrl, List<Integer> heightList,

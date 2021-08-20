@@ -28,11 +28,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,6 +142,7 @@ public class PTService {
                             .reservationTime(o.getReservationDate())
                             .nickname(o.getPtStudent().getNickname())
                             .username(o.getPtStudent().getUsername())
+                            .profileUrl((String)o.getPtStudent().getInfo("profilePictureURL"))
                             .email(o.getPtStudent().getEmail())
                             .build()
                     );
@@ -158,6 +157,7 @@ public class PTService {
                             .reservationTime(o.getReservationDate())
                             .nickname(o.getPtTeacher().getNickname())
                             .username(o.getPtTeacher().getUsername())
+                            .profileUrl((String)o.getPtTeacher().getInfo("profilePictureURL"))
                             .email(o.getPtTeacher().getEmail())
                             .build()
                     );
@@ -189,6 +189,7 @@ public class PTService {
         return result;
     }
 
+    // 선생님 리스트 출력(원하는 정보만 담기)
     public PTTeacherDto toPTTeacherDto(PTTeacher ptTeacher) {
 
         List<Certificate> certificates = ptTeacher.getCertificates();

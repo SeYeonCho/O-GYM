@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.186s</div>
+<div class="counter">0.219s</div>
 <p>duration</p>
 </div>
 </td>
@@ -81,19 +81,19 @@
 <tr>
 <td class="success">내 건강 정보 확인 - 실패</td>
 <td class="success">getMyHealth_failure()</td>
-<td class="success">0.019s</td>
+<td class="success">0.024s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">내 건강 정보 확인 - 성공</td>
 <td class="success">getMyHealth_success()</td>
-<td class="success">0.135s</td>
+<td class="success">0.151s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">내 학생들의 건강 정보 확인 - 성공</td>
 <td class="success">getMyStudentsHealth_success()</td>
-<td class="success">0.032s</td>
+<td class="success">0.044s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -101,12 +101,12 @@
 <div id="tab1" class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre>2021-08-18 00:09:03.980  INFO 17340 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.B305.ogym.controller.HealthApiControllerTest], using SpringBootContextLoader
-2021-08-18 00:09:03.981  INFO 17340 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.B305.ogym.controller.HealthApiControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
-2021-08-18 00:09:03.981  INFO 17340 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.B305.ogym.controller.HealthApiControllerTest]: HealthApiControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-2021-08-18 00:09:03.986  INFO 17340 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.B305.ogym.OgymApplication for test class com.B305.ogym.controller.HealthApiControllerTest
-2021-08-18 00:09:03.987  INFO 17340 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
-2021-08-18 00:09:03.988  INFO 17340 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@6daa1e80, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@7f54b280, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@493dc2b, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@81aab1e, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@3579ea83, org.springframework.test.context.support.DirtiesContextTestExecutionListener@6fe39e1e, org.springframework.test.context.transaction.TransactionalTestExecutionListener@750b654d, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@289462a9, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@5243b8ca, org.springframework.test.context.event.EventPublishingTestExecutionListener@2123dff2, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@face796, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@4a64de0, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4bec3056, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@748faa96, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@1c7773c6, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@2a08e4e5, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@4c0f72]
+<pre>2021-08-19 23:18:53.654  INFO 25316 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.B305.ogym.controller.HealthApiControllerTest], using SpringBootContextLoader
+2021-08-19 23:18:53.655  INFO 25316 --- [    Test worker] o.s.t.c.support.AbstractContextLoader    : Could not detect default resource locations for test class [com.B305.ogym.controller.HealthApiControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+2021-08-19 23:18:53.656  INFO 25316 --- [    Test worker] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.B305.ogym.controller.HealthApiControllerTest]: HealthApiControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2021-08-19 23:18:53.661  INFO 25316 --- [    Test worker] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.B305.ogym.OgymApplication for test class com.B305.ogym.controller.HealthApiControllerTest
+2021-08-19 23:18:53.661  INFO 25316 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+2021-08-19 23:18:53.662  INFO 25316 --- [    Test worker] .b.t.a.w.s.WebMvcTestContextBootstrapper : Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@7cd96a28, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@705d21f9, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@51a7c62e, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@3ad99fef, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@d663ab6, org.springframework.test.context.support.DirtiesContextTestExecutionListener@14ad800a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@7bd4b207, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@d047c75, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@318b54e9, org.springframework.test.context.event.EventPublishingTestExecutionListener@49de3f02, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@1744f8b4, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@390dd9fd, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@52caee29, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@6a54fd5d, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@5a6529fb, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@df0c17b, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@8cecd4a]
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -116,20 +116,20 @@
  =========|_|==============|___/=/_/_/_/
  :: Spring Boot ::                (v2.5.2)
 
-2021-08-18 00:09:04.043  INFO 17340 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : Starting HealthApiControllerTest using Java 11.0.1 on DESKTOP-H7093P3 with PID 17340 (started by juhyu in C:\ssafy-common-sub3\BackEnd)
-2021-08-18 00:09:04.044  INFO 17340 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : No active profile set, falling back to default profiles: default
-2021-08-18 00:09:04.982  INFO 17340 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
+2021-08-19 23:18:53.717  INFO 25316 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : Starting HealthApiControllerTest using Java 11.0.1 on DESKTOP-H7093P3 with PID 25316 (started by juhyu in C:\ssafy-common-sub3\BackEnd)
+2021-08-19 23:18:53.718  INFO 25316 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : No active profile set, falling back to default profiles: default
+2021-08-19 23:18:54.546  INFO 25316 --- [    Test worker] .s.s.UserDetailsServiceAutoConfiguration : 
 
-Using generated security password: e8729a32-250e-4f45-a163-36889ecf6907
+Using generated security password: 15fbe432-3d96-4532-a39e-8fa96a030346
 
-2021-08-18 00:09:05.135  INFO 17340 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@333b361c, org.springframework.security.web.context.SecurityContextPersistenceFilter@8efd1d0, org.springframework.security.web.header.HeaderWriterFilter@b22f5ee, org.springframework.security.web.csrf.CsrfFilter@211455b4, org.springframework.security.web.authentication.logout.LogoutFilter@120c7d43, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@7ec01154, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@34d50411, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@46563370, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@116d6b32, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@5f1f2c07, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@438e2f8f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3862d05f, org.springframework.security.web.session.SessionManagementFilter@b558cfb, org.springframework.security.web.access.ExceptionTranslationFilter@293fc301, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@55441b90]
-2021-08-18 00:09:05.200  INFO 17340 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2021-08-18 00:09:05.200  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2021-08-18 00:09:05.201  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
-2021-08-18 00:09:05.218  INFO 17340 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : Started HealthApiControllerTest in 1.226 seconds (JVM running for 7.239)
-2021-08-18 00:09:05.234  INFO 17340 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2021-08-18 00:09:05.234  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2021-08-18 00:09:05.235  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-08-19 23:18:54.688  INFO 25316 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@69f10da4, org.springframework.security.web.context.SecurityContextPersistenceFilter@156fa52f, org.springframework.security.web.header.HeaderWriterFilter@5634a420, org.springframework.security.web.csrf.CsrfFilter@2fca2b5f, org.springframework.security.web.authentication.logout.LogoutFilter@5f043281, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@62a24105, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@6988b6d2, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4ddff9f1, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@712b0985, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@22128506, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@19ce2e8d, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3d052326, org.springframework.security.web.session.SessionManagementFilter@6609186a, org.springframework.security.web.access.ExceptionTranslationFilter@61a4c126, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@3112b318]
+2021-08-19 23:18:54.744  INFO 25316 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-19 23:18:54.744  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-19 23:18:54.745  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-08-19 23:18:54.760  INFO 25316 --- [    Test worker] c.B.o.c.HealthApiControllerTest          : Started HealthApiControllerTest in 1.094 seconds (JVM running for 6.623)
+2021-08-19 23:18:54.779  INFO 25316 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-19 23:18:54.779  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-19 23:18:54.780  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
@@ -167,9 +167,9 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2021-08-18 00:09:05.364  INFO 17340 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2021-08-18 00:09:05.364  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2021-08-18 00:09:05.365  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-08-19 23:18:54.922  INFO 25316 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-19 23:18:54.922  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-19 23:18:54.923  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
@@ -207,9 +207,9 @@ MockHttpServletResponse:
     Forwarded URL = null
    Redirected URL = null
           Cookies = []
-2021-08-18 00:09:05.385  INFO 17340 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
-2021-08-18 00:09:05.385  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
-2021-08-18 00:09:05.386  INFO 17340 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-08-19 23:18:54.949  INFO 25316 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-08-19 23:18:54.949  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-08-19 23:18:54.950  INFO 25316 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
 
 MockHttpServletRequest:
       HTTP Method = GET
@@ -258,7 +258,7 @@ MockHttpServletResponse:
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="http://www.gradle.org">Gradle 7.1.1</a> at 2021. 8. 18. 오전 12:09:09</p>
+<a href="http://www.gradle.org">Gradle 7.1.1</a> at 2021. 8. 19. 오후 11:18:58</p>
 </div>
 </div>
 </body>

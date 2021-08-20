@@ -3,26 +3,19 @@ package com.B305.ogym.domain.users.ptTeacher;
 
 import static com.B305.ogym.domain.mappingTable.QPTStudentPTTeacher.pTStudentPTTeacher;
 import static com.B305.ogym.domain.users.ptStudent.QPTStudent.pTStudent;
-import static com.B305.ogym.domain.users.ptTeacher.QCareer.career;
-import static com.B305.ogym.domain.users.ptTeacher.QCertificate.certificate;
 import static com.B305.ogym.domain.users.ptTeacher.QPTTeacher.pTTeacher;
-import static com.B305.ogym.domain.users.ptTeacher.QSns.sns;
 
 import com.B305.ogym.common.util.RestResponsePage;
 import com.B305.ogym.controller.dto.HealthDto.MyStudentsHealthListResponse;
 import com.B305.ogym.controller.dto.HealthDto.StudentHealth;
 import com.B305.ogym.controller.dto.PTDto.SearchDto;
-import com.B305.ogym.controller.dto.UserDto.CareerDto;
-import com.B305.ogym.controller.dto.UserDto.CertificateDto;
-import com.B305.ogym.controller.dto.UserDto.SnsDto;
 import com.B305.ogym.domain.mappingTable.PTStudentPTTeacher;
 import com.B305.ogym.domain.users.common.Gender;
+import com.B305.ogym.domain.users.common.ProfilePicture;
 import com.B305.ogym.domain.users.ptStudent.Monthly;
 import com.B305.ogym.domain.users.ptStudent.PTStudent;
 import com.querydsl.core.QueryResults;
-import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
@@ -32,8 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import javax.persistence.EntityManager;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom {
@@ -52,7 +43,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
     // 해당 선생님 관련 학생들의 건강정보 조회 메서드
     @Override
     public MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail) {
-        List<PTStudent> students = queryFactory.select(pTStudent)
+        List<PTStudent> students = queryFactory.selectDistinct(pTStudent)
             .from(pTStudentPTTeacher)
             .join(pTStudentPTTeacher.ptStudent, pTStudent)
             .join(pTStudentPTTeacher.ptTeacher, pTTeacher)
@@ -65,17 +56,30 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
             StudentHealth studentHealth = StudentHealth.builder()
                 .username(o.getUsername())
                 .nickname(o.getNickname())
+//                .profileUrl(o.getProfilePicture().getPictureAddr())
                 .age(o.getAge())
                 .gender(o.getGender())
                 .build();
+            ProfilePicture profilePicture = o.getProfilePicture();
+            if(profilePicture != null){
+                studentHealth.setProfileUrl(profilePicture.getPictureAddr());
+            }
             List<Monthly> monthly = o.getMonthly();
             monthly.sort((o1, o2) -> {
                 return o1.getMonth() - o2.getMonth();
             });
-            monthly.forEach(m -> {
+//            monthly.forEach(m -> {
+//                studentHealth.addWeight(m.getWeight());
+//                studentHealth.addHeight(m.getHeight());
+//            });
+            for(Monthly m : monthly){
                 studentHealth.addWeight(m.getWeight());
                 studentHealth.addHeight(m.getHeight());
-            });
+            }
+            for(int i = monthly.size(); i<12 ;i++){
+                studentHealth.addWeight(-1);
+                studentHealth.addHeight(-1);
+            }
             result.add(studentHealth);
         });
 
@@ -83,6 +87,7 @@ public class PTTeacherRepositoryCustomImpl implements PTTeacherRepositoryCustom 
         myStudentsHealthListResponse.setStudentHealthList(result);
         return myStudentsHealthListResponse;
     }
+
     // 선생님 리스트 조건 검색
     @Override
     public RestResponsePage<PTTeacher> searchAll(SearchDto searchDto, Pageable pageable) {

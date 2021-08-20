@@ -1,11 +1,10 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { AddSNS } from "../../../recoil/atoms/AddSNS";
 import styled from "styled-components";
-import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
-import { Button } from "antd";
+import { Button, Space } from "antd";
+import arrow from "../../../assets/pages/register/arrow.jpg";
 
 const StyledInput = styled.input`
   display: block;
@@ -17,6 +16,22 @@ const StyledInput = styled.input`
   margin-bottom: 10px;
   font-size: 14px;
   color: black;
+`;
+
+const StyledSelect = styled.select`
+  width: 200px;
+  padding: 0.8em 0.5em;
+  border: 1px solid #999;
+  font-family: inherit;
+  background: url(${arrow}) no-repeat 95% 50%;
+  border-radius: 0px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  .select::-ms-expand {
+    display: none;
+  }
 `;
 
 function AddSns() {
@@ -65,13 +80,6 @@ function AddSns() {
     if (prevIsValid()) {
       setForm((prev) => [...prev, inputState]);
     }
-    // const newForm = form.map((item, index) => {
-    //   return {
-    //     platform: item["SNSPlatform"],
-    //     SNSUrl: item["SNSUrl"],
-    //   };
-    // });
-    // console.log(newForm);
   };
 
   const onChange = (index, event) => {
@@ -98,7 +106,6 @@ function AddSns() {
         };
       });
     });
-    // setsnsInfo(form);
   };
 
   useEffect(() => {
@@ -109,7 +116,6 @@ function AddSns() {
       };
     });
     setsnsInfo(newForm);
-    // console.log(snsInfo);
   }, [form]);
 
   const handleRemoveField = (e, index) => {
@@ -123,61 +129,57 @@ function AddSns() {
         <form>
           {form.map((item, index) => (
             <div key={`item-${index}`} style={{ display: "flex" }}>
-              {/* <div>
-                <StyledInput
-                  type="text"
-                  name="SNSPlatform"
-                  placeholder="SNSPlatform"
-                  value={item.SNSPlatform}
-                  onChange={(e) => onChange(index, e)}
-                />
+              <Space>
 
-                {item.errors.SNSPlatform && (
-                  <div style={{ color: "red" }}>{item.errors.SNSPlatform}</div>
-                )}
-              </div> */}
               <div>
-                <select
+                <StyledSelect
                   name="SNSPlatform"
                   value={item.SNSPlatform}
                   onChange={(e) => onChange(index, e)}
-                >
+                  >
                   <option value="">Select</option>
                   <option value="facebook">페이스북</option>
                   <option value="instagram">인스타그램</option>
                   <option value="twitter">트위터</option>
                   <option value="youtube">유튜브</option>
-                </select>
+                </StyledSelect>
                 {item.errors.SNSPlatform && (
                   <div style={{ color: "red" }}>{item.errors.SNSPlatform}</div>
-                )}
+                  )}
               </div>
 
               <div>
                 <StyledInput
                   type="text"
                   name="SNSUrl"
-                  placeholder="SNSUrl"
+                  placeholder="SNS주소"
                   value={item.SNSUrl}
                   onChange={(e) => onChange(index, e)}
-                />
+                    style={{
+                      marginTop: "10px"
+                  }}
+                  />
 
                 {item.errors.SNSUrl && (
                   <div style={{ color: "red" }}>{item.errors.SNSUrl}</div>
-                )}
+                  )}
               </div>
 
               <Button
                 type="primary"
                 danger
                 onClick={(e) => handleRemoveField(e, index)}
-              >
+                >
                 X
               </Button>
+                </Space>
             </div>
           ))}
 
-          <Button type="primary" onClick={handleAddLink}>
+          <Button type="primary" onClick={handleAddLink}
+            style={{
+              marginBottom: "10px"
+          }}>
             SNS 추가
           </Button>
         </form>

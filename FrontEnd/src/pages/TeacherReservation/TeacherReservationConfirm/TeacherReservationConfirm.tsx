@@ -3,19 +3,15 @@
 // @ts-nocheck
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
-import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
+import { ViewState } from '@devexpress/dx-react-scheduler';
 import {
   Scheduler,
   Toolbar,
-  MonthView,
   WeekView,
   ViewSwitcher,
   Appointments,
   AppointmentTooltip,
   AppointmentForm,
-  DragDropProvider,
-  EditRecurrenceMenu,
-  AllDayPanel,
   DateNavigator,
   TodayButton,
   DayView
@@ -24,22 +20,14 @@ import { connectProps } from '@devexpress/dx-react-core';
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 import { withStyles } from '@material-ui/core/styles';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 import IconButton from '@material-ui/core/IconButton';
-import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import LocationOn from '@material-ui/icons/LocationOn';
 import Notes from '@material-ui/icons/Notes';
 import Close from '@material-ui/icons/Close';
 import CalendarToday from '@material-ui/icons/CalendarToday';
 import Create from '@material-ui/icons/Create';
-import './TeacherReservationConfirm.css'
 import { appointments } from './appointments';
 import axios from 'axios';
 // @ts-ignore
@@ -102,7 +90,6 @@ class AppointmentFormContainerBasic extends React.PureComponent {
 
     this.getAppointmentData = async () => {
       const { appointmentData } = this.props;
-
       return appointmentData;
     };
     this.getAppointmentChanges = () => {
@@ -279,31 +266,66 @@ class AppointmentFormContainerBasic extends React.PureComponent {
   }
 }
 
-class AddButton extends React.PureComponent {
-  
-  render() {
+
+const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
+
+const Appointment = ({
+  children, data, style, ...restProps
+}) => {
+  console.log(data.id)
+
+  if (data.id === 1) {
     return (
-      <Fab
-          color="secondary"
-          className={classes.addButton}
-          onClick={() => {
-            this.setState({ editingFormVisible: true });
-            this.onEditingAppointmentChange(undefined);
-            this.onAddedAppointmentChange({
-              startDate: new Date(currentDate).setHours(startDayHour),
-              endDate: new Date(currentDate).setHours(startDayHour + 1),
-            });
-          }}
-        >
-          <AddIcon />
-      </Fab>
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#ff85c0',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
       
     );
   }
+  else if (data.id === 2) {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#b37feb',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+  else {
+    return (
+      <Appointments.Appointment
+      {...restProps}
+      style={{
+        ...style,
+        backgroundColor: '#5cdbd3',
+        borderRadius: '8px',
+      }}
+    >
+      {children}
+    </Appointments.Appointment>
+    
+      
+    );
+  }
+
+  
 }
 
-
-const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
 
 const styles = theme => ({
   addButton: {
@@ -320,21 +342,20 @@ class Demo extends React.PureComponent {
     const nowDate = new Date();
     this.state = {
       data: appointments,
-      // currentDate: `${nowDate.getFullYear()}-${nowDate.getMonth()+1}-${nowDate.getDate()}`,
-      currentDate: `2021-07-28`,
+      currentDate: `${nowDate.getFullYear()}-${nowDate.getMonth()+1}-${nowDate.getDate()}`,
+      // currentDate: `2021-07-28`,
       confirmationVisible: false,
       editingFormVisible: false,
       deletedAppointmentId: undefined,
       editingAppointment: undefined,
       previousAppointment: undefined,
       addedAppointment: {},
-      startDayHour: 9,
-      endDayHour: 19,
+      startDayHour: 0,
+      endDayHour: 24,
       isNewAppointment: false,
     };
 
 
-    // this.getFirstData = this.getFirstData.bind(this);
 
     this.toggleConfirmationVisible = this.toggleConfirmationVisible.bind(this);
     this.commitDeletedAppointment = this.commitDeletedAppointment.bind(this);
@@ -343,6 +364,7 @@ class Demo extends React.PureComponent {
     this.commitChanges = this.commitChanges.bind(this);
     this.onEditingAppointmentChange = this.onEditingAppointmentChange.bind(this);
     this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this);
+    this.refreshData = this.refreshData.bind(this);
     this.appointmentForm = connectProps(AppointmentFormContainer, () => {
       const {
         editingFormVisible,
@@ -375,11 +397,7 @@ class Demo extends React.PureComponent {
       };
     });
   }
-
-  async componentDidMount() {
-    const { data } = this.state;
-    //console.log(data);
-    //console.log(localStorage.getItem('accessToken'))
+  async refreshData () {
     let accessToken = localStorage.getItem('accessToken');
       
     if (accessToken) {
@@ -387,14 +405,14 @@ class Demo extends React.PureComponent {
         exp, email, role, nickname
       } = jwt_decode(accessToken);
     
-      let data2 = await axios.get(`https://i5b305.p.ssafy.io/api/pt/reservation`, {
+      let data2 = await axios.get(`${process.env.REACT_APP_API_ROOT_ADDRESS}/api/pt/reservation`, {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem('accessToken')}`
       }
     });
       let data21: { data } = await data2.data;
       let inko = new Inko();
-    //console.log(data21.data);
+
     let changeData = data21.data.map(({
       description,
       nickname,
@@ -402,39 +420,30 @@ class Demo extends React.PureComponent {
       email,
       reservationTime
     }) => {
-      //console.log(reservationTime);
       
       let startDate = new Date(reservationTime);
-
       let endDate = new Date(reservationTime);
       endDate.setHours(startDate.getHours()+1);
-      //console.log(startDate, endDate);
       return {
         title: `${nickname}님 PT - ${
           description
         }`,
         startDate: startDate,
         endDate: endDate,
-        id: 0,
+        id: (nickname.length%3)+1,
         location: inko.ko2en(nickname) + inko.ko2en(
           checkDate['nickname']
         ),
       }
     });
     
-    // {
-    //   // title: 'Website Re-Design Plan',
-    //   // startDate: new Date(2021, 8, 8, 9, 35),
-    //   // endDate: new Date(2021, 8, 10, 11, 30),
-    //   // id: 0,
-    //   // location: 'Room 1',
-      
-    // };
-    
     this.setState({ data : changeData });
 
     }
-    
+  }
+
+  componentDidMount() {
+   this.refreshData();
   }
 
   componentDidUpdate() {
@@ -505,12 +514,9 @@ class Demo extends React.PureComponent {
     const {
       currentDate,
       data,
-      confirmationVisible,
-      editingFormVisible,
       startDayHour,
       endDayHour,
     } = this.state;
-    const { classes } = this.props;
 
     return (
       <Paper
@@ -526,73 +532,28 @@ class Demo extends React.PureComponent {
             currentDate={currentDate}
             onCurrentDateChange={ this.currentDateChange }
           />
-          <EditingState
-            onCommitChanges={this.commitChanges}
-            onEditingAppointmentChange={this.onEditingAppointmentChange}
-            onAddedAppointmentChange={this.onAddedAppointmentChange}
-          />
+         
           <DayView />
           <WeekView
             startDayHour={startDayHour}
             endDayHour={endDayHour}
             
           />
-          <AllDayPanel />
-          <EditRecurrenceMenu />
-          <Appointments />
+          <Appointments
+            appointmentComponent={Appointment}
+          />
           <AppointmentTooltip
-            showOpenButton
             showCloseButton
-            showDeleteButton
           />
           <Toolbar />
           <DateNavigator />
           <TodayButton />
           <ViewSwitcher />
-          <AppointmentForm
-            overlayComponent={this.appointmentForm}
-            visible={editingFormVisible}
-            onVisibilityChange={this.toggleEditingFormVisibility}
-          />
-          <DragDropProvider />
+        
         </Scheduler>
 
-        <Dialog
-          open={confirmationVisible}
-          onClose={this.cancelDelete}
-        >
-          <DialogTitle>
-            Delete Appointment
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Are you sure you want to delete this appointment?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.toggleConfirmationVisible} color="primary" variant="outlined">
-              Cancel
-            </Button>
-            <Button onClick={this.commitDeletedAppointment} color="secondary" variant="outlined">
-              Delete
-            </Button>
-          </DialogActions>
-        </Dialog>
+        
 
-        <Fab
-          color="secondary"
-          className={classes.addButton}
-          onClick={() => {
-            this.setState({ editingFormVisible: true });
-            this.onEditingAppointmentChange(undefined);
-            this.onAddedAppointmentChange({
-              startDate: new Date(currentDate).setHours(startDayHour),
-              endDate: new Date(currentDate).setHours(startDayHour + 1),
-            });
-          }}
-        >
-          <AddIcon />
-        </Fab>
       </Paper>
     );
   }

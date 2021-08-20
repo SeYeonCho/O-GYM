@@ -2,7 +2,38 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import OpenViduSession from 'openvidu-react';
 import jwt_decode from "jwt-decode";
+import styled from 'styled-components';
+// @ts-ignore
+import './Session.css';
+import Inko from 'inko';
+import MainNavigation from '../../components/organisms/Main/Main-Navigation';
+import { message, Button, Input, Space } from 'antd';
+import { UserOutlined, HomeOutlined  } from '@ant-design/icons';
 
+const StyledBackground = styled.div`
+    height: 88vh;
+    background-image:
+    linear-gradient(rgba(0, 0, 255, 0.5), rgba(100, 155, 0, 0.5)),
+    url("https://ogymbucket.s3.ap-northeast-2.amazonaws.com/teacher_navbar.jpg");
+
+`;
+
+const StyledNavigationDiv = styled.div`
+height: 12vh;
+background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+background-size: 100% 100%;
+animation: gradient 15s ease infinite;
+`;
+
+const StyledInputDiv = styled.div`
+    padding: 30vh 20vh;
+`;
+
+const StyledSession = styled(OpenViduSession)`
+    #navSessionInfo {
+        display: none;
+    }
+`;
 
 class SessionPage extends Component {
     OPENVIDU_SERVER_URL: any;
@@ -11,41 +42,81 @@ class SessionPage extends Component {
     constructor(props: any) {
         super(props);
         // this.OPENVIDU_SERVER_URL = 'https://' + window.location.hostname + ':4443';
-        this.OPENVIDU_SERVER_URL = 'https://' + 'i5b305.p.ssafy.io' + ':3443';
-        this.OPENVIDU_SERVER_SECRET = 'password';
-        
-        const accessToken = localStorage.getItem('accessToken');
-    
-        if (accessToken != null) {
-        
-            const decoded: {
-                nickname, role
-            } = jwt_decode(accessToken);
-        
-            this.state = {
-                mySessionId: 'SessionA',
-                myUserName: decoded['nickname'],
-                token: undefined,
-            };
-
-        }
-        else {
-
-            this.state = {
-                mySessionId: 'SessionA',
-                myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
-                token: undefined,
-            };
-
-            
-        }
-
+        this.OPENVIDU_SERVER_URL = `https://i5b305.p.ssafy.io:3443`;
+        this.OPENVIDU_SERVER_SECRET = `password`;
+        this.state = {
+            mySessionId: 'SessionA',
+            myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
+            token: undefined,
+        };
         this.handlerJoinSessionEvent = this.handlerJoinSessionEvent.bind(this);
         this.handlerLeaveSessionEvent = this.handlerLeaveSessionEvent.bind(this);
         this.handlerErrorEvent = this.handlerErrorEvent.bind(this);
         this.handleChangeSessionId = this.handleChangeSessionId.bind(this);
         this.handleChangeUserName = this.handleChangeUserName.bind(this);
         this.joinSession = this.joinSession.bind(this);
+    }
+
+    componentDidMount() {
+        const accessToken = localStorage.getItem('accessToken');
+        message.info({
+            content: '반드시 사용 전에 카메라와 마이크가 다른 어플리케이션에 사용중인지 확인해주세요!',
+            className: 'custom-class',
+            style: {
+              marginTop: '20vh',
+            },
+          });
+        if (accessToken != null) {
+        
+            const decoded: {
+                nickname, role
+            } = jwt_decode(accessToken);
+        
+            if (decoded['nickname']) {
+                axios.get(`https://i5b305.p.ssafy.io/api/pt/nowreservation`, {
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`
+                    }
+                }).then(({ data }) => {
+
+                    console.log(data);
+                    
+                    if (data.data === null) {
+                        message.error('현재 해당 수업 시간이 아닙니다!');
+                        throw new Error();
+                    }
+                        
+                    let receivedData: { studentNickname, teacherNickname } = data.data;
+                    let inko = new Inko();
+                    this.setState({
+                        mySessionId: inko.ko2en(receivedData['studentNickname']) + inko.ko2en(receivedData['teacherNickname']),
+                        myUserName: decoded['nickname'],
+                        token: undefined,
+                    });
+                    
+                }).catch(() => {
+                    if (!decoded['nickname']) {
+                        message.error('다시 로그인 해주세요!');
+                    }
+                });
+
+                this.setState({
+                    mySessionId: 'SessionA',
+                    myUserName: decoded['nickname'],
+                    token: undefined,
+                });
+            }
+        
+        }
+        else {
+
+            this.setState({
+                mySessionId: 'SessionA',
+                myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
+                token: undefined,
+            });
+            
+        }
     }
 
     handlerJoinSessionEvent() {
@@ -91,42 +162,43 @@ class SessionPage extends Component {
         const mySessionId = this.state.mySessionId;
         const myUserName = this.state.myUserName;
         const token = this.state.token;
-        return (
-            <div>
+        return (<>
+            {this.state.session !== true ? 
+            <StyledNavigationDiv>
+                <MainNavigation position="sticky" /> 
+                </StyledNavigationDiv> :
+                
+            <></>
+        }
+            
+            <StyledBackground>
+                
                 {this.state.session === undefined ? (
-                    <div id="join">
-                        <div id="join-dialog">
-                            <h1> Join a video session </h1>
-                            <form onSubmit={this.joinSession}>
-                                <p>
-                                    <label>Participant: </label>
-                                    <input
-                                        type="text"
-                                        id="userName"
-                                        value={myUserName}
-                                        onChange={this.handleChangeUserName}
-                                        required
-                                    />
-                                </p>
-                                <p>
-                                    <label> Session: </label>
-                                    <input
-                                        type="text"
-                                        id="sessionId"
-                                        value={mySessionId}
-                                        onChange={this.handleChangeSessionId}
-                                        required
-                                    />
-                                </p>
-                                <p>
-                                    <input name="commit" type="submit" value="JOIN" />
-                                </p>
-                            </form>
-                        </div>
-                    </div>
+                    <StyledInputDiv >
+                        <Space direction="vertical">
+                                <Input
+                                    type="text"
+                                    id="userName"
+                                    value={myUserName}
+                                    onChange={this.handleChangeUserName}
+                                    required
+                                    size="large" placeholder="please Input UserName" prefix={<UserOutlined />} />
+                    
+                                <Input type="text"
+                                    id="sessionId"
+                                    value={mySessionId}
+                                    onChange={this.handleChangeSessionId}
+                                    required
+                                    size="large" placeholder="please Input ClassName" prefix={<HomeOutlined  />} />
+                                <Button name="commit" type="primary" onClick={ this.joinSession } block>
+                                        JOIN
+                                    </Button>
+
+                        </Space>
+                    </StyledInputDiv>
                 ) : (
                     <div id="session">
-                        <OpenViduSession
+                        <StyledSession
                             id="opv-session"
                             sessionName={mySessionId}
                             user={myUserName}
@@ -137,7 +209,8 @@ class SessionPage extends Component {
                         />
                     </div>
                 )}
-            </div>
+            </StyledBackground>
+            </>
         );
     }
 

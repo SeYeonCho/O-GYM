@@ -69,26 +69,7 @@ const BmiChart = (props:any) => {
   ]);
 
   useEffect(() => {
-    console.log(myInfo[selectedIndex.index])
   }, [])
-
-  // useEffect(() => {
-  //   let today = new Date()
-  //   let month = today.getMonth()
-  //   let myWeight = myInfo[selectedIndex.index].weightList[month]
-  //   let myHeight = myInfo[selectedIndex.index].heightList[month] /100
-  //   let myBMI = Math.round(myWeight/myHeight/myHeight)
-  //   setHeight(myInfo[selectedIndex.index].heightList[month])
-  //   setWeight(myInfo[selectedIndex.index].weightList[month])
-  //   setBmiInfo(myBMI)
-  //   setManData([
-  //     {
-  //       id: "나의 BMI",
-  //       ranges: [0, 18.5, 22.9, 24.9, 29.9, 34.9, 60],
-  //       measures: [myBMI]
-  //     }
-  //   ])
-  // }, []);
 
   return (
     <>

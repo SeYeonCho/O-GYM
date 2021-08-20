@@ -16,7 +16,7 @@ function WeightFlowChart() {
     let today = new Date()
     let month = today.getMonth()
     axios.get(
-      'https://i5b305.p.ssafy.io/api/health/myhealth', {
+      "https://i5b305.p.ssafy.io/api/health/myhealth", {
         headers: {
           "Authorization": `Bearer ${accessToken}`
         }

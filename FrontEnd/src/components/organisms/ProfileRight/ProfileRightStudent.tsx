@@ -11,34 +11,34 @@ function ProfileRightStudent() {
   let accessToken = localStorage.getItem('accessToken');
   
   useEffect(() => {
-    axios.get("https://i5b305.p.ssafy.io/api/pt/reservation", {
+    axios.get('https://i5b305.p.ssafy.io/api/pt/reservation', {
       headers: {
         "Authorization": `Bearer ${accessToken}`
       }
     })
     .then((response) => {
-      console.log(response.data.data)
       setMyReservation(response.data.data)
+      console.log(response.data.data)
     })
   }, [])
 
   return (
       <>
       <List
-        header={<div>예약현황</div>}
+        header={<div style={{fontWeight:700, fontSize: "1.3rem", borderTop: "1px solid black", paddingTop: "0.7rem", borderBottom: "1px solid black", paddingBottom: "0.7rem"}}>예약현황</div>}
         style={{overflowY: "scroll", height: "500px"}}
         itemLayout="horizontal"
         dataSource={myReservation}
         renderItem={myReservation => (
           <List.Item
-            actions={[<a key="reservation-cancel">예약취소</a>]}
+            style={{borderBottom: "0.3px solid grey"}}
           >
             <List.Item.Meta
-              avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-              title={<a href="https://ant.design">{myReservation.nickname}</a>}
-              description={myReservation.description}
+              avatar={<Avatar src={myReservation.profileUrl} />}
+              title={<p style={{fontWeight: 700, fontSize: "1rem"}}>트레이너 {myReservation.nickname}</p>}
+              description={<p style={{fontWeight: 700, fontSize: "1rem"}}>운동부위 {myReservation.description}</p>}
             />
-            <div>{
+            <div style={{marginRight: "1rem", fontWeight: 700, fontSize: "1rem"}}>{
                 myReservation.reservationTime.substring(0, 4) + "년 " +
                 myReservation.reservationTime.substring(5, 7) + "월 " +
                 myReservation.reservationTime.substring(8, 10) + "일 " +

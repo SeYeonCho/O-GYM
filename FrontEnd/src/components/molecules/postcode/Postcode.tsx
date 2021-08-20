@@ -24,7 +24,6 @@ function Postcode() {
       }
       fullAddress += (extraAddress !== '' ? ` (${extraAddress})` : '');
     }
-    // console.log(fullAddress);
     setZipcode(data.zonecode)
     setStreetAddress(data.roadAddress)
     setIsModalVisible(false);

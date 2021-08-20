@@ -81,4 +81,8 @@ public class UserBase extends BaseTimeEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public void setProfilePicture(ProfilePicture profilePicture) {
+        this.profilePicture = profilePicture;
+    }
 }

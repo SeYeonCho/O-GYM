@@ -13,6 +13,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
@@ -26,6 +27,7 @@ import static org.springframework.test.web.servlet.setup.SharedHttpSessionConfig
 
 import com.B305.ogym.common.annotation.WithAuthUser;
 import com.B305.ogym.common.config.SecurityConfig;
+import com.B305.ogym.controller.dto.UserDto.ProfileDto;
 import com.B305.ogym.controller.dto.UserDto.SaveUserRequest;
 import com.B305.ogym.exception.user.UserDuplicateEmailException;
 import com.B305.ogym.exception.user.UserDuplicateNicknameException;
@@ -466,5 +468,32 @@ class UserApiControllerTest {
             ));
     }
 
+    @WithAuthUser(email = "userEmail@naver.com", role = "ROLE_PTTEACHER")
+    @DisplayName("유저 프로필 이미지 등록 - 성공")
+    @Test
+    public void putProfile_success() throws Exception {
+        ProfileDto profileDto = ProfileDto.builder()
+            .url("fileDIR/fileURL")
+            .build();
+        doNothing().when(userService).putProfile(any(), any());
+
+        mockMvc.perform(patch("/api/user")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(profileDto)))
+            .andDo(print())
+            .andExpect(status().isOk()) // 201 isCreated()
+            .andDo(
+                document(
+                    "userApi/putProfile/successful",
+                    getDocumentRequest(),
+                    getDocumentResponse(),
+                    requestFields(
+                        fieldWithPath("url").type(JsonFieldType.STRING)
+                            .description("프로필 이미지 주소")
+                            .attributes(key("constraint")
+                                .value("AWS S3에 저장된 이미지의 URL"))
+                    )
+                ));
+    }
 
 }

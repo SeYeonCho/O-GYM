@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import 'antd/dist/antd.css';
-import { List, Avatar } from 'antd';
+import { List, Avatar, Button } from 'antd';
 import { useRecoilState} from 'recoil'
 import { StudentIndex } from '../../../recoil/atoms/chart/StudentIndex';
 import { Bmi } from '../../../recoil/atoms/chart/Bmi';
@@ -22,19 +22,15 @@ function StudentList(props: any) {
   const [series, setSeries] = useRecoilState(Weight);
   const [ selectedUser, setSelectedUser] = useRecoilState(SelectedInfo)
 
-  useEffect(() => {
-    console.log(studentIndex.index)
-    console.log(myStudent)
-    console.log(myBmi)
-  }, [])
+  
   return (
     <>
       <div style={{marginTop: "8rem"}}>
       {data.myStudent.map((student: any, index: any) => (
-        <div style={{display: "flex", marginLeft: "4rem"}}>
-          <p style={{color: "white", marginTop: "1rem"}}>{student.username}</p>
-          <button 
-            style={{backgroundColor: "transparent", borderColor: "transparent", color: "white", cursor: "pointer"}} 
+        <div style={{display: "flex", marginLeft: "1rem"}}>
+          <Button 
+            block
+            style={{marginBottom: "1.5rem"}}
             onClick={() => {
               let today = new Date()
               let month = today.getMonth()
@@ -50,25 +46,12 @@ function StudentList(props: any) {
               setSelectedUser(myStudent[index])
             }}
           >
-            차트
-          </button>
+            {student.username}님의 차트보기
+          </Button>
         </div>
       ))}
       </div>
     </>
-  //   <List
-  //   style={{marginTop: "9rem"}}
-  //   itemLayout="horizontal"
-  //   dataSource={data}
-  //   renderItem={item => (
-  //     <List.Item>
-  //       <List.Item.Meta
-  //         avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-  //         title={<a href="https://ant.design" style={{color: 'white'}}>{item.title}</a>}
-  //       />
-  //     </List.Item>
-  //   )}
-  // />
   )
 }
 
