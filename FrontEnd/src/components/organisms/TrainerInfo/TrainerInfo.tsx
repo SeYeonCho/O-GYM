@@ -74,7 +74,6 @@ const labelStyle = {
 };
 
 
-
 function TrainerInfo () {
   let accessToken = localStorage.getItem('accessToken');
   const [ data, setData ] = useState<any>([])
@@ -91,21 +90,28 @@ function TrainerInfo () {
         "Authorization": `Bearer ${accessToken}`
       }
     })
-    .then((res) => {
+      .then((res) => {
+
       callback(res)
-      setNum(num+1)
+        setNum(num + 1);
     })
   }
   
   useEffect(() => {
     fetchData((res) => {
-      setData(res.data.data.teacherList)
+      console.log(res.data.data.teacherList);
+      let trainerData = data;
+      trainerData = trainerData.concat(res.data.data.teacherList);
+      setData(trainerData)
+      
+      // console.log(trainerData);
+      // setData(res.data.data.teacherList)
     })
   }, [])
 
 
   const handleInfiniteOnLoad = () => {
-    let trainerData = data
+    let trainerData = data;
     setLoading(true)
     if (data.length > 500) {
       message.warning("트레이너를 모두 불러왔습니다.");
@@ -113,11 +119,16 @@ function TrainerInfo () {
       setLoading(false)
       return;
     }
-    fetchData((res) => {
-      trainerData = trainerData.concat(res.data.data.teacherList);
-      setData(trainerData)
-      setLoading(false)
-    });
+    
+      
+      fetchData((res) => {
+        console.log(res.data.data.teacherList);
+        trainerData = trainerData.concat(res.data.data.teacherList);
+        setData(trainerData)
+        // console.log(trainerData);
+        setLoading(false)
+      });
+    
   };
 
   return (

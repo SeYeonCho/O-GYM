@@ -270,10 +270,12 @@ class AppointmentFormContainerBasic extends React.PureComponent {
 const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
 
 const Appointment = ({
-  children, data, style, ...restProps
+  children, style, ...restProps
 }) => {
-  console.log(data.id)
-
+  //console.log(data.id)
+  let data= { ...restProps }['data'];
+  
+  
   if (data.id === 1) {
     return (
       <Appointments.Appointment

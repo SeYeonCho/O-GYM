@@ -50,7 +50,7 @@ const careerColumns = [
     key: 'startDate',
   },
   {
-    title: '입사일자',
+    title: '퇴사일자',
     dataIndex: 'endDate',
     key: 'endDate',
   },

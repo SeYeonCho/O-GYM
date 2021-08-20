@@ -30,9 +30,11 @@ public class HealthService {
 
     // 선생님 : 학생들에 대한 건강정보 조회
     public HealthDto.MyStudentsHealthListResponse findMyStudentsHealth(String teacherEmail) {
+
         if (!ptTeacherRepository.existsByEmail(teacherEmail)) {
             throw new UserNotFoundException("해당하는 이메일이 존재하지 않습니다.");
         }
+
         return ptTeacherRepository.findMyStudentsHealth(teacherEmail);
     }
 }
