@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/uploads/fb20fd2eb8d0b25111045109da7b0398/OGYM_로고-removebg-preview.png" alt="OGYM_로고-removebg-preview" width="298">    
+    <img src="https://user-images.githubusercontent.com/46417206/133896469-e03ec8ac-a42e-4e01-a1fe-db5edc6c4583.png" alt="OGYM_로고-removebg-preview" width="298">    
 </p>
 <p align="center">
     SSAFY 2학기 공통 프로젝트 - OGYM
@@ -36,8 +36,7 @@ COVID-19로 인해 UN-TACT 시대가 열렸고, 또한 건강을 유지하는 �
 
 ------
 
-![기술스택](/uploads/777ee54b4b58eb5e659bc9c026cd1284/기술스택.png)
-
+![기술스택](https://user-images.githubusercontent.com/46417206/133896465-0cc59c3a-fb62-4b65-8b27-8d87bb98c10a.png)
 
 
 # WIKI
