@@ -96,7 +96,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return RESERVATION_NOT_FOUND;
     }
 
-
     // 입력해야하는 파라미터 중에 입력하지 않은 파라미터가 존재하는 경우
     @ExceptionHandler(NotValidRequestParamException.class)
     public final ResponseEntity<String> handleNotValidRequestParamException(
@@ -111,6 +110,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return UNAUTHORIZED_USER;
     }
 
+    // 존재하지 않는 권한 조회에 대한 에러 핸들러
+    @ExceptionHandler(AuthorityNotFoundException.class)
+    public final ResponseEntity<String> handleAuthorityNotFoundException(
+        ReservationNotFoundException ex) {
+        log.debug("존재하지 않는 권한", ex);
+        return AUTHORITY_NOT_FOUND;
+    }
+
     // 5xx error handler : 서버에서 발생한 전반적인 에러에 대한 핸들러
     @ExceptionHandler(Exception.class)
     public final ResponseEntity<Object> handleAllExceptions(Exception ex, WebRequest request) {
@@ -122,12 +129,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    // 존재하지 않는 권한 조회에 대한 에러 핸들러
-    @ExceptionHandler(AuthorityNotFoundException.class)
-    public final ResponseEntity<String> handleAuthorityNotFoundException(
-        ReservationNotFoundException ex) {
-        log.debug("존재하지 않는 권한", ex);
-        return AUTHORITY_NOT_FOUND;
-    }
 
 }
